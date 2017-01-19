@@ -76,7 +76,19 @@ li {
   }
 }
 
+dl dt {
+  font-weight: bold;
+}
 
+dl dd {
+  padding-left: 20px;
+  font-style: italic;
+}
+
+dl p {
+  padding-left: 20px;
+  font-style: italic;
+}
 
 /**
  * Headings
@@ -99,7 +111,7 @@ a {
   }
 
   &:hover {
-    color: $text-color;
+    color: $brand-color;
     text-decoration: underline;
   }
 }
