@@ -17,14 +17,13 @@ title: derek wilson
 subtitle: what could possibly go wrong
 email: mail@derekwilson.net
 description: > # this means to ignore newlines until "baseurl:"
-  Write an awesome description for your new site here. You can edit this
-  line in _config.yml. It will appear in your document head meta (for
-  Google search results) and in your feed.xml site description.
+  personal space for personal views
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://derekwilson.github.io/" # the base hostname & protocol for your site, e.g. http://example.com
 #url: "http://127.0.0.1:4000/"
 twitter_username: derek__wilson
 github_username:  derekwilson
+bitbucket_username:  derekwilson
 repository: "derekwilson/derekwilson.github.io"
 
 # Build settings

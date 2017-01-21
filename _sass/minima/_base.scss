@@ -208,3 +208,8 @@ pre {
     fill: $grey-color;
   }
 }
+
+.icon--bitbucket {
+  /* because I cannot get the svg to be the same size */
+  padding-right: 4px;
+}
