@@ -1,0 +1,42 @@
+---
+layout: post
+title: "FxCop suppression works in visual studio but not in MSBUILD"
+date: 2011-11-29 08:11:00 +1300
+published: true
+tags: ["Development", "General"]
+categories: ["Development", "General"]
+alias: ["/derekblog/post/2011/11/29/FxCop-suppression-works-in-visual-studio-but-not-in-MSBUILD.aspx", "/derekblog/post/2011/11/29/fxcop-suppression-works-in-visual-studio-but-not-in-msbuild.aspx"]
+---
+<p>I had a very odd problem to solve recently, I needed to specify a SupressMessage attribute on some code however when I did decorate the code with SupressMessage FxCop on the build server still complained about the error. I had used FxCop locally to check the code before checking in and also used the FxCop command &ldquo;Copy as SuppressMessage&rdquo; to make sure I didn&rsquo;t type it wrong.</p><!--more-->
+<!--more-->
+<p>Luckily this problem only seemed to afflict some projects in the solution so I could compare the projects that worked with my current project. It turned out that all the projects that worked specified CODE_ANALYSIS on the Build Tab.</p>
+<p>&nbsp;<a href="/images/wordpress/FxCopsuppressionworksinvisualstudiobutno_C493/buildtabclip.png"><img style="display: inline; border: 0px;" title="buildtabclip" src="/images/wordpress/FxCopsuppressionworksinvisualstudiobutno_C493/buildtabclip_thumb.png" alt="buildtabclip" width="305" height="276" border="0" /></a></p>
+<p>The project that was causing the problem had used a check box on the Code Analysis tab labelled &ldquo;Enable Code Analysis on Build (defines CODE_ANALYSIS constant)&rdquo;.</p>
+<p><a href="/images/wordpress/FxCopsuppressionworksinvisualstudiobutno_C493/condeanalysistabclip.png"><img style="display: inline; border: 0px;" title="condeanalysistabclip" src="/images/wordpress/FxCopsuppressionworksinvisualstudiobutno_C493/condeanalysistabclip_thumb.png" alt="condeanalysistabclip" width="307" height="216" border="0" /></a></p>
+<p>Now you might presume given the label that checking the box would define CODE_ANALYSIS &ndash; I know I did, however when I looked into the project XML file it turns out it did not.</p>
+<p>Projects that checked the cleckbox on the Code Analysis tab looked like this</p>
+<pre class="c#">&lt;PropertyGroup
+ Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' "&gt;
+  &lt;DebugSymbols&gt;true&lt;/DebugSymbols&gt;
+  &lt;DebugType&gt;full&lt;/DebugType&gt;
+  &lt;Optimize&gt;false&lt;/Optimize&gt;
+  &lt;OutputPath&gt;bin\Debug\&lt;/OutputPath&gt;
+  &lt;DefineConstants&gt;DEBUG;TRACE&lt;/DefineConstants&gt;
+  &lt;ErrorReport&gt;prompt&lt;/ErrorReport&gt;
+  &lt;WarningLevel&gt;4&lt;/WarningLevel&gt;
+  &lt;RunCodeAnalysis&gt;true&lt;/RunCodeAnalysis&gt;
+&lt;/PropertyGroup&gt; </pre>
+<p>and projects that used the old style CODE_ANALYSIS define on the build tab looked like this.</p>
+<pre class="c#">&lt;PropertyGroup
+ Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' "&gt;
+  &lt;DebugSymbols&gt;true&lt;/DebugSymbols&gt;
+  &lt;DebugType&gt;full&lt;/DebugType&gt;
+  &lt;Optimize&gt;false&lt;/Optimize&gt;
+  &lt;OutputPath&gt;bin\Debug\&lt;/OutputPath&gt;
+  &lt;DefineConstants&gt;TRACE;DEBUG;CODE_ANALYSIS&lt;/DefineConstants&gt;
+  &lt;ErrorReport&gt;prompt&lt;/ErrorReport&gt;
+  &lt;WarningLevel&gt;4&lt;/WarningLevel&gt;
+  &lt;RunCodeAnalysis&gt;false&lt;/RunCodeAnalysis&gt;
+&lt;/PropertyGroup&gt;</pre>
+<p>Notice that where we used the checkbox on the Code Analysis tab the CODE_ANALYSIS constant is not defined.</p>
+<p>Sometime when I am trying to sort out bizarre little details like this I wonder if it really is a good use of my time. However later I was talking to another developer and he had run into the issue where SupressMessage was not working on the build server and his response had been to turn FxCop off for that project, when we turned FxCop back on there were hundreds of errors that now needed fixing &ndash; my conclusion was that it is worth the time to get to the bottom of this problem.</p>

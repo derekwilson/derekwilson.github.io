@@ -1,0 +1,84 @@
+---
+layout: post
+title: "CSS position:absolute, what does it mean?"
+date: 2009-05-27 13:05:00 +1200
+published: true
+tags: ["CSS", "Development", "Web"]
+categories: ["CSS", "Development", "Web"]
+alias: ["/derekblog/post/2009/05/27/CSS-positionabsolute-what-does-it-mean.aspx", "/derekblog/post/2009/05/27/css-positionabsolute-what-does-it-mean.aspx"]
+---
+<p>This is probably something the rest of the world found out ages ago but I have only just discovered it. I was trying to find a problem with a page, granted the page was quite complex and consisted of a large amount of generated HTML but the problem boiled down to a simple issue: I did not understand how position:absolute worked in CSS.</p><!--more-->
+<!--more-->
+<p>I had a style like this</p>
+<pre class="c#">.interesting_p
+    {
+    	position: absolute;
+    	top: 10px;
+    	left: 10px;
+    	margin: 0px;
+    }</pre>
+<p>I had a P element using this style as its class. I expected the P element to be up near the top left hand corner of the browser window (10 pixels in and down). However it wasn&rsquo;t anywhere near there so obviously I was not understanding the positioning attributes in CSS. I found a <a href="http://dev.opera.com/articles/view/37-css-absolute-and-fixed-positioning/">very interesting and useful article</a> explaining how positioning works</p>
+<blockquote>
+<p>An essential concept when it comes to absolute positioning is the containing block: the block box that the position and dimensions of the absolutely positioned box are relative to.</p>
+<p>For static boxes and relatively positioned boxes the containing block is the nearest block-level ancestor&mdash;the parent element in other words. For absolutely positioned elements however it&rsquo;s a little more complicated. In this case the containing block is the nearest positioned ancestor. By &ldquo;positioned&rdquo; I mean an element whose position property is set to relative, absolute or fixed&mdash;in other words, anything except normal static elements.</p>
+<p>So, by setting position:relative for an element you make it the containing block for any absolutely positioned descendant (child elements), whether they appear immediately below the relatively positioned element in the hierarchy, or further down the hierarchy.</p>
+<p>If an absolutely positioned element has no positioned ancestor, then the containing block is something called the &ldquo;initial containing block,&rdquo; which in practice equates to the html element. If you are looking at the web page on screen, this means the browser window; if you are printing the page, it means the page boundary.</p>
+</blockquote>
+<p>When I looked through the page I did find that I did have a containing block that was not the whole page.</p>
+<p>I stripped back my page to the simplest HTML that demonstrates the problem and it goes like this</p>
+<pre class="c#">&lt;html&gt; 
+ &lt;head&gt; 
+  &lt;title&gt;Positioning&lt;/title&gt; 
+  &lt;style type="text/css"&gt; 
+   .container 
+   { 
+    background-color: Blue; 
+    padding: 5px; 
+    margin: 0px; 
+   } 
+   .interesting_p 
+   { 
+    background-color: Red; 
+    margin: 0px; 
+   } 
+  &lt;/style&gt; 
+ &lt;/head&gt; 
+ &lt;body&gt; 
+  &lt;p&gt;paragraph 1&lt;/p&gt; 
+  &lt;p&gt;paragraph 2&lt;/p&gt; 
+  &lt;p&gt;paragraph 3&lt;/p&gt; 
+  &lt;p&gt;paragraph 4&lt;/p&gt; 
+  &lt;p&gt;paragraph 5&lt;/p&gt; 
+  &lt;p&gt;paragraph 6&lt;/p&gt; 
+  &lt;p&gt;paragraph 7&lt;/p&gt; 
+  &lt;p&gt;paragraph 8&lt;/p&gt; 
+  &lt;p&gt;paragraph 9&lt;/p&gt; 
+  &lt;div class="container"&gt;Container 
+   &lt;p class="interesting_p"&gt;ABS&lt;/p&gt; 
+  &lt;/div&gt; 
+ &lt;/body&gt; 
+&lt;/html&gt;</pre>
+<p>The P with the class of interesting_p is the element I want to position, it is Red. The P elements with paragraph 1 to 9 are just there to push the red P down the page so that it is not already at the top of the page and so it will move when I position it. I have given the container padding so that we can see it around the red P, the container is blue. The page looks like this</p>
+<p><a href="/images/wordpress/CSSpositionabsolutewhatdoesitmean_1233F/pos1.png"><img style="display: inline; border-width: 0px;" title="pos1" src="/images/wordpress/CSSpositionabsolutewhatdoesitmean_1233F/pos1_thumb.png" alt="pos1" width="348" height="395" border="0" /></a></p>
+<p>Now if we just change the interesting_p class to position it at 10, 10 like this</p>
+<pre class="c#">.interesting_p
+    {
+   	background-color: Red;
+    	position: absolute;
+    	top: 10px;
+    	left: 10px;
+    	margin: 0px;
+    }</pre>
+<p>then the page looks like this</p>
+<p><a href="/images/wordpress/CSSpositionabsolutewhatdoesitmean_1233F/pos2.png"><img style="display: inline; border-width: 0px;" title="pos2" src="/images/wordpress/CSSpositionabsolutewhatdoesitmean_1233F/pos2_thumb.png" alt="pos2" width="350" height="397" border="0" /></a></p>
+<p>This is what I would expect the red P element to always look like, after all it is absolutely positioned at 10, 10. However if we introduce a containing block by changing the container class like this</p>
+<pre class="c#">.container
+    {
+    	background-color: Blue;
+    	position: relative;
+    	padding: 5px;
+    	margin: 0px;
+    }</pre>
+<p>then the page looks like this</p>
+<p><a href="/images/wordpress/CSSpositionabsolutewhatdoesitmean_1233F/pos3.png"><img style="display: inline; border-width: 0px;" title="pos3" src="/images/wordpress/CSSpositionabsolutewhatdoesitmean_1233F/pos3_thumb.png" alt="pos3" width="348" height="395" border="0" /></a></p>
+<p>the absolutely positioned block is relative to the container. So the point to remember is before trying to work out why an element lays out at a particular position we must find the containing block. Its also worth remembering that it can affect Z-Index as well.</p>

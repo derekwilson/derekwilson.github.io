@@ -1,0 +1,100 @@
+---
+layout: post
+title: "Logging in native Android apps"
+date: 2014-07-25 13:31:00 +1200
+published: true
+tags: ["Android", "MeasureMe", "Development"]
+categories: ["Android", "MeasureMe", "Development"]
+alias: ["/derekblog/post/2014/07/25/Logging-in-native-Android-apps.aspx", "/derekblog/post/2014/07/25/logging-in-native-android-apps.aspx"]
+---
+<p><a href="https://play.google.com/store/apps/details?id=net.derekwilson.measureme">MeasureMe</a> was my first native Android application. <a href="http://derekwilson.net/derekblog/post/2014/05/01/IoC-in-native-Android-apps.aspx">Previously</a> I’ve commented on the basic framework needed to start developing an app and one of the most basic elements is logging.</p><!--more-->  <p>In my previous projects in .NET I have used Emterprise Library and Log4Net and they have both been fine. Obviously for an Android application I was going to need a Java based framework. I have already blogged about how I <a href="http://derekwilson.net/derekblog/post/2012/06/22/Medium-Trust-SQLServer-CE-log4net-and-NHibernate.aspx">migrated from one logging Enterprise Library to Log4Net</a>. It was relatively easy as I had implement a facade layer so logging framework specific references were in the main body of the code.</p>  <p>When I looked around for an equivalent in Java I found that <a href="http://www.slf4j.org">slf4j</a> is a purpose built logging facade and for Android <a href="http://tony19.github.io/logback-android/">Logback</a> appeared to be a popular choice. slf4j acts as a barrier meaning that I can swap real real logging implementations behind it.</p>  <p>To get the whole thing off the ground all I needed to do was download slf4j-api-1.7.5.jar and logback-android-1.0.10-2.jar and place them in the libs folder.</p>  <p>Then to perform any logging in a class I just reference an ILoggerFactory like this</p>  <pre>public class OpenSourceLicensesActivity extends RoboActivity {
+
+ @Inject
+ private ILoggerFactory logger;
+
+ @Override
+ protected void onCreate(Bundle savedInstanceState) {
+  super.onCreate(savedInstanceState);
+  setContentView(R.layout.activity_open_source_licenses);
+
+  logger.getCurrentApplicationLogger().debug(&quot;OSLicensesActivity.onCreate()&quot;);</pre>
+
+<p>The ILoggerFactory dependency is injected by Guice as I covered in an earlier post. The implementation of ILoggerFactory for slf4j looks like this</p>
+
+<pre>public class SlfLoggerFactory implements ILoggerFactory {
+  @Override
+  public Logger getCurrentApplicationLogger() {
+    return LoggerFactory.getLogger(MeasureMe.class);
+  }
+}</pre>
+
+<p>The actual logging is done by Logback. Logback takes its configuration from an XML file in the assets folder.</p>
+
+<pre><configuration debug="true">&lt;property name=&quot;LOG_HOME&quot; value=&quot;/sdcard/MeasureMe&quot; /&gt;
+  &lt;!-- Create a logcat appender --&gt;
+  &lt;appender name=&quot;logcat&quot; class=&quot;ch.qos.logback.classic.android.LogcatAppender&quot;&gt;
+    &lt;encoder&gt;
+      &lt;pattern&gt;%msg&lt;/pattern&gt;
+    &lt;/encoder&gt;
+  &lt;/appender&gt;
+
+  &lt;appender name=&quot;FILE&quot; class=&quot;ch.qos.logback.core.rolling.RollingFileAppender&quot;&gt;
+    &lt;file&gt;${LOG_HOME}/mm_main.log&lt;/file&gt;
+    &lt;rollingPolicy class=&quot;ch.qos.logback.core.rolling.FixedWindowRollingPolicy&quot;&gt;
+      &lt;fileNamePattern&gt;${LOG_HOME}/mm_main.%i.log&lt;/fileNamePattern&gt;
+      &lt;minIndex&gt;1&lt;/minIndex&gt;
+      &lt;maxIndex&gt;2&lt;/maxIndex&gt;
+    &lt;/rollingPolicy&gt;
+
+    &lt;triggeringPolicy class=&quot;ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy&quot;&gt;
+      &lt;maxFileSize&gt;500KB&lt;/maxFileSize&gt;
+    &lt;/triggeringPolicy&gt;
+    &lt;encoder&gt;
+      &lt;pattern&gt;%date{yyyy-MMM-dd HH:mm:ss.SSS} %t %r %logger{15} - %msg%n&lt;/pattern&gt;
+    &lt;/encoder&gt;
+  &lt;/appender&gt;
+
+  &lt;logger 
+    name=&quot;main&quot; 
+    level=&quot;WARN&quot; 
+  &gt;
+    &lt;appender-ref ref=&quot;logcat&quot; /&gt;
+    &lt;appender-ref ref=&quot;FILE&quot; /&gt;
+  &lt;/logger&gt;
+
+  &lt;root level=&quot;WARN&quot;&gt;
+    &lt;appender-ref ref=&quot;logcat&quot; /&gt;
+    &lt;appender-ref ref=&quot;FILE&quot; /&gt;
+  &lt;/root&gt;
+  
+&lt;/configuration&gt;</pre>
+
+<p>A point to note here is configuring the path to the logfile, this is set in the property LOG_HOME to be /sdcard/MeasureMe. Not all Android devices have sdcard slots, though even the ones that do not appear to mount emulated sdcards using the name sdcard. However I could find the path programmatically but the only way to do this from code was to break the facade and reach into the logback implementation and set the path, I was keen to keep the code clean so I am still looking for a configuration based solution.</p>
+
+<p>Another interesting part is to configure release and debug builds to have different logging levels I will cover the mechanism in a different post.</p>
+
+<p>The only place in the code where I did not use this pattern is in the main application.</p>
+
+<pre>public class MeasureMe extends Application {
+	
+ // Deliberately not using IoC for this - as this class is where IoC is setup
+ final private Logger _logger = LoggerFactory.getLogger(MeasureMe.class);
+
+ @Override
+ public void onCreate() {
+  _logger.warn(&quot;Application started v{}, debug {}, production build {}&quot;,
+    getVersionName(getApplicationContext()),
+    BuildConfig.DEBUG,
+    MeasureMeBuildConfig.PRODUCTION);
+
+  super.onCreate();
+  RoboGuice.setBaseApplicationInjector(
+    this,
+    RoboGuice.DEFAULT_STAGE,
+    RoboGuice.newDefaultRoboModule(this),
+    new IoCModule());
+
+  _logger.debug(&quot;Application IoC bound&quot;);
+}</pre>
+
+<p>I wanted to be able to log if I had a bug in the IoC container logic and for that reason the code in the main application gets its own logger in case IoC is broken.&#160; </p>

@@ -1,0 +1,200 @@
+---
+layout: post
+title: "Message logging in WCF clients"
+date: 2014-12-10 01:54:00 +1300
+published: true
+tags: ["Web", "Development"]
+categories: ["Web", "Development"]
+alias: ["/derekblog/post/2014/12/10/Message-logging-in-WCF-clients.aspx", "/derekblog/post/2014/12/10/message-logging-in-wcf-clients.aspx"]
+---
+<p>Having migrated a service client from <a href="http://www.microsoft.com/en-us/download/details.aspx?id=14089">WSE</a> to WCF one of the things I noticed is that <a href="http://msdn.microsoft.com/en-us/library/ms730064(v=vs.110).aspx">WCF client message logging</a> is certainly very comprehensive but it can be extremely verbose and difficult to just look at the wire packets.</p><!--more-->  <p>It turns out that WCF client channels can be easily configured to use an existing logging framework. To attach a custom logger we can configure it into the client by adding a behaviourConfiguration into the client endpoint.</p>  <pre>&lt;system.serviceModel&gt;
+ &lt;bindings&gt;
+  &lt;customBinding&gt;
+   &lt;binding name=&quot;httpsWithCredentialBinding&quot;&gt;
+    &lt;security 
+      enableUnsecuredResponse=&quot;true&quot;
+      authenticationMode=&quot;UserNameOverTransport&quot;
+      includeTimestamp=&quot;false&quot;
+      allowInsecureTransport=&quot;true&quot;/&gt;
+    &lt;textMessageEncoding messageVersion=&quot;Soap11&quot;/&gt;
+    &lt;httpsTransport maxReceivedMessageSize=&quot;655360000&quot;/&gt;
+   &lt;/binding&gt;
+  &lt;/customBinding&gt;
+ &lt;/bindings&gt;
+ &lt;client&gt;
+  &lt;endpoint
+    address=&quot;https://service&quot;
+    binding=&quot;customBinding&quot;
+    bindingConfiguration=&quot;httpsWithCredentialBinding&quot;
+    behaviorConfiguration=&quot;withMessageLogging&quot;
+    contract=&quot;IMyService&quot;
+    name=&quot;MyService&quot;/&gt;
+ &lt;/client&gt;
+ &lt;behaviors&gt;
+  &lt;endpointBehaviors&gt;
+   &lt;behavior name=&quot;withMessageLogging&quot;&gt;
+    &lt;loggingBehavior /&gt;
+   &lt;/behavior&gt;
+  &lt;/endpointBehaviors&gt;
+ &lt;extensions&gt;
+  &lt;behaviorExtensions&gt;
+   &lt;add name=&quot;loggingBehavior&quot; type=&quot;LoggingBehaviorExtension, TestWCF&quot; /&gt;
+  &lt;/behaviorExtensions&gt;
+ &lt;/extensions&gt;
+&lt;/system.serviceModel&gt;</pre>
+
+<p>This will attach the LoggingBehaviour to our WCF client. This class derives from the system provided BehaviourExtensionElement it inserts the logger into the channel like this</p>
+
+<pre>public class LoggingBehaviorExtension : BehaviorExtensionElement
+{
+ protected override object CreateBehavior()
+ {
+  return new LoggingBehavior();
+ }
+
+ public override Type BehaviorType
+ {
+  get
+  {
+   return typeof(LoggingBehavior);
+  }
+ }
+}
+
+public class LoggingBehavior : IEndpointBehavior
+{
+ // these are public to enable us to test this class
+ // we use property injection here as we do not create this class
+ public IDebugHelper DebugHelper { get; set; }
+ public IExceptionHandler ExceptionHandler { get; set; }
+
+ public LoggingBehavior()
+ {
+  // by default we use the real debug helper
+  this.DebugHelper = new DebugHelper();
+  // by default we use the real exception handler
+  this.ExceptionHandler = new BusinessObjects.Exceptions.ExceptionHandler();
+ }
+
+ public void AddBindingParameters(
+     ServiceEndpoint endpoint,
+     BindingParameterCollection bindingParameters)
+ {
+ }
+
+ public void ApplyClientBehavior(
+     ServiceEndpoint endpoint,
+     ClientRuntime clientRuntime)
+ {
+  // if message logging is disabled then we do not want the overhead of having an inspector
+  if (DebugHelper.MessageLogging)
+  {
+    // for this to work our custom credentials must have been inserted 
+    UsernameClientCredentials credentials =
+       endpoint.Behaviors.Find<usernameclientcredentials>();
+
+    ClientLoggingMessageInspector inspector = new ClientLoggingMessageInspector(
+              credentials, this.DebugHelper, this.ExceptionHandler);
+
+    clientRuntime.MessageInspectors.Add(inspector);
+  }
+ }
+
+ public void ApplyDispatchBehavior(
+     ServiceEndpoint endpoint, 
+     EndpointDispatcher endpointDispatcher)
+ {
+  throw new NotSupportedException(&quot;Behavior not supported on the server side!&quot;);
+ }
+
+ public void Validate(ServiceEndpoint endpoint)
+ {
+ }
+}</pre>
+
+<p>The ClientLoggingMessageInspector is created and attached with everything it needs to work. This is dependency injection without having an IoC container available. The UsernameClientCredentials will only be available if they have been added by the caller, however this is a requirement of the service we are calling.</p>
+
+<pre>string username = ConfigurationManager.AppSettings[&quot;Username&quot;];
+string password = ConfigurationManager.AppSettings[&quot;Password&quot;];
+UsernameClientCredentials credentials = new UsernameClientCredentials(new UsernameInfo(userName, passWord));
+
+WcfService service = new WcfService(&quot;MyService&quot;);
+service.Endpoint.EndpointBehaviors.Remove(typeof(ClientCredentials));
+service.Endpoint.EndpointBehaviors.Add(credentials);
+ServiceResponse result = service.MethodCall(request);</pre>
+
+<p>The actual logging is done in the ClientLoggingMessageInspector </p>
+
+<pre>public class ClientLoggingMessageInspector : IClientMessageInspector
+{
+ private readonly IDebugHelper debugHelper;
+ private readonly IExceptionHandler exceptionHandler;
+ private readonly UsernameClientCredentials credentials;
+
+ public ClientLoggingMessageInspector(
+     UsernameClientCredentials credentials,
+     IDebugHelper debugHelper,
+     IExceptionHandler exceptionHandler)
+ {
+  this.credentials = credentials;
+  this.debugHelper = debugHelper;
+  this.exceptionHandler = exceptionHandler;
+ }
+
+ public object BeforeSendRequest(ref Message request, IClientChannel channel)
+ {
+  // careful it is a REF parameter - do not make a mess of the message
+  try
+  {
+   string requestAsString = request.ToString();
+   string creddentialsDisplay = &quot;NONE&quot;;
+   if (this.credentials != null)
+   {
+    creddentialsDisplay = string.Format(
+        &quot;Username: {0}, Password {1}&quot;,
+        this.credentials.UsernameInfo.Username,
+        this.credentials.UsernameInfo.Password);
+   }
+
+   this.debugHelper.WriteSoapMessage(
+      string.Format(
+        &quot;WCF Request: Credentials: {0}, Message: {1}&quot;,
+        creddentialsDisplay,
+        requestAsString
+      )
+   );
+  }
+  catch (Exception ex)
+  {
+   this.exceptionHandler.HandleException(ex);
+   // no throw
+   // do not let message logging kill the service
+   // the exception will be logged
+  }
+  return null;
+ }
+
+ public void AfterReceiveReply(ref Message reply, object correlationState)
+ {
+  // careful it is a REF parameter - do not make a mess of the message
+  try
+  {
+   string replyAsString = reply.ToString();
+   this.debugHelper.WriteSoapMessage(
+      string.Format(
+          &quot;WCF Reply: Message {0} &quot;, 
+          replyAsString
+      )
+   );
+  }
+  catch (Exception ex)
+  {
+   this.exceptionHandler.HandleException(ex);
+   // no throw
+   // do not let message logging kill the service
+   // the exception will be logged
+  }
+ }
+}</pre>
+
+<p>The debugHelper is the existing logging framework and the message logging will be stored wherever that framework decides.</p>

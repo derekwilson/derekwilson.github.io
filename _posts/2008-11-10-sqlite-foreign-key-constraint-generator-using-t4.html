@@ -1,0 +1,204 @@
+---
+layout: post
+title: "SQLite foreign key constraint generator using T4"
+date: 2008-11-10 13:11:00 +1300
+published: true
+tags: ["Code Generation", "SQL"]
+categories: ["Code Generation", "SQL"]
+alias: ["/derekblog/post/2008/11/10/SQLite-foreign-key-constraint-generator-using-T4.aspx", "/derekblog/post/2008/11/10/sqlite-foreign-key-constraint-generator-using-t4.aspx"]
+---
+<p>In my <a href="/2008/10/29/sqlite-foreign-key-constaint-generator-using-codesmith.html">previous post</a> I described creating a Codesmith template to generate SQL code to implement foreign key constraints in a SQLite database using triggers as SQL does not natively support the foreign key constraint when specifying the column during table creation.</p><!--more-->
+<p>After I had produced the template I started reading about T4 which is <a href="http://msdn.microsoft.com/en-us/library/bb126445.aspx">Text Template Transformation Toolkit.</a> T4 is built in to Visual Studio, the obvious advantage being that you can use T4 in to Visual Studio 2005 and 2008 without having to install anything, though there are some pieces that you may choose to add to VS after you get going with T4.</p>
+<p>Although T4 is built in I think you will find the whole T4 experience easier if you download the <a href="http://www.t4editor.net/downloads.html">T4 editor from Claris</a>, the free version adds syntax highlighting for T4 like this</p>
+<p>&nbsp;<a href="/images/wordpress/2008/11/windowslivewritersqliteforeignkeyconstaintgeneratorusingt-c048t4-2.png"><img style="border-width: 0px;" src="/images/wordpress/2008/11/windowslivewritersqliteforeignkeyconstaintgeneratorusingt-c048t4-thumb.png" alt="T4 template in Visual Studio" width="466" height="335" border="0" /></a></p>
+<p>I would also suggest reading <a href="http://www.olegsych.com/2007/12/text-template-transformation-toolkit/">Oleg Sych&rsquo;s posts</a> as an introduction to T4 as they will really help you get started if you have not used T4 before. As you can see in the screen shot at its simplest form we can use a T4 template, the file extension TT is used for T4 templates, to produce another file. In this case we are using a TT file to produce an SQL file, the transformation process to produce the SQL file is triggered whenever you save the TT file or when you build the project. The resulting SQL text can be copied into the script that I use to generate my database.</p>
+<p>Converting the Codesmith template was relatively straightforward. The main difference with my T4 template from the Codesmith template is that the layout is upside down in that the SQL template code is at the top and then the C# code and then the parameter definitions.</p>
+<p>&nbsp;</p>
+<!--more-->
+<p>&nbsp;</p>
+<pre class="csharp">&lt;#@ template language="C#" hostspecific="True" debug="True" #&gt;
+&lt;#@ output extension="sql" #&gt;
+
+/* start triggers to support 
+  CREATE TABLE &lt;#= FullTableName() #&gt;
+  (
+    &lt;#= ttp_foreignKeyColumn #&gt; INTEGER
+    CONSTRAINT &lt;#= ForeignKeyName("") #&gt;
+    REFERENCES &lt;#= FullOtherTableName() #&gt;
+      (&lt;#= ttp_otherKeyColumn #&gt;),
+  }
+*/
+
+-- Foreign Key Preventing insert
+DROP TRIGGER IF EXISTS &lt;#= ForeignKeyName("_ins") #&gt;;
+CREATE TRIGGER &lt;#= ForeignKeyName("_ins") #&gt;
+
+... extra T4 template to generate SQL removed for readability ...
+
+/* end triggers to support &lt;%= ForeignKeyName("") %&gt; */
+
+&lt;#+
+  private string FullTableName()
+  {
+    return string.Format("[{0}]",ttp_tableForForeignKey);
+  }
+
+  private string FullOtherTableName()
+  {
+    return string.Format("[{0}]",ttp_otherTable);
+  }
+
+  private string ForeignKeyName(string strAppend)
+  {
+    return string.Format("fk_{0}_{1}_{2}_{3}{4}",
+        ttp_tableForForeignKey,
+        ttp_foreignKeyColumn,
+        ttp_otherTable,
+        ttp_otherKeyColumn,
+        strAppend
+      );
+  }
+#&gt;
+
+&lt;#+
+  string ttp_tableForForeignKey = "tab_table";
+  string ttp_foreignKeyColumn = "oth_id";
+  string ttp_otherTable = "oth_other_table";
+  string ttp_otherKeyColumn = "id";
+  bool ttp_cascadeDelete = false;
+#&gt;</pre>
+<p>You can <a href="/downloads/fk_sqlite.zip">download the complete set of templates</a> both Codesmith and T4.</p>
+<p>Using the templates are quite different, in Codesmith the parameters are specified in an XML file and either the UI is used or the command line to generate the SQL. In T4 the parameters are specified in C# (though<em>&nbsp;</em>I<em> </em>guess I could write a loader that would read them from an XML file) like this (the following is what is in books_simple.tt)</p>
+<pre class="csharp">&lt;#
+	ttp_tableForForeignKey = "bok_books";
+	ttp_foreignKeyColumn = "bok_aut_id";
+	ttp_otherTable = "aut_author";
+	ttp_otherKeyColumn = "aut_id";
+	ttp_cascadeDelete = false;
+#&gt;
+&lt;#@ include file="sqlite_fk.tt" #&gt;</pre>
+<p>Building the project causes the SQL to be generated. If you wanted then you can get a MSBUILD task to automate the T4 generation so you can add it into your existing build script. There is a command line version of the transformer in &ldquo;C:\Program Files\Common Files\Microsoft Shared\TextTemplating&rdquo; that you can call from script to generate the SQL.</p>
+<p>This does work but I have to say that I found the primitive method of specifying parameters just be using variables at the bottom the the template to be cumbersome and fragile. A better solution was to download the <a href="http://www.codeplex.com/t4toolbox">T4Toolbox</a>, from Oleg Sych, and create a reusable template with a structured parameter passing mechanism like this.</p>
+<pre class="csharp">&lt;#+
+public class sqlite_fk_relationship
+{
+  public string TableForForeignKey { get; set; }
+  public string ForeignKeyColumn { get; set; }
+  public string OtherTable { get; set; }
+  public string OtherKeyColumn { get; set; }
+  public bool CascadeDelete { get; set; }
+
+  public string FullTableName()
+  {
+    return string.Format("[{0}]",TableForForeignKey);
+  }
+
+  public string FullOtherTableName()
+  {
+    return string.Format("[{0}]",OtherTable);<br />  }
+
+  public string ForeignKeyName(string strAppend)
+  {
+    return string.Format("fk_{0}_{1}_{2}_{3}{4}",
+				TableForForeignKey,
+				ForeignKeyColumn,
+				OtherTable,
+				OtherKeyColumn,
+				strAppend);
+  }
+}
+
+public class sqlite_fk_template : Template
+{
+  public sqlite_fk_relationship[] Relationships =<br />    new sqlite_fk_relationship[] {
+		new sqlite_fk_relationship {
+			TableForForeignKey = "tab_table",
+			ForeignKeyColumn = "oth_id",
+			OtherTable = "oth_other_table",
+			OtherKeyColumn = "id",
+			CascadeDelete = false
+		}
+	};
+
+  protected override void RenderCore()
+  {
+  foreach (sqlite_fk_relationship Relationship in Relationships)
+  {
+#&gt;
+  /* start triggers to support 
+  CREATE TABLE &lt;#= Relationship.FullTableName() #&gt;
+  (
+  &lt;#= Relationship.ForeignKeyColumn #&gt; INTEGER
+    CONSTRAINT &lt;#= Relationship.ForeignKeyName("") #&gt;<br />    REFERENCES &lt;#= Relationship.FullOtherTableName() #&gt;
+        (&lt;#= Relationship.OtherKeyColumn #&gt;),
+  }
+  */
+
+-- Foreign Key Preventing insert
+DROP TRIGGER IF EXISTS &lt;#= Relationship.ForeignKeyName("_ins") #&gt;;
+CREATE TRIGGER &lt;#= Relationship.ForeignKeyName("_ins") #&gt;
+
+... extra T4 template to generate SQL removed for readability .....
+
+/* end triggers to support &lt;#= Relationship.ForeignKeyName("") #&gt; */
+
+&lt;#+
+    }
+  }
+}
+#&gt;</pre>
+<p>This template can then be used like this</p>
+<pre class="csharp">&lt;#@ template language="C#v3.5" hostspecific="True" #&gt;
+&lt;#@ output extension="sql" #&gt;
+&lt;#@ include file="T4Toolbox.tt" #&gt;
+&lt;#@ include file="sqlite_fk_template.tt" #&gt;
+&lt;#
+  sqlite_fk_template template = new sqlite_fk_template();
+
+  sqlite_fk_relationship[] rels = new sqlite_fk_relationship[] {
+
+        new sqlite_fk_relationship {
+         TableForForeignKey = "bok_books",
+         ForeignKeyColumn = "bok_aut_id",
+         OtherTable = "aut_author",
+         OtherKeyColumn = "aut_id",
+         CascadeDelete = false
+        },
+
+        new sqlite_fk_relationship {
+          TableForForeignKey = "bok_books",
+          ForeignKeyColumn = "bok_pub_id",
+          OtherTable = "pub_publisher",
+          OtherKeyColumn = "pub_id",
+          CascadeDelete = false
+        },
+
+        new sqlite_fk_relationship {
+          TableForForeignKey = "bok_books",
+          ForeignKeyColumn = "bok_bty_id",
+          OtherTable = "bty_book_type",
+          OtherKeyColumn = "bty_id",
+          CascadeDelete = false
+        },
+
+        new sqlite_fk_relationship {
+          TableForForeignKey = "bok_books",
+          ForeignKeyColumn = "bok_rat_id",
+          OtherTable = "rat_rating",
+          OtherKeyColumn = "rat_id",
+          CascadeDelete = false
+        }
+
+      };
+
+  template.Relationships = rels;
+
+  template.Render();
+#&gt;</pre>
+<p>The main points to note here are</p>
+<ol>
+<li>the template language needs to be C#v3.5 as we are making use of new language features such as automatic properties and object initializes.</li>
+<li>the file that contains the template (that is the class sqlite_fk_template that derives from Template in the T4Toolbox) is only ever used from another file and is not passed to the T4 generator on its own, hence it does not have a template directive at the top.</li>
+<li>the parameters to the template are now type safe structures and the template generates all the constraints for the whole database rather than just one constraint.</li>
+<li>In this instance we generate all the SQL into one file, if we wanted to we could easily generate each constraint into its own file, Oleg Sych has an example of <a href="http://www.olegsych.com/2008/03/how-to-generate-multiple-outputs-from-single-t4-template/">how to do this</a>.</li>
+</ol>

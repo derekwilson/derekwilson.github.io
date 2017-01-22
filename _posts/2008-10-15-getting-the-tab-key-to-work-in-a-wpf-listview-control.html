@@ -1,0 +1,41 @@
+---
+layout: post
+title: "Getting the tab key to work in a WPF ListView control"
+date: 2008-10-15 12:10:00 +1300
+published: true
+tags: ["Development", "WPF"]
+categories: ["Development", "WPF"]
+alias: ["/derekblog/post/2008/10/15/Getting-the-tab-key-to-work-in-a-WPF-ListView-control.aspx", "/derekblog/post/2008/10/15/getting-the-tab-key-to-work-in-a-wpf-listview-control.aspx"]
+---
+<p>During the summer I have been doing some work on WPF and this lead me to reading about <a href="http://www.hanselman.com/blog/">Scott Hanselman's</a> new project <a href="http://www.hanselman.com/babysmash/">Baby Smash</a>.&nbsp; One small paragraph in <a href="http://www.hanselman.com/blog/LearningWPFWithBabySmashMVCOrMVPAndTheBenefitsOfADesigner.aspx">this post</a> captured my early progress</p><!--more-->
+<blockquote>
+<p>One little aside to end on. Just when I'm getting really pissed at WPF and I'm ready to give up, something simple and cool happens where I realize I'm starting to "get" it.</p>
+</blockquote>
+<p>An example of this is a dialog that I was working on. I had a ListView control that displayed a number of rows of controls. I wanted the user to be able to tab around the dialog and through all the controls in the ListView. Sounds reasonable doesn&rsquo;t it.</p>
+<!--more-->
+<p>There are a couple of problems with the way the default behavior appears to work</p>
+<ol>
+<li>When tabbing into the ListView the container for each row of controls (a ListViewItem is treated as a tab stop</li>
+<li>After tabbing across the first row of controls we then tab to the control that follows the ListView, missing out the other rows in the ListView control.</li>
+</ol>
+<p>It should be simple and it is simple when you know how. This is the XAML that gives us what we want.</p>
+<pre class="c#">&lt;ListView
+  ItemsSource="{Binding Path=LocalObservableCollection}"
+  x:Name="listView1"
+  Focusable="True"
+  KeyboardNavigation.TabNavigation="Continue"
+&gt;
+  &lt;ListView.ItemContainerStyle&gt;
+    &lt;Style TargetType="{x:Type ListViewItem}"&gt;
+      &lt;Setter Property="IsTabStop" Value="False" /&gt;
+    &lt;/Style&gt;
+  &lt;/ListView.ItemContainerStyle&gt;
+  &lt;ListView.View&gt;
+    &lt;GridView&gt;
+        .... grid view controls ....
+    &lt;/GridView&gt;
+  &lt;/ListView.View&gt;
+&lt;/ListView&gt;</pre>
+<p>&nbsp;</p>
+<p>The KeyboardNavigation.TabNavigation="Continue" attribute causes the tab key to tab through all the controls in the ListView, not just the first row. This corrects problem number 2.</p>
+<p>The ListView.ItemContainerStyle is a local style to this control that stops the row container from being a tab stop, this corrects problem 1. Obviously this style will only affect this individual control, If you want to apply this style on a wider scale you may want to add it to a resource dictionary.</p>

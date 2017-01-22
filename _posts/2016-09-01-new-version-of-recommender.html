@@ -1,0 +1,265 @@
+---
+layout: post
+title: "New version of Recommender"
+date: 2016-09-01 01:38:00 +1200
+published: true
+tags: ["Android", "Recommender", "Development"]
+categories: ["Android", "Recommender", "Development"]
+alias: ["/derekblog/post/2016/09/01/New-version-of-Recommender.aspx", "/derekblog/post/2016/09/01/new-version-of-recommender.aspx"]
+---
+<p>There is a new version of <a href="https://play.google.com/store/apps/details?id=net.derekwilson.recommender">Recommender in the play sore</a>. The main change is that I’ve added a <a href="https://material.google.com/components/bottom-sheets.html">Bottom Sheet</a> using the <a href="http://android-developers.blogspot.co.nz/2016/02/android-support-library-232.html">Design Support Library</a>. The Bottom Sheet is used to display the list of categories that you have currently used. Category is a free text field but is used to group recommendations so its best to try and avoid misspelt duplicate. The list of current categories is displayed to to try and discourage duplication. It looks like this</p><!--more-->  <p>&#160;<a href="/images/Screenshot_20160728-204032.png"><img title="Screenshot_20160728-204032" style="border-left-width: 0px; border-right-width: 0px; border-bottom-width: 0px; display: inline; border-top-width: 0px" border="0" alt="Screenshot_20160728-204032" src="/images/Screenshot_20160728-204032_thumb.png" width="208" height="367" /></a> </p>  <p>Its an extension of BottomSheetDialogFragment. Triggered by tapping the down arrow on the Category field. Its modal as I wanted you to either be selecting a current category or entering a new one. I found doing both at the same time made the screen to cluttered and I didn't want to break the flow by forcing you to go to a separate screen to enter a category.</p>  <p>The dialog that goes in the BottomSheet fragment is pretty straightforward the layout looks like this</p>  <pre>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;LinearLayout 
+ xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+ android:orientation=&quot;vertical&quot;
+ android:layout_width=&quot;match_parent&quot;
+ android:layout_height=&quot;match_parent&quot;&gt;
+
+ &lt;View
+  android:layout_width=&quot;fill_parent&quot;
+  android:layout_height=&quot;1dp&quot;
+  android:background=&quot;@color/color_divider&quot;
+ /&gt;
+
+ &lt;TextView
+  android:layout_width=&quot;match_parent&quot;
+  android:layout_height=&quot;wrap_content&quot;
+  android:text=&quot;@string/category_fragment_title&quot;
+  android:textColor=&quot;@color/color_accent&quot;
+  android:paddingLeft=&quot;2dp&quot;
+  android:paddingRight=&quot;2dp&quot;
+  android:textSize=&quot;16sp&quot;/&gt;
+
+ &lt;ListView
+  android:id=&quot;@+id/category_list&quot;
+  android:layout_width=&quot;match_parent&quot;
+  android:layout_height=&quot;match_parent&quot;&gt;
+ &lt;/ListView&gt;
+&lt;/LinearLayout&gt;</pre>
+
+<p>Then I just put an ImageButton down and called showBottomSheet() on an instance of a CategoryBottomSheetFragment</p>
+
+<pre>public class CategoryBottomSheetFragment extends BottomSheetDialogFragment {
+
+ private IEditRecommendationComponent component;
+
+ @Inject
+ protected IRecommendationRepository repository;
+ @Inject
+ protected ILoggerFactory logger;
+ @Inject
+ protected ITextUtils textUtils;
+
+ @BindView(R.id.category_list)
+ protected ListView categoryList;
+
+ private CategoryAdapter categoryAdapter;
+ private Subscription categorySubscription = null;
+ private BottomSheetBehavior bottomSheetBehavior;
+ private RecommendationEditFragment editFragment;
+ private BottomSheetBehavior.BottomSheetCallback bottomSheetBehaviorCallback =
+            new BottomSheetBehavior.BottomSheetCallback() {
+              @Override
+              public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                if (newState == BottomSheetBehavior.STATE_HIDDEN) {
+                 dismiss();
+                }
+              }
+
+              @Override
+              public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+              }
+            };
+
+ private IEditRecommendationComponent getComponent() {
+  if (component == null) {
+   component = DaggerIEditRecommendationComponent.builder()
+       .iApplicationComponent(getApplicationComponent())
+       .baseActivityModule(new BaseActivityModule(getActivity()))
+       .editRecommendationModule(new EditRecommendationModule())
+       .build();
+  }
+  return component;
+ }
+
+ @Override
+ public void onCreate(Bundle savedInstanceState) {
+  super.onCreate(savedInstanceState);
+  getComponent().inject(this);
+ }
+
+ @Override
+ public void setupDialog(Dialog dialog, int style) {
+  super.setupDialog(dialog, style);
+  View contentView = View.inflate(getContext(), R.layout.fragment_category_bottomsheet, null);
+  ButterKnife.bind(this, contentView);
+  dialog.setContentView(contentView);
+
+  // lets set the size of the dialog to be half the height of the screen
+  Display display = getActivity().getWindowManager().getDefaultDisplay();
+  Point size = new Point();
+  display.getSize(size);
+  contentView.getLayoutParams().height = size.y / 2;
+
+  CoordinatorLayout.LayoutParams params = 
+   (CoordinatorLayout.LayoutParams) ((View) contentView.getParent()).getLayoutParams();
+  CoordinatorLayout.Behavior behavior = params.getBehavior();
+
+  if ( behavior != null &amp;&amp; behavior instanceof BottomSheetBehavior ) {
+   bottomSheetBehavior = (BottomSheetBehavior) behavior;
+   bottomSheetBehavior.setBottomSheetCallback(bottomSheetBehaviorCallback);
+  } else {
+   throw new UnsupportedOperationException(&quot;cannot find bottomSheetBehaviour&quot;);
+  }
+
+  categoryAdapter = new CategoryAdapter(this.getActivity(), textUtils);
+  categoryList.setAdapter(categoryAdapter);
+  categoryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+   @Override
+   public void onItemClick(AdapterView&lt;?&gt; adapterView, View view, int position, long id) {
+    if (editFragment != null) {
+     editFragment.setCategory(categoryAdapter.getItem(position));
+    }
+    dismiss();
+   }
+  });
+ }
+
+ @Override public void onResume() {
+  super.onResume();
+  categorySubscription = repository.getCategories(new Action1<list><string>&gt;() {
+   @Override
+   public void call(List<string> categories) {
+    categoryAdapter.call(categories);
+   }
+  });
+ }
+
+ @Override public void onPause() {
+  super.onPause();
+  // stop any subscriptions
+  if (categorySubscription != null) {
+   categorySubscription.unsubscribe();
+   categorySubscription = null;
+  }
+ }
+
+ @Override
+ public void onStart() {
+  super.onStart();
+  bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+ }
+
+ public void hideBottomSheet() {
+  bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+ }
+
+ public void showBottomSheet(
+    FragmentManager supportFragmentManager, 
+    RecommendationEditFragment editFragment)
+ {
+  this.editFragment =  editFragment;
+  show(supportFragmentManager, getTag());
+ }
+}</pre>
+
+<p>For completeness the adapter looks like this</p>
+
+<pre>final public class CategoryAdapter extends BaseAdapter implements Action1<list><string>&gt; {
+ private final LayoutInflater inflater;
+
+ private ITextUtils textUtils;
+ private List<string> items = Collections.emptyList();
+
+ public CategoryAdapter(Context context, ITextUtils textUtils) {
+  this.textUtils = textUtils;
+  inflater = LayoutInflater.from(context);
+ }
+
+ @Override
+ public void call(List<string> strings) {
+  if (strings == null || strings.size() &lt; 1) {
+   return;
+  }
+  this.items = new ArrayList<string>(strings.size());
+  for (String thisString : strings) {
+   if (!textUtils.isEmpty(thisString)) {
+    items.add(thisString);
+   }
+  }
+  notifyDataSetChanged();
+ }
+
+ @Override
+ public int getCount() { return items == null ? 0 : items.size(); }
+
+ @Override
+ public String getItem(int position) {
+  return items.get(position);
+ }
+
+ @Override
+ public long getItemId(int position) {
+  return getItem(position).hashCode();
+ }
+
+ @Override
+ public boolean hasStableIds() {
+  return true;
+ }
+
+ @Override
+ public View getView(int position, View rowView, ViewGroup parent) {
+  if (rowView == null) {
+   rowView = inflater.inflate(R.layout.list_item_category, parent, false);
+  }
+  ViewHolder holder = new ViewHolder(rowView);
+  String thisCategory = items.get(position);
+  holder.label.setText(thisCategory);
+  return rowView;
+ }
+
+ static class ViewHolder {
+  @BindView(R.id.category_row_label)
+  TextView label;
+
+  public ViewHolder(View view) {
+   ButterKnife.bind(this, view);
+  }
+ }
+}</pre>
+
+<p>The layout for each line in the adapter can be as complex as you like but this one is pretty simple</p>
+
+<pre>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+  android:layout_width=&quot;match_parent&quot;
+  android:layout_height=&quot;wrap_content&quot;
+  android:orientation=&quot;vertical&quot;
+  android:background=&quot;?attr/selectableItemBackground&quot;
+&gt;
+ &lt;LinearLayout
+  android:layout_width=&quot;match_parent&quot;
+  android:layout_height=&quot;wrap_content&quot;
+  android:orientation=&quot;vertical&quot;
+  android:minHeight=&quot;@dimen/listview_min_height&quot;
+  android:gravity=&quot;center_vertical&quot;
+  android:paddingLeft=&quot;@dimen/listview_padding&quot;
+  android:paddingRight=&quot;@dimen/listview_padding&quot;
+  android:paddingTop=&quot;@dimen/listview_item_padding&quot;
+  android:paddingBottom=&quot;@dimen/listview_item_padding&quot;
+  &gt;
+
+  &lt;TextView
+   android:id=&quot;@+id/category_row_label&quot;
+   android:layout_width=&quot;fill_parent&quot;
+   android:layout_height=&quot;26dip&quot;
+   android:layout_centerHorizontal=&quot;true&quot;
+   android:ellipsize=&quot;marquee&quot;
+   android:singleLine=&quot;true&quot;
+   android:text=&quot;@string/placeholder&quot;
+   android:textSize=&quot;16sp&quot;/&gt;
+
+ &lt;/LinearLayout&gt;
+&lt;/LinearLayout&gt;</pre>
+
+<p>You can also look at the <a href="https://bitbucket.org/derekwilson/recommender-android">full source code</a> to get a better idea of how it all hangs together </p>

@@ -1,0 +1,76 @@
+---
+layout: post
+title: "C# != VB.NET"
+date: 2010-02-07 15:02:00 +1300
+published: true
+tags: ["Development", "General"]
+categories: ["Development", "General"]
+alias: ["/derekblog/post/2010/02/07/C-!=-VBNET.aspx", "/derekblog/post/2010/02/07/c-!=-vbnet.aspx"]
+---
+<p>Or maybe it should be VB.NET &lt;&gt; C#. I started out using C++ professionally but as time has gone on ended up using a wide variety of languages. Web development does tend to involve concurrent use of multiple languages, javascript, C#, SQL, XSLT etc. I find that using multiple languages at the same time makes it lots easier to make silly mistakes because the language does not perform in the manner I assume it does, luckily these mistakes do tend to stick in my mind so I rarely make them again. I am currently working on a project that utilises both C# and VB.NET on the server side. In the past I have used VB6 but not really made much use of VB.NET before this project.</p><!--more-->
+<p>There are web pages that detail the differences in the syntax between the two languages and sites that will convert code, I&rsquo;ve even used Reflector.NET to view C# code in VB.NET.</p>
+<p>In general as Microsoft were at pains to point out the when &lsquo;NET started difference is mainly a syntax thing, its just a lifestyle choice. However there are a few gotcha that have tripped me up, VB.NET is not C# and it is possible to introduce odd little errors. Here are some of my unforgettable mistakes to make.</p>
+<h4>Missing function return value.</h4>
+<p>Sometimes when I am writing a function I forget to return the value, in C# its not a problem I get a compilation error.</p>
+<p>error CS0161: 'ConsoleApplication1.Program.Test()': not all code paths return a value</p>
+<p>However when I make the same mistake in VB.NET I get a much more subtle error. Consider this</p>
+<pre class="vb.net">    Public Function Square(ByVal x As Integer) As Integer
+        Dim calculatedValue As Integer
+        calculatedValue = x * x
+    End Function
+
+    Sub Main()
+        Console.WriteLine("Function returns {0}", Square(2))
+        Console.ReadKey()
+    End Sub</pre>
+<p>When its compiled there is no error or warning however it just outputs zero. This example is pretty trivial but more complex ones can yield odd errors. If I ever needed a good reason for unit testing then this is a good starting place.</p>
+<h4>AND and ANDALSO</h4>
+<p>Consider the following code in C#</p>
+<pre class="c#">        public static string Test(object obj)
+        {
+            if (obj != null &amp;&amp; obj.ToString().Length &gt; 0)
+            {
+                return "object returned a string value";
+            }
+            return "no object or no ToString value";
+        }</pre>
+<p>If I was casually converting this to VB then I might end up with the following</p>
+<pre class="vb.net">    Public Function Test(ByVal obj As Object) As String
+        If obj IsNot Nothing And obj.ToString().Length &gt; 0 Then
+            Return "object returned a string value"
+        End If
+        Return "no object or no ToString value"
+    End Function</pre>
+<p>The problem is that this yields a runtime NullReferenceException error as both sides of the &ldquo;And&rdquo; are evaluated in VB.NET, to do the same thing in VB.NET requires me to use &ldquo;AndAlso&rdquo; like this.</p>
+<pre class="vb.net">    Public Function Test(ByVal obj As Object) As String
+        If obj IsNot Nothing AndAlso obj.ToString().Length &gt; 0 Then
+            Return "object returned a string value"
+        End If
+        Return "no object or no ToString value"
+    End Function</pre>
+<h4>Case insensitivity</h4>
+<p>This is weird,, consider this</p>
+<pre class="vb.net">Public Class Class1
+
+    Private ReadOnly Property TestProperty() As Decimal
+        Get
+            Return 99
+        End Get
+    End Property
+
+    Public Function GetValue() As Decimal
+
+        Dim testProperty As Decimal = TestProperty
+
+        testProperty += 1
+
+        Return TestProperty
+
+    End Function
+
+End Class</pre>
+<p>To a C# developer the call to GetValue should yield 100 but in fact as VB is case insensitive the local variable hides the property, the local variable is initialised with zero and 1 is returned, all without an error or a comment.</p>
+<p>To be fair, case sensitivity is mad and probably not the greatest idea in c#, and the VB compiler will attempt to change the variable declaration to</p>
+<pre class="vb.net">    Dim testProperty As Decimal = testProperty</pre>
+<p>but sometimes it fails to do this, or you may use another tool to edit the file.</p>
+<p>So all in all I find that when using multiple languages I need to pay more attention, not necessarily a bad thing but worth pointing out.</p>

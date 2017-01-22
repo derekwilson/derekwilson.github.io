@@ -1,0 +1,191 @@
+---
+layout: post
+title: "IoC in native Android apps"
+date: 2014-05-01 16:23:00 +1200
+published: true
+tags: ["Android", "Development", "MeasureMe", "Mobile"]
+categories: ["Android", "Development", "MeasureMe", "Mobile"]
+alias: ["/derekblog/post/2014/05/01/IoC-in-native-Android-apps.aspx", "/derekblog/post/2014/05/01/ioc-in-native-android-apps.aspx"]
+---
+<p>Recently I spent some time producing <a href="https://play.google.com/store/apps/details?id=net.derekwilson.measureme">MeasureMe</a>, a low friction personal measurement tool for Android devices. The development time for the first version was four weeks. Looking at my <a href="https://bitbucket.org/derekwilson/measureme/commits/all">check-ins for the project</a> I see that I spent the first one and a half weeks getting the architecture sorted out, that is almost a third of my time. It was my first &ldquo;proper&rdquo; native Android application, and I did not have long to complete the project so I found it interesting to reflect on what I considered essentials of software development. The big pieces of the architecture that needed sorting out were</p><!--more-->
+<ol>
+<li>Logging</li>
+<li>Inversion of Control</li>
+<li>Unit Testing</li>
+<li>Automated Building</li>
+</ol>
+<p>How different this list would have looked five years ago, in that time IoC and Unit Testing have elevated themselves to essentials.</p>
+<p>I though it would be interesting to explore the decisions around some of these architecture choices, starting with IoC. There were two main options <a href="https://github.com/roboguice/roboguice/wiki">RoboGuice</a> and <a href="http://square.github.io/dagger/">Dagger</a>.</p>
+<h3>RoboGuice</h3>
+<p>The RoboGuice patter for dependency injection is pretty standard. My background is in Castle Windsor, LinFu, NInject and I found it similar to those frameworks. For example to inject a logger into an activity the activity would be declared like this</p>
+<pre>public class OpenSourceLicensesActivity extends RoboActivity {
+
+ @Inject
+ private ILoggerFactory logger;
+
+ @InjectView(R.id.txtAndroiSupportLibraryLicense)
+ private TextView v7license;
+
+ @InjectView(R.id.txtRoboguiceLicense)
+ private TextView roboguicelicense;
+
+ @InjectView(R.id.txtSlf4jLicense)
+ private TextView slf4jlicense;
+
+ @Override
+ protected void onCreate(Bundle savedInstanceState) {
+  super.onCreate(savedInstanceState);
+  setContentView(R.layout.activity_open_source_licenses);
+
+  logger.getCurrentApplicationLogger().debug("OSLicensesActivity.onCreate()");</pre>
+<p>The logger is decorated with the @Inject attribute and then is just used without any initialisation. The Activity extends RoboActivity which injects the dependency.</p>
+<p>Then the IoC container looks like this</p>
+<pre>public class IoCModule implements Module {
+ @Override
+ public void configure(Binder binder) {
+
+ // singletons
+ binder.bind(ILoggerFactory.class).toInstance(new SlfLoggerFactory());
+ binder.bind(ISystemTime.class).toInstance(new SystemTime());
+
+ // reops
+ //binder.bind(new TypeLiteral&gt;() {}).to(AlarmRepository.class);
+ binder.bind(IAlarmRepository.class).to(AlarmRepository.class);
+ binder.bind(IMeasurementRepository.class).to(MeasurementRepository.class);
+ binder.bind(IMeasurementScaleRepository.class).to(MeasurementScaleRepository.class);
+ binder.bind(IAlarmMeasurementRepository.class).to(AlarmMeasurementRepository.class);
+    	
+ // writers
+ binder.bind(IRecordedMeasurementWriter.class).to(RecordedMeasurementWriter.class);
+    	
+ // logic
+ binder.bind(IPreferencesHelper.class).to(PreferencesHelper.class);
+ binder.bind(ILogSender.class).to(LogSender.class);
+}</pre>
+<p>And finally we initialise the container in the application class.</p>
+<pre>public class MeasureMe extends Application {
+	
+ // Deliberately not using IoC for this - as this class is where IoC is setup
+ final private Logger _logger = LoggerFactory.getLogger(MeasureMe.class);
+
+ @Override
+ public void onCreate() {
+  _logger.warn("Application started v{}",
+    getVersionName(getApplicationContext()));
+
+  super.onCreate();
+  RoboGuice.setBaseApplicationInjector(
+    this,
+    RoboGuice.DEFAULT_STAGE,
+    RoboGuice.newDefaultRoboModule(this),
+    new IoCModule());
+
+  _logger.debug("Application IoC bound");</pre>
+<p>The @InjectView in the activity class is a short hand method of attaching UI dependencies, it eliminates the calls to findViewById.</p>
+<h3>Dagger</h3>
+<p>By contrast the Dagger activity class looks like this</p>
+<pre>public class MainActivity extends Activity {
+ @Inject
+ ILoggerFactory logger;
+	
+ private void initIoC() {
+  MeasureMe app = (MeasureMe) getApplication(); 
+  app.getObjectGraph().inject(this);
+ }
+	
+ @Override
+ protected void onCreate(Bundle savedInstanceState) {
+  initIoC();
+        
+  logger.getApplicationLogger().debug("MainActivity started - Dagger IoC 2");
+  super.onCreate(savedInstanceState);</pre>
+<p>Notice that this time the Activity does not extend a magic base class, instead we need to initialise the IoC container ourselves, of course this could easily be removed to our own custom base class.</p>
+<p>The IoC container look like this</p>
+<pre>@Module(injects = MainActivity.class)
+public class IoCModule {
+ @Provides @Singleton ILoggerFactory provideLogger() {
+  return new SlfLoggerFactory();
+ }
+}</pre>
+<p>The syntax here is a little different from other frameworks. This is mainly because the injection mechanism does not do all its magic at runtime like RoboGuice, rather it emits Java at compile time so that some of the load is removed when the application is running.</p>
+<p>Finally the main application looks like this</p>
+<pre>public class MeasureMe extends Application {
+
+ final Logger logger = LoggerFactory.getLogger(MeasureMe.class);
+ private ObjectGraph objectGraph;
+	
+ @Override
+ public void onCreate() {
+  logger.debug("Application started");
+
+  objectGraph = ObjectGraph.create(new IoCModule());
+
+  logger.debug("Object graph bound");
+
+  super.onCreate();
+ }
+	
+ public ObjectGraph getObjectGraph() {
+  return this.objectGraph;
+ }
+}</pre>
+<p>The method getObjectGraph is used by our activities to inject their own dependencies.</p>
+<h3>Selecting a framework.</h3>
+<p>It was tricky to pick between these two approaches, as both mechanism appeared to work as expected. In the end I chose RoboGuice. The main reasons were</p>
+<ol>
+<li>The IoC Module syntax is more familiar to me given my background in Castle Windsor, LinFu, NInject.</li>
+<li>The product did appear to be more mature and build upon <a href="https://code.google.com/p/google-guice/">Google Guice</a></li>
+<li>Dagger relied upon a <a href="http://stackoverflow.com/questions/19555023/dagger-example-built-through-eclipse-fails-with-please-ensure-that-code-generat">specific version of the javawriter library</a></li>
+<li>The need to write the extra code to inject dependencies when using Dapper seemed clunky.</li>
+</ol>
+<h3>Reflections</h3>
+<p>Obviously the decision between the two frameworks was made early on in the project. With the benefit of hindsight there are some other factors that should be considered.</p>
+<p>As it turned out one of the weaknesses of RoboGuice turns out to be the need for specific Robo* base classes, for example RoboActivity, RoboService. The problem manifested itself when I wanted to use the new ActionBar, I used the <a href="http://developer.android.com/tools/support-library/index.html">Google Android Support Library</a> however <a href="https://github.com/roboguice/roboguice/issues/134">RoboGuice does not yet support ActionBar</a>, though support is planned for version 3.</p>
+<p>This has meant that in the end I did need to write the extra code to inject myself in activities that used the ActionBar, which was most of them. So the code looked more like this</p>
+<pre>//public class MainActivity extends RoboActivity {
+public class MainActivity extends ActionBarActivity {
+
+ @Inject
+ private ILoggerFactory logger;
+
+ @Inject
+ private ISystemTime systemTime;
+
+ @Inject
+ private IPreferencesHelper preferences;
+	
+ @Inject
+ private IAlarmRepository alarmRepo;
+
+ @Inject
+ private IMeasurementRepository measurementRepo;
+	
+ @Inject
+ private ILogSender measurementLogSender;
+
+ AlarmArrayAdapter adapter; 
+
+ //@InjectView(R.id.lvAlarms)
+ private ListView lvAlarms;
+ //@InjectView(R.id.lvAlarms)
+ private LinearLayout layoutNoData;;
+
+ private void HookupControls() {
+  // to get the ActionBar I have to give up the InjectView until RoboGuice 3
+  // Inject is OK but its just too fiddley to get the view to work
+  // we can override this for testing - cheesy but gets us out of a hole
+		
+  lvAlarms = (ListView)findViewById(R.id.lvAlarms);
+  layoutNoData = (LinearLayout)findViewById(R.id.layNoData);
+ }
+	
+ @Override
+ protected void onCreate(Bundle savedInstanceState) {
+  super.onCreate(savedInstanceState);
+  setContentView(R.layout.activity_main);
+
+  // this will inject non view dependencies
+  RoboGuice.getInjector(this.getApplicationContext()).injectMembers(this);		
+  logger.getCurrentApplicationLogger().debug("MainActivity started");
+  HookupControls();</pre>
+<p>I also lose the ability to inject UI dependencies. Given this restriction I guess there is even less to choose between Dagger and RoboGuice, I guess it I would need to look again when RoboGuice v3 is released.</p>

@@ -1,0 +1,17 @@
+---
+layout: post
+title: "Slipping standards"
+date: 2016-11-14 00:06:00 +1300
+published: true
+tags: ["Android", "Code Review", "Development", "General"]
+categories: ["Android", "Code Review", "Development", "General"]
+alias: ["/derekblog/post/2016/11/14/Slipping-standards.aspx", "/derekblog/post/2016/11/14/slipping-standards.aspx"]
+---
+<p>I really try not to rant in this blog, it does no good really.</p><!--more-->
+<p>Last year I wrote about a decision I had to make about <a href="http://derekwilson.net/derekblog/post/2015/12/22/New-version-of-PodcastUtilities.aspx">extending PodcastUtilities to support dates that did not follow the defined standard</a>. It makes me sad when we cannot follow standards.</p>
+<p>I was surprised at work when a colleague queries my pull request in which I did not escape a single quote char in an android resource file. The XML file looked like this</p>
+<pre>&lt;string name="display_message"&gt;Your client's files&lt;/string&gt;</pre>
+<p>Now I know that the <a href="https://www.w3.org/TR/REC-xml/#NT-CharData">XML standard does not need to have single quotes escaped</a> in the text content of elements. A more <a href="http://www.xmlnews.org/docs/xml-basics.html#text">plain English version is here</a>.</p>
+<p>It turns out that he was right, when I looked up the <a href="https://developer.android.com/guide/topics/resources/string-resource.html#FormattingAndStyling">Android developer&rsquo;s documentation</a>. The results of not escaping single quotes is unpredictable at best. It would appear that the XML spec required elements of &ldquo;&amp;quot;&rdquo; is not mentioned and also the &ldquo;&lt;&rdquo; which is invalid can be used. I needed to correct my pull request to</p>
+<pre>&lt;string name="display_message"&gt;Your client\'s files&lt;/string&gt;</pre>
+<p>So in summary Android string resource files have an XML extension and have a passing resemblance to XML but in fact are not XML and I cannot find formal specification for them.</p>

@@ -1,0 +1,181 @@
+---
+layout: post
+title: "Enterprise Library exception handling in a production environment"
+date: 2010-08-25 10:08:00 +1200
+published: true
+tags: ["Development", "Enterprise Library"]
+categories: ["Development", "Enterprise Library"]
+alias: ["/derekblog/post/2010/08/25/Enterprise-Library-exception-handling-in-a-production-environment.aspx", "/derekblog/post/2010/08/25/enterprise-library-exception-handling-in-a-production-environment.aspx"]
+---
+<p>I have blogged before about liking Enterprise Library, <a href="/2009/04/30/aspnet-exception-logging-in-a-hosted-environment.html">particularly about its exception handling mechanism</a>. Given that the whole purpose of the exception handling mechanism is to provide much needed information about defects in software I have recently been faced with a problem where the exception handling mechanism itself failed.</p><!--more-->
+<p>I had a piece of software that was deployed to a production server. It had been tested fully on a staging environment and was then deployed. It failed, in that it apparently did nothing when a request was sent. We log exceptions into the database but that was empty, I configured an exception handler that writes to the Event Log, once again nothing. Hmm it looked as though I was a victim of <a href="http://en.wikipedia.org/wiki/Systemantics">Systemantics</a>, specifically the Fail Safe Theorem:</p>
+<blockquote>
+<p>The Fail-Safe Theorem: When a Fail-Safe system fails, it fails by failing to fail safe.</p>
+</blockquote>
+<p>The problem could be a real problem in the software, for example we were not calling the exception handler or it could be a problem in exception handler itself, or it could be that the request was not getting through. I needed to isolate where the problem was. The usual mechanism for doing this was to use the exception handling mechanism, however as this was the first time I had deployed to this server I needed some kind of sign that the mechanism was working.</p>
+<!--more-->
+<p>I have had issues like this in the past and it is hard to find a logging mechanism that can be relied on completely.</p>
+<p>A database logging exception handler is susceptible to having database client software, network connection and connection credentials.</p>
+<p>A Event Log exception handler is susceptible to security issues, many production environments disallow access to the Event Log as it can contain sensitive information.</p>
+<p>The most reliable and simplest solution I could think of was a Debug Console exception handler, that is an exception handler that writes to the debug console. The debug console is a good choice as it is guaranteed to be there, it is rarely restricted, and it can be monitored without the need to install any software on the server. It can be monitored either locally or remotely using a number of tools but the one I tend to use is <a href="http://technet.microsoft.com/en-us/sysinternals/bb896647.aspx">DebugView from Microsoft Sysinternals</a>. The advantage of DebugView is that it can be run remotely or locally without the need to install anything, just copy the single exe.</p>
+<p>The Enterprise Library Exception Handler is very straightforward to write, this is the complete code.</p>
+<pre class="c#">using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Text;
+using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
+using Microsoft.Practices.EnterpriseLibrary.ExceptionHandling;
+using Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.Configuration;
+
+namespace AAD.ProvidersLibrary
+{
+  [ConfigurationElementType(typeof(CustomHandlerData))]
+  public class DebugConsoleExceptionHandler : IExceptionHandler
+  {
+    public DebugConsoleExceptionHandler(NameValueCollection ignore)
+    {
+    }
+
+    public Exception HandleException(
+                              Exception exception, 
+                              Guid handlingInstanceId
+                           )
+    {
+      OutputToConsole("Exception Start");
+      OutputToConsole(
+          string.Format("ID: {0}, Message: {1}",
+                   handlingInstanceId.ToString(),
+                   exception.Message));
+      OutputToConsole("Exception End");
+
+      return exception;
+    }
+
+    protected virtual void OutputToConsole(
+                              string format,
+                              params object[] args
+                           )
+    {
+      Debug.Print(format, args);
+    }
+  }
+}</pre>
+<p>To show how this can be used I wrote a very simple program that just throws an exception like this.</p>
+<pre class="c#">class Program
+  {
+    static void Main(string[] args)
+    {
+      Debug.Print("Program Start");
+
+      System.Exception ex = new Exception("A test exception");
+      ExceptionPolicy.HandleException(ex, "AAD Policy");
+
+      Console.WriteLine("Done.");
+    }
+  }</pre>
+<p>I have also implemented a Broken Exception Handler to simulate what might happen with a handler that was not working</p>
+<pre class="c#">namespace AAD.ProvidersLibrary
+{
+  [ConfigurationElementType(typeof(CustomHandlerData))]
+  public class BrokenExceptionHandler : IExceptionHandler
+  {
+    public BrokenExceptionHandler(NameValueCollection ignore)
+    {
+      //throw new Exception("CONSTRUCTOR FAILURE");
+    }
+
+    public Exception HandleException(Exception exception, Guid handlingInstanceId)
+    {
+      throw new Exception("HANDLER FAILURE");
+      return exception;
+    }
+  }
+}</pre>
+<p>Then I can configure both handlers into the Enterprise Library Policy in the enterprise library configuration either in app.config, web.config or it may be in its own separate config file like this (I have also configured in the standard Event Log handler).</p>
+<pre class="c#">&lt;exceptionhandling&gt;
+  &lt;exceptionpolicies&gt;
+    &lt;add name="AAD Policy"&gt;
+      &lt;exceptiontypes&gt;
+        &lt;add name="Exception"
+                posthandlingaction="None"
+                type="System.Exception, mscorlib, Version=2.0.0.0,
+                           Culture=neutral,
+                           PublicKeyToken=b77a5c561934e089"&gt;
+          &lt;exceptionhandlers&gt;
+            &lt;add name="Custom Debug Console Handler"
+              type="AAD.ProvidersLibrary.DebugConsoleExceptionHandler,
+                      ExceptionHandler, Version=1.0.0.0, Culture=neutral,
+                      PublicKeyToken=null" /&gt;
+            &lt;add name="Custom Handler"
+              type="AAD.ProvidersLibrary.BrokenExceptionHandler,
+                      ExceptionHandler, Version=1.0.0.0, Culture=neutral,
+                      PublicKeyToken=null" /&gt;
+            &lt;add title="Enterprise Library Exception Handling"
+                    name="Logging Handler"
+                    type="Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.Logging.LoggingExceptionHandler,
+                         Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.Logging,
+                         Version=4.0.0.0,
+                         Culture=neutral,
+                         PublicKeyToken=31bf3856ad364e35" 
+                     usedefaultlogger="false" priority="0" 
+                     formattertype="Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.XmlExceptionFormatter,
+                         Microsoft.Practices.EnterpriseLibrary.ExceptionHandling,
+                         Version=4.0.0.0,
+                         Culture=neutral,
+                         PublicKeyToken=31bf3856ad364e35" 
+                     severity="Error"
+                     eventid="100"
+                     logcategory="Exceptions" /&gt;
+          &lt;/exceptionhandlers&gt;
+        &lt;/add&gt;
+      &lt;/exceptiontypes&gt;
+    &lt;/add&gt;
+  &lt;/exceptionpolicies&gt;
+&lt;/exceptionhandling&gt;</pre>
+<p>Please note that the Debug Console handler is physically the first handler in the file, this does give the best chance of seeing an exception.</p>
+<p>When the program is run and the exception fires, nothing is written by Enterprise Library to the Event Log. There may be something in the event log if the OS has detected your program aborting but its unlikely to be very useful, this is what I got from a standard EXE application domain.</p>
+<pre>Log Name:      Application
+Source:        Windows Error Reporting
+Date:          24/08/2010 20:25:11
+Event ID:      1001
+Task Category: None
+Level:         Information
+Keywords:      Classic
+User:          N/A
+Computer:      -----
+Description:
+Fault bucket , type 0
+Event Name: CLR20r3
+Response: Not available
+Cab Id: 0
+
+Problem signature:
+P1: 0V0DMNGI4KP0FD2NOHG4YSFBQA5APTTZ
+P2: 1.0.0.0
+P3: 4c741c71
+P4: Microsoft.Practices.EnterpriseLibrary.ExceptionHandling
+P5: 4.0.0.0
+P6: 482b76b4
+P7: 12d
+P8: c9
+P9: FUBV21AXAANWXNW1H1IUFLUXEZ1Y44LQ
+P10: 
+
+Attached files:
+
+These files may be available here:
+C:\ProgramData\Microsoft\Windows\WER\ReportArchive\AppCrash_0V0DMNGI4KP0FD2N_33286785ea64748539fd1471e8a8a0802f19e2fa_04a543a6
+
+Analysis symbol: 
+Rechecking for solution: 0
+Report Id: 4df7eb32-afb5-11df-9817-001ec902ae30
+Report Status: 0</pre>
+<p>However this is what we see in DebugView</p>
+<p><a href="/images/wordpress/EnterpriseLibraryexceptionhandlinginapro_12DE8/dbgview.png"><img style="display: inline; border-width: 0px;" title="dbgview" src="/images/wordpress/EnterpriseLibraryexceptionhandlinginapro_12DE8/dbgview_thumb.png" alt="dbgview" width="462" height="141" border="0" /></a></p>
+<p>Enterprise library calls the HandleException method in each of the handlers in turn but the chain is broken if one of them fails. In this instance the &ldquo;Custom Debug Console Handler&rdquo; records the exception in the debug console. The &ldquo;Custom Handler&rdquo;, which is a broken handler, in this example it is taking the place of a handler that may not be working in a production environment is then called and throws an exception so the &ldquo;Logging Handler&rdquo; is never called.</p>
+<p>My first reaction is to move the &ldquo;Logging Handler&rdquo; up the chain, in other words making it physically the first &lt;add&gt; element in the &lt;exceptionhandlers&gt; however there have been instances where event logging is not permitted in a hosted production environment.</p>
+<p>This is where the &ldquo;Custom Debug Console Handler&rdquo; comes in its a great little handler that can be used to check if there is a problem in any of the configured exception handlers.</p>
+<p>Its worth noting that if I uncomment the <br />throw new Exception("CONSTRUCTOR FAILURE"); <br />code in the broken handler then Enterprise Library throws an exception when constructing the policy and none of the HandleException methods get called, with this in mind I try and keep to a minimum the code in the exception handler constructor.</p>

@@ -1,0 +1,256 @@
+---
+layout: post
+title: "Using Dagger2 and Roboelectric for unit testing in Android development."
+date: 2015-09-26 16:49:00 +1200
+published: true
+tags: ["Android", "Code Generation", "Development"]
+categories: ["Android", "Code Generation", "Development"]
+alias: ["/derekblog/post/2015/09/26/Using-Dagger2-and-Roboelectric-for-unit-testing-in-Android-development.aspx", "/derekblog/post/2015/09/26/using-dagger2-and-roboelectric-for-unit-testing-in-android-development.aspx"]
+---
+<p>I have <a href="http://derekwilson.net/derekblog/post/2015/08/23/Starting-a-new-native-Android-app-in-2015.aspx">started a new project using AndroidStudio and Dagger</a>. Using inversion of control is all well and good but its only there to help with isolation code and one of the main reasons for doing this is to enable objects to be more easily tested. </p><!--more--> <p>In previous projects I have written pure junit tests. These worked well enough however it does mean that I am only able to test a relatively small number of objects.</p> <p>For this new project I wanted to extent my testing into as much of the code as I could. This is where <a href="http://google.github.io/dagger/">Dagger2</a> and <a href="http://robolectric.org/">Roboelectric</a> come in.</p> <p>For the production app I created an IoC container like this.</p><pre>@Module
+public class ApplicationModule {
+ private final AndroidApplication application;
+
+ public ApplicationModule(AndroidApplication application) {
+  this.application = application;
+ }
+
+ @Provides
+ @Singleton
+ Context provideApplicationContext() {
+  return this.application;
+ }
+
+ @Provides
+ @Singleton
+ ILoggerFactory provideLogger(SlfLoggerFactory loggerFactory) {
+  return loggerFactory;
+ }
+}</pre>
+<p>And the container is initialised by the application like this</p><pre>public class AndroidApplication extends Application {
+ private ApplicationComponent applicationComponent;
+
+ @Override
+ public void onCreate() {
+  super.onCreate();
+  this.applicationComponent = initialiseInjector();
+ }
+
+ protected ApplicationComponent initialiseInjector() {
+  return DaggerApplicationComponent.builder()
+    .applicationModule(new ApplicationModule(this))
+    .build();
+ }
+
+ public ApplicationComponent getApplicationComponent() {
+  return this.applicationComponent;
+ }</pre>
+<p>Next I created a test package, Android Studio 1.3 has got pretty good support for unit testing, and I needed to use 1.3 or later to get the support for Dagger code generation in the test project. I created the package in the folder called test in the AndroidStudio project like this.</p>
+<p><a href="/images/src%20layout.png"><img title="src layout" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; padding-top: 0px; padding-left: 0px; display: inline; padding-right: 0px; border-top-width: 0px" border="0" alt="src layout" src="/images/src%20layout_thumb.png" width="211" height="300"></a></p>
+<p>I am using the Roboelectric v3 test runner which will automatically use the test application if it is created in the same namespace as the real application. The test application looks like this</p><pre>package net.derekwilson.recommender;
+
+/**
+ * this is the application created by Roboelectric
+ */
+public class TestAndroidApplication extends AndroidApplication implements TestLifecycleApplication {
+
+ // these should move to the module when we can move it into the test package
+ // maybe AndroidStudio 1.4
+ private Logger mockLogger;
+ private ILoggerFactory mockLoggerFactory;
+
+ @Override
+ public void onCreate() {
+  System.out.print("Test application created v" + getVersionName(this) + "\n");
+  super.onCreate();
+ }
+
+ protected TestApplicationComponent component;
+
+ protected AndroidApplication getApplication() {
+  return ((AndroidApplication) RuntimeEnvironment.application);
+ }
+
+ protected ApplicationComponent getTestApplicationComponent() {
+  if (component == null) {
+   this.mockLoggerFactory = mock(ILoggerFactory.class);
+   this.mockLogger = mock(Logger.class);
+   when(mockLoggerFactory.getCurrentApplicationLogger()).thenReturn(mockLogger);
+   this.component = DaggerTestApplicationComponent.builder()
+     .testApplicationModule(
+        new TestApplicationModule(
+           getApplication(),
+           mockLoggerFactory))
+     .build();
+  }
+  return (ApplicationComponent) component;
+ }
+
+ @Override
+ protected ApplicationComponent initialiseInjector() {
+  System.out.print("Setting the application mocked component\n");
+  return getTestApplicationComponent();
+ }
+
+ @Override
+ protected void initialiseDatabase() {
+  // do not call super as we do not want to initialise the DB
+ }
+
+ @Override
+ public void beforeTest(Method method) {
+ }
+
+ @Override
+ public void prepareTest(Object test) {
+ }
+
+ @Override
+ public void afterTest(Method method) {
+ }
+}</pre>
+<p>The logger, as well as all the other components in the container, are mocks rather than real objects. The test IoC container is setup like this</p><pre>@Singleton
+@Component(modules = TestApplicationModule.class)
+public interface TestApplicationComponent extends ApplicationComponent {
+}
+
+@Module
+public class TestApplicationModule {
+ private final AndroidApplication application;
+ private final ILoggerFactory mockLogger;
+
+ public TestApplicationModule(
+  AndroidApplication application, 
+  ILoggerFactory mockLogger) {
+
+  this.application = application;
+  // we would not need to do this if we could create the mocks here
+  // however we cannot do that unless we can move this class to the junit package
+  this.mockLogger = mockLogger;
+ }
+
+ @Provides
+ @Singleton
+ Context provideApplicationContext() {
+  return this.application;
+ }
+
+ @Provides
+ @Singleton
+ ILoggerFactory provideLogger() {
+  return mockLogger;
+ }
+}
+</pre>
+<p>The main trick here is that the @Component interface inherits from the ApplicationComponent, it does not add anything to the interface as the tests use the component in the same manner as the main application. It does however specify a TestApplicationModule in the modules list. This module is the module that is used to initialise the main applications component by overriding the initialiseInjector method in the test application. </p>
+<p>I also override the initialiseDatabase method from the main application this is a method that I wrote to setup the SQLite database, in the tests we just do nothing as we also use the test IoC container to present a mock database to the tests, this makes the tests run much faster.</p><pre></pre>
+<p>Then we write junit tests like this, the scoped component is built using the test application component returned from getApplicationComponent which will ensure that mocks are injected for all objects obtained from the container.</p><pre>@RunWith(RobolectricGradleTestRunner.class)
+@Config(constants = BuildConfig.class)
+public class HasBeenEditedTests extends PresenterTestsSetup {
+
+ // mocks
+ Activity mockActivity = mock(Activity.class);
+ IEditRecommendationView mockView = mock(IEditRecommendationView.class);
+
+ // will use a concrete object until we have to use a mock
+ Recommendation recommendationPassedToActivity;
+ Recommendation recommendationFromUi;
+
+ // object under test
+ IEditRecommendationPresenter presenter;
+
+ private EditRecommendationComponent getComponent() {
+  return DaggerEditRecommendationComponent.builder()
+    .applicationComponent(getApplicationComponent())
+    .baseActivityModule(new BaseActivityModule(mockActivity))
+    .editRecommendationModule(new EditRecommendationModule())
+    .build();
+ }
+
+ @Before
+ public void setUp() {
+  // setup required behaviour
+  when(mockView.getRecommendation()).thenAnswer(new Answer<recommendation>() {
+    @Override
+    public Recommendation answer(InvocationOnMock invocation) throws Throwable {
+      return recommendationPassedToActivity;
+    }
+  });
+  when(mockView.getRecommendationFromUi()).thenAnswer(new Answer<recommendation>() 
+    @Override
+    public Recommendation answer(InvocationOnMock invocation) throws Throwable {
+      return recommendationFromUi;
+    }
+  });
+
+  // create object under test
+  presenter = getComponent().getPresenter();
+  presenter.bindView(mockView);
+ }
+
+ @Test
+ public void create_empty_recommendation_is_not_dirty() {
+  // arrange
+  recommendationPassedToActivity = null;
+  recommendationFromUi = setupRecommendation("","","","","");
+
+  // act
+  boolean edited = presenter.hasBeenEdited();
+
+ // assert
+ assertThat(edited, is(false));
+}
+</pre>
+<p>For this mechanism to work I needed to ensure that I has the latest version of apt specified (v1.7) and also gradle 1.3 in my gradle file. The top level gradle file looks like this</p><pre>// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:1.3.0'
+        // This plugin helps Android Studio find Dagger's generated classes
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.7'
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
+</pre>
+<p>And then the project gradle like this, we need to specify testApt to get the Dagger code generated for the tests. Also note that I am compiling using SDK v23 however I need to target SDK v21 for Roboelectric to work.</p><pre>apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
+
+android {
+ compileSdkVersion 23
+ buildToolsVersion "23.0.1"
+
+ defaultConfig {
+  applicationId "net.derekwilson.recommender"
+  minSdkVersion 15
+  targetSdkVersion 21
+  versionCode 11
+  versionName "0.39"
+ }
+
+dependencies {
+...
+
+ // tests
+ testApt 'com.google.dagger:dagger-compiler:2.0.1'
+ testCompile 'com.google.dagger:dagger:2.0.1'
+ testCompile "org.robolectric:robolectric:3.0"
+ testCompile "junit:junit:4.10"
+ testCompile "org.mockito:mockito-core:1.+"
+}
+</pre>
+<p>The last piece of the puzzle is to create a configuration to run the tests like this</p>
+<p><a href="/images/runner%20config.png"><img title="runner config" style="border-top: 0px; border-right: 0px; background-image: none; border-bottom: 0px; padding-top: 0px; padding-left: 0px; border-left: 0px; display: inline; padding-right: 0px" border="0" alt="runner config" src="/images/runner%20config_thumb.png" width="410" height="226"></a></p>
+<p>And finally to select the test artefact to be unit tests rather than Android Tests.</p>
+<p><a href="/images/build%20variant.png"><img title="build variant" style="border-top: 0px; border-right: 0px; background-image: none; border-bottom: 0px; padding-top: 0px; padding-left: 0px; border-left: 0px; display: inline; padding-right: 0px" border="0" alt="build variant" src="/images/build%20variant_thumb.png" width="201" height="244"></a></p>
+<p>Then just select run and the tests will run in AndroidStudio or from the command line using gradle.</p>

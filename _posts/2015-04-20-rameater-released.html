@@ -1,0 +1,57 @@
+---
+layout: post
+title: "RamEater released"
+date: 2015-04-20 00:37:00 +1200
+published: true
+tags: ["Development", "Mobile", "Android", "RamEater"]
+categories: ["Development", "Mobile", "Android", "RamEater"]
+alias: ["/derekblog/post/2015/04/20/RamEater-released.aspx", "/derekblog/post/2015/04/20/rameater-released.aspx"]
+---
+<p>I have been trying to work on an interesting Android development problem recently. The <a href="http://developer.android.com/reference/android/app/Activity.html">activity lifecycle</a> includes a number of less obvious states. If the device’s memory is under pressure then an activity can be unloaded, and ultimately the activity and the application process can be unloaded.</p><!--more--> <p>As a developer it is possible to simulate the activity being unloaded by setting the developer option “Don’t Keep Activities” like this.</p> <p><a href="/images/Screenshot_2015-04-20-19-11-58.png"><img title="Screenshot_2015-04-20-19-11-58" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; padding-top: 0px; padding-left: 0px; display: inline; padding-right: 0px; border-top-width: 0px" border="0" alt="Screenshot_2015-04-20-19-11-58" src="/images/Screenshot_2015-04-20-19-11-58_thumb.png" width="167" height="275"></a></p> <p>I needed an easy mechanism to force the application process to unload by allocating all the available memory. It was pretty easy to put together an app to do this, the <a href="https://github.com/derekwilson/RamEater">source code</a> is in Github and the <a href="https://play.google.com/store/apps/details?id=derekwilson.net.rameater">app is in the play store</a>.</p> <p>There were a couple of learning points this I discovered. It was pretty simple to get an app that would spin off multiple services and each service would allocate all the memory it was allowed to. However the call that gets the maximum amount of memory allowed <a href="http://developer.android.com/reference/android/app/ActivityManager.html#getLargeMemoryClass()">(activityManager.getLargeMemoryClass())</a> is only supported on Android 3 and above. Also it returns an amount in MB and if you work out the amount of memory to allocate by assuming that 1MB = 1024 * 1024 Bytes then the allocation fails. I think this is because the number returned is 1000 * 1024 Bytes however other reasons are possible so I coded it such that it tries to allocate less and less memory until it succeeds. Like so</p><pre>private void eatAllMemory() {
+ //Get amount of memory this app is allowed to use (in MBs)
+ int availMem = activityManager.getLargeMemoryClass();
+ eatMemory(availMem);
+}
+
+private void eatMemory(int numberOfMb) {
+ // convert MB -&gt; KB -&gt; Bytes
+ int numberOfBytes = numberOfMb * 1024 * 1024;
+
+ boolean memoryAllocated = false;
+ String message = (numberOfBytes / 1024 / 1024) + " MB allocated";
+ while (!memoryAllocated)
+ {
+  try {
+   // we need to do this before we allocate all the memory :-)
+   message = (numberOfBytes / 1024 / 1024) + " MB allocated";
+   // char is 2 bytes in java
+   memoryBlackHole = new char[numberOfBytes / 2];
+   memoryAllocated = true;
+  }
+  catch (OutOfMemoryError e) {
+   // we cannot have that much, lets try 1MB less
+   numberOfBytes = numberOfBytes - (1024 * 1024);
+  }
+ }
+
+ fillBlackHole(numberOfBytes / 2);
+ updateNotification(message);
+}</pre>
+<p>Also when I used the memory profiler in Android Studio (which gave another slightly different amount of memory allocated) I noticed that when I used a device using the Dalvik runtime that the memory was allocated immediately, however on a device using Art runtime the memory was not allocated. It turned out that I needed to write to the memory before it was allocated.</p><pre>private void fillBlackHole(int numberOfChars) {
+ // dalvik allocate the memory when requested
+ // art is clever and waits until you use the memory
+ for (int index=0; index &lt; numberOfChars; index++) {
+  memoryBlackHole[index] = 'a';
+ }
+}</pre>
+<p>The memory itself is allocated into separate services for two reasons, one that the process was less likely to be killed of (after all we want the app under development top be killed off) and also because we need to run each in its own process so each can allocate the maximum allowed memory.</p>
+<p>Another piece of the puzzle is that its unclear from the documentation if the amount of memory that can be allocated is restricted by application or by process, it turned out that if the memory allocation service are run in their own processes by setting the process in the manifest file like this they work fine</p><pre>&lt;service
+ android:name="Service1"
+ android:process=":sp1"&gt;
+&lt;/service&gt;
+&lt;service
+ android:name="Service2"
+ android:process=":sp2"&gt;
+&lt;/service&gt;
+</pre>
+<p>I have found using the tool has made it much easier to trigger low memory situations.</p><pre></pre>

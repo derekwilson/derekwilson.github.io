@@ -1,0 +1,23 @@
+---
+layout: post
+title: "Inserting line breaks into PDF text using XSLT-FO"
+date: 2013-11-25 00:30:00 +1300
+published: true
+tags: ["How Do I", "General", "Development"]
+categories: ["How Do I", "General", "Development"]
+alias: ["/derekblog/post/2013/11/25/Inserting-line-breaks-into-PDF-text-using-XSLT-FO.aspx", "/derekblog/post/2013/11/25/inserting-line-breaks-into-pdf-text-using-xslt-fo.aspx"]
+---
+<p>Recently I needed to insert a line break into a block of text in a PDF file. The PDF was generated using an XSLT-FO style sheet with an XML input document. The solution wasn't as straight forward as I had expected but it can be done relatively easily.</p><!--more-->  <p>The XSLT-FO looked like this</p>  <pre>&lt;fo:block font-size=&quot;9pt&quot; line-height=&quot;14pt&quot;&gt; 	
+ &lt;xsl:value-of select=&quot;/PresentationData/TextBlock&quot;/&gt; 	
+&lt;/fo:block&gt;</pre>
+
+<p>The change needed is to add the linefeed-treatment attribute like this</p>
+
+<pre>&lt;fo:block font-size=&quot;9pt&quot; line-height=&quot;14pt&quot; linefeed-treatment=&quot;preserve&quot; &gt; 	
+ &lt;xsl:value-of select=&quot;/PresentationData/TextBlock&quot;/&gt; 	
+&lt;/fo:block&gt;</pre>
+
+<p>Then put the line breaks (\n) into the input XML document in .NET.</p>
+
+<pre>presentationDataXML.Add(new XElement(&quot;PresentationData&quot;, 	
+                           new XElement(&quot;TextBlock&quot;, &quot;line one\nline two&quot;)</pre>

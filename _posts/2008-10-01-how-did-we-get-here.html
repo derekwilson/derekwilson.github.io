@@ -1,0 +1,58 @@
+---
+layout: post
+title: "how did we get here?"
+date: 2008-10-01 11:10:00 +1300
+published: true
+tags: ["General", "Development", "Web"]
+categories: ["General", "Development", "Web"]
+alias: ["/derekblog/post/2008/10/01/how-did-we-get-here.aspx"]
+---
+I created my first personal web site in the 1990’s. When I created that first site I decided to use static HTML for the site for a number of reasons
+<ol>
+	<li>I had my hands full learning HTML and CSS without having to learn a server side technology.</li>
+	<li>I was unsure which server side technology was going to be most useful to learn</li>
+	<li>I was cautious about adopting a technology that would make it hard to migrate to a different provide for my web space.</li>
+</ol>
+It was fun, and it was ugly. I seem to remember it had great big graphics with purple borders. Notepad was my development environment. However it did achieve my purpose of learning how to create a web site and providing a place for the bits of software that I had written.
+
+The next stage was to provide some web pages for the group of friends that I play badminton with, I began to think that maybe notepad was not the best web design tool so I had a quick look around and like most of the rest of the planet started to use Frontpage. The <a href="/derek/pages/newbobs.htm">pages</a> I created were little better looking than the ones in notepad and the HTML was much more complex.<!--more-->
+<h3>Time moves on</h3>
+These pages were fine and I had no real requirement to add anything for a while. Then around 2003 / 2004 I started to work on a shareware project called <a href="http://www.worldolio.com">worldolio</a>. It turned out that I needed to move my web space to a new hosting provider as I needed to be able to host ASP.NET web sites.
+
+I started to think about other things that I could do with my web site, given the nature of my work it seamed reasonable that I should have some method of publishing my CV and that led me to thinking about how to publish content in general. Most information held on a PC is held in Microsoft Office format, Word, Excel and Access etc.
+
+I share my web space with <a href="http://www.stephanieslater.com">Steph</a> and I have always though that it would be good if she could publish her work to the web.
+
+I was still unsure about what server technology to use, when I had last considered the options ASP/VBScript had been all the rage now it was ASP.NET, WordPress had only just appeared in 2003. Steph’s requirements were slightly different from mine in that she needed to reach a number of people who did not have access to the internet, or at least did not routinely use the internet in their professional life (this was the NHS in 2003 after all)
+
+I opted for an offline compilation mechanism. I could write a number of tools that I ran locally and “compiled” DOC and MDB files into HTML. The first part of that process was to extract MS Office files as XML and for that I modified some example code from Microsoft to create a <a href="/downloads/Conv2XML.zip">Conv2XML</a> tool that would do this.
+<div class="thumb_image"><a href="/images/wordpress/2008/10/worddocs.gif"><img title="Convert DOC to HTML" src="/images/wordpress/2008/10/worddocs-thumb.gif" border="0" alt="Convert DOC to HTML" /></a>
+<div>Convert Microsoft Word DOC files to HTML</div>
+</div>
+<div class="thumb_image"><a href="/images/wordpress/2008/10/bookssite.gif"><img title="Convert MDB to HTML" src="/images/wordpress/2008/10/bookssite-thumb.gif" border="0" alt="Convert MDB to HTML" /></a>
+<div>Convert Microsoft Access DB files to HTML</div>
+</div>
+For example my <a href="/derek/webgen/booksite/html/framework.htm">online books catalog</a> is compiled from an Access MDB file. The main advantages of this mechanism are
+<ol>
+	<li>Can be hosted on any web server capable of service static HTML</li>
+	<li>The resultant HTML can be burnt to a CDROM and given to people with no internet access and viewed by just using IE to access to files with the need to a web server at all.</li>
+	<li>The content is created in Microsoft Office, Word, Excel etc in an environment that is convenient and familiar to the user.</li>
+</ol>
+<h3>where to now?</h3>
+This year a number of things have conspired to mean that I have revisited my web site.
+<ul>
+	<li>I needed to update my CV as it has been too long since I did that.</li>
+	<li>Microsoft Office now natively supports XML based formats such as DOCX</li>
+	<li>I spent some time listening to <a href="http://therissingtonpodcast.co.uk/">the rissington podcast</a> where I got to hear about what was happening with content management systems</li>
+	<li>I felt that server side technologies had started to reach a level of maturity where I could reasonable expect to be able to find ASP.NET hosting easily and cheaply. I have been using <a href="http://www.webstrikesolutions.com/">webstrike solutions</a> for 5 years and would not hesitate to recommend them, their performance has been flawless.</li>
+	<li>I now had access (no pun intended) to mature inexpensive backend database technology in the form of MySQL and SQLite.</li>
+	<li>There were some issues with the “compilation” mechanism that could be addressed.</li>
+</ul>
+If I was going to make a change then there were some issues with the existing compilation mechanism that I wanted to address
+<ol>
+	<li>Changing the design of the web site was a nightmare. To say that the design was not WYSIWYG is an understatement. The HTML was originally written in notepad (or Interdev if I was feeling like colour coded syntax) and then chopped up and placed into XSLT the data XML was applied to produce HTML</li>
+	<li>From the point of view of publishing a CV, the market has moved on. It is less of a priority to be able to produce a CDROM. In fact it would appear that what is really needed is the ability to download a PDF or DOC file.</li>
+	<li>If the code is written carefully it should be possible to have the same code able to run on a desktop to support compilation to HTML and also run on a server to support a dynamic web site.</li>
+	<li>The HTML was very old and needed to be updated. The HTML still had support in for Netscape 4 ILAYERs but as a result used TABLE to achieve its layout.</li>
+	<li>The compilation process used a number of pieces of technology that were becoming obsolete, for instance VB6, Saxon 5 and Microsoft Java VM</li>
+</ol>

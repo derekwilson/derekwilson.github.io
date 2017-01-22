@@ -1,0 +1,105 @@
+---
+layout: post
+title: "SQLite foreign key constaint generator using Codesmith"
+date: 2008-10-29 13:10:00 +1300
+published: true
+tags: ["Code Generation", "SQL"]
+categories: ["Code Generation", "SQL"]
+alias: ["/derekblog/post/2008/10/29/SQLite-foreign-key-constaint-generator-using-Codesmith.aspx", "/derekblog/post/2008/10/29/sqlite-foreign-key-constaint-generator-using-codesmith.aspx"]
+---
+<p>I have started to plan the my new online books catalog as part of the new site structure, as I discussed <a href="/2008/10/08/mixing-fire-and-water-aspnet-and-wordpress.html">here</a>. I know the basic shape of the way the catalog will work, in that I will be using server based technology rather than compiling an Access database to HTML. I have been assessing which database technology to use bearing in mind that part of the reason this site exists is to provide an opportunity to learn new techniques and I wanted to use either <a href="http://code.msdn.microsoft.com/adonetefx/">Entity framework</a> or <a href="http://www.hibernate.org/343.html">NHibernate</a> as a repository model of the data.</p><!--more-->
+<h3>Database <span>options</span></h3>
+<table style="width: 450px;" border="0" cellspacing="0" cellpadding="2">
+<tbody>
+<tr>
+<td valign="top" width="87"><strong>Database</strong></td>
+<td valign="top" width="180"><strong>Pros</strong></td>
+<td valign="top" width="182"><strong>Cons</strong></td>
+</tr>
+<tr>
+<td valign="top" width="87"><strong><a href="http://office.microsoft.com/en-us/access/default.aspx">Access</a></strong></td>
+<td valign="top" width="180">Already in use, no porting needed</td>
+<td valign="top" width="182">Cannot really be used for a web site <br />Non standard SQL means patchy support for ORMs such as EF or NHibernate</td>
+</tr>
+<tr>
+<td valign="top" width="87"><strong><a href="http://www.sqlite.org/index.html">SQLite</a></strong></td>
+<td valign="top" width="180">Free, portable (can be run on mobile devices) <br />Supported by ORMs such as EF and NHibernate <br />Data can be updated locally and then uploaded by copying a single file</td>
+<td valign="top" width="182">Incomplete implementation for example <a href="http://www.sqlite.org/omitted.html">foreign key constraints are not enforced</a> and stored procedures are not available.</td>
+</tr>
+<tr>
+<td valign="top" width="87"><strong><a href="http://www.mysql.com/">MySQL</a></strong></td>
+<td valign="top" width="180">Full implementation <br />Free (ish), I have already paid my $10</td>
+<td valign="top" width="182">Only available for desktop operating systems. <br />Porting, updating and backing up the data would be more complex than SQLite</td>
+</tr>
+<tr>
+<td valign="top" width="87"><strong><a href="http://msdn.microsoft.com/en-us/sqlserver/default.aspx">SQLServer</a></strong></td>
+<td valign="top" width="180">Full implementation <br />Rapid development using LINQ to SQL</td>
+<td valign="top" width="182">Cost, $100 a year. <br />Other cons are the same as MySQL</td>
+</tr>
+</tbody>
+</table>
+<p>In normal circumstances I would probably select MySQL as it does everything that is needed is supported by the tools that I plan to use. however there are other requirements to be considered.</p>
+<ol>
+<li>I am the only person who will be updating the data and it would be a nice option to do this on a mobile device, it is also simpler and quicker to build a UI to enable the data to be updated on a smart client (either desktop or mobile) rather than building a full blown web based UI. This would mean that the web site would be used to report on the data and not update.</li>
+<li>Backing up and restoring the data&nbsp; can be simplified if it is just a single file rather than part of an existing database.</li>
+<li>This site is a learning exercise and using a combination such as NHibernate and SQLite gives me an opportunity to expand my knowledge</li>
+<li>Stored procedures are less of an issue in an architecture that using an ORM to model the data.</li>
+</ol>
+<p>So on balance for this site I am tempted to select SQLite however I am concerned about the lack of support for foreign key constraints. I like my data integrity enforced and would be worried if it was not.</p>
+<p>&nbsp;</p>
+<!--more-->
+<p>&nbsp;</p>
+<h3>foreign key <span>constraints</span></h3>
+<p>Foreign key constraints are used within the database to ensure that the data is stored correctly. For example consider this relationship from the books database.</p>
+<p><a href="/images/wordpress/2008/10/fkrel.png"><img style="display: inline; border-width: 0px;" title="data relationship" src="/images/wordpress/2008/10/fkrel-thumb.png" alt="data relationship" width="357" height="201" border="0" /></a></p>
+<p>All this relationship does is ensure that each book has a valid author, and that authors cannot be deletes if it would invalidate any books. In most applications data is accessed and updated in a multiuser environment. The integrity of the data can only be assured if the constraint is applied in a transaction. Consider what would happen if one user changed a book to reference author A and at the same time another user deleted author A. A typical approach is to use foreign key constraints in the database like this</p>
+<pre class="sql">bok_aut_id INTEGER
+   CONSTRAINT fk_bok_books_bok_aut_id_aut_author_aut_id
+   REFERENCES [aut_author](aut_id)</pre>
+<pre>&nbsp;</pre>
+<p>Although the same result could be achieved using other techniques doing it like this in the database is the most robust and transparent solution.</p>
+<h3>Adding foreign key constraints to <span>SQLite</span></h3>
+<p>At first I could not believe such a fundamental part of SQL was missing from SQLite. I had a look around and found this posting describing the problem and a <a href="http://www.sqlite.org/cvstrac/wiki?p=ForeignKeyTriggers">solution using triggers</a>. It looked good and when I tried it with my database it worked. It did however make the SQL to create the constraint in the database a <span style="text-decoration: line-through;">bit</span> lot more verbose.</p>
+<pre class="sql">-- Foreign Key Preventing insert
+DROP TRIGGER IF EXISTS fk_bok_books_bok_aut_id_aut_author_aut_id_ins;
+CREATE TRIGGER fk_bok_books_bok_aut_id_aut_author_aut_id_ins
+BEFORE INSERT ON [bok_books]
+FOR EACH ROW BEGIN
+  SELECT RAISE(ROLLBACK, 'insert on bok_books violates fk constraint')
+  WHERE NEW.bok_aut_id IS NOT NULL
+        AND (SELECT aut_id
+               FROM [aut_author]
+               WHERE aut_id = NEW.bok_aut_id
+             ) IS NULL;
+END;
+
+-- Foreign key preventing update
+DROP TRIGGER IF EXISTS fk_bok_books_bok_aut_id_aut_author_aut_id_upd;
+CREATE TRIGGER fk_bok_books_bok_aut_id_aut_author_aut_id_upd
+BEFORE UPDATE ON [bok_books]
+FOR EACH ROW BEGIN
+    SELECT RAISE(ROLLBACK, 'update on bok_books violates fk constraint')
+    WHERE NEW.bok_aut_id IS NOT NULL
+        AND (SELECT aut_id
+               FROM [aut_author]
+               WHERE aut_id = NEW.bok_aut_id
+             ) IS NULL;
+END;
+
+DROP TRIGGER IF EXISTS fk_bok_books_bok_aut_id_aut_author_aut_id_del;
+-- Foreign key preventing delete
+CREATE TRIGGER fk_bok_books_bok_aut_id_aut_author_aut_id_del
+BEFORE DELETE ON [aut_author]
+FOR EACH ROW BEGIN
+    SELECT RAISE(ROLLBACK, 'delete on aut_author violates fk constraint')
+    WHERE (SELECT bok_aut_id
+            FROM [bok_books]
+            WHERE bok_aut_id = OLD.aut_id
+           ) IS NOT NULL;
+END;</pre>
+<pre>&nbsp;</pre>
+<p>So the obvious solution would be to generate the SQL rather than typing it in every time. I have used Codesmith template generator in the past so I wrote a Codesmith template to generate the extra SQL given the names of the tables and fields concerned.</p>
+<p>The Codesmith template can be used like this</p>
+<p><a href="/images/wordpress/2008/10/cs261.png"><img style="display: inline; border-width: 0px;" title="Codesmith 2.6" src="/images/wordpress/2008/10/cs26-thumb1.png" alt="Codesmith 2.6" width="391" height="333" border="0" /></a></p>
+<p>I have used <a href="http://www.codesmithtools.com/freeware.aspx">Codesmith 2.6</a> &ndash; the last free version to test this template in case you do not own a later version however it should work in later versions. I have also added a template parameter to cascade the delete.</p>
+<p>You can <a title="download template zip" href="/downloads/fk_sqlite.zip">download the template</a> if you want to use it.</p>

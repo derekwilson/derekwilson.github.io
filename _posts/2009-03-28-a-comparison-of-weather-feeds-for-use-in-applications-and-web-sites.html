@@ -1,0 +1,202 @@
+---
+layout: post
+title: "A Comparison of Weather Feeds for use in applications and web sites"
+date: 2009-03-28 12:03:00 +1300
+published: true
+tags: ["Development", "Web"]
+categories: ["Development", "Web"]
+alias: ["/derekblog/post/2009/03/28/A-Comparison-of-Weather-Feeds-for-use-in-applications-and-web-sites.aspx", "/derekblog/post/2009/03/28/a-comparison-of-weather-feeds-for-use-in-applications-and-web-sites.aspx"]
+---
+<p>I am involved in a project to build an application called <a href="http://worldolio.com/">Worldolio</a>, this applications provides a variety of geographical information, current time, DST dates, sunrise, sunset and weather forecasts.</p><!--more-->
+<p>Currently I am reviewing the weather feed we use for <a href="http://worldolio.com/">Worldolio</a> with a view to replacing it. In the course of this work I&rsquo;ve had a look at most of the weather feeds I can find, if you know of any I have missed please point it out.</p>
+<h3>Feature <span>comparison</span></h3>
+<p>Each of the providers offer different information</p>
+<table style="width: 450px;" border="1" cellspacing="0" cellpadding="2">
+<tbody>
+<tr>
+<td align="center" width="52">
+<p align="center">feature</p>
+</td>
+<td valign="top" width="67">custom <br />weather</td>
+<td valign="top" width="67">weather <br />.com</td>
+<td valign="top" width="63">yahoo</td>
+<td valign="top" width="64">google</td>
+<td valign="top" width="59">bbc</td>
+<td valign="top" width="76">weather <br />under <br />ground</td>
+</tr>
+<tr>
+<td align="center" width="51">no of <br />days <br />forecast</td>
+<td align="center" width="69">7</td>
+<td align="center" width="70">5</td>
+<td align="center" width="67">2</td>
+<td align="center" width="68">4</td>
+<td align="center" width="66">3</td>
+<td align="center" width="78">6</td>
+</tr>
+<tr>
+<td align="center" width="51">day and <br />night <br />forecast</td>
+<td align="center" width="69">N</td>
+<td align="center" width="70">Y</td>
+<td align="center" width="67">N</td>
+<td align="center" width="68">N</td>
+<td align="center" width="66">N</td>
+<td align="center" width="78">N</td>
+</tr>
+<tr>
+<td align="center" width="51">high <br />and low <br />temp</td>
+<td align="center" width="69">Y</td>
+<td align="center" width="70">Y</td>
+<td align="center" width="67">Y</td>
+<td align="center" width="68">Y</td>
+<td align="center" width="66">Y</td>
+<td align="center" width="78">Y</td>
+</tr>
+<tr>
+<td align="center" width="51">general <br />description</td>
+<td align="center" width="69">Y</td>
+<td align="center" width="70">Y</td>
+<td align="center" width="67">Y</td>
+<td align="center" width="68">Y</td>
+<td align="center" width="66">Y</td>
+<td align="center" width="78">Y</td>
+</tr>
+<tr>
+<td align="center" width="51">general <br />icon</td>
+<td align="center" width="69">Y</td>
+<td align="center" width="70">Y</td>
+<td align="center" width="67">Y</td>
+<td align="center" width="68">Y</td>
+<td align="center" width="66">N</td>
+<td align="center" width="78">Y</td>
+</tr>
+<tr>
+<td align="center" width="51">wind <br />description</td>
+<td align="center" width="69">Y</td>
+<td align="center" width="70">N</td>
+<td align="center" width="67">N</td>
+<td align="center" width="68">N</td>
+<td align="center" width="66">N</td>
+<td align="center" width="78">N</td>
+</tr>
+<tr>
+<td align="center" width="51">wind <br />direction</td>
+<td align="center" width="69">Y</td>
+<td align="center" width="70">N</td>
+<td align="center" width="67">N</td>
+<td align="center" width="68">N</td>
+<td align="center" width="66">Y</td>
+<td align="center" width="78">N</td>
+</tr>
+<tr>
+<td align="center" width="51">wind <br />speed</td>
+<td align="center" width="69">Y</td>
+<td align="center" width="70">Y</td>
+<td align="center" width="67">N</td>
+<td align="center" width="68">N</td>
+<td align="center" width="66">Y</td>
+<td align="center" width="78">N</td>
+</tr>
+<tr>
+<td align="center" width="51">gust <br />speed</td>
+<td align="center" width="69">Y</td>
+<td align="center" width="70">Y</td>
+<td align="center" width="67">N</td>
+<td align="center" width="68">N</td>
+<td align="center" width="66">N</td>
+<td align="center" width="78">N</td>
+</tr>
+<tr>
+<td align="center" width="51">sky <br />description</td>
+<td align="center" width="69">Y</td>
+<td align="center" width="70">N</td>
+<td align="center" width="67">N</td>
+<td align="center" width="68">N</td>
+<td align="center" width="66">Y</td>
+<td align="center" width="78">Y</td>
+</tr>
+<tr>
+<td align="center" width="51">pressure</td>
+<td align="center" width="69">Y</td>
+<td align="center" width="70">N</td>
+<td align="center" width="67">N</td>
+<td align="center" width="68">N</td>
+<td align="center" width="66">Y</td>
+<td align="center" width="78">N</td>
+</tr>
+<tr>
+<td align="center" width="51">humidity</td>
+<td align="center" width="69">Y</td>
+<td align="center" width="70">Y</td>
+<td align="center" width="67">N</td>
+<td align="center" width="68">N</td>
+<td align="center" width="66">Y</td>
+<td align="center" width="78">N</td>
+</tr>
+<tr>
+<td align="center" width="51">precip <br />%</td>
+<td align="center" width="69">Y</td>
+<td align="center" width="70">Y</td>
+<td align="center" width="67">N</td>
+<td align="center" width="68">N</td>
+<td align="center" width="66">N</td>
+<td align="center" width="78">N</td>
+</tr>
+<tr>
+<td align="center" width="51">precip <br />description</td>
+<td align="center" width="69">Y</td>
+<td align="center" width="70">Y</td>
+<td align="center" width="67">N</td>
+<td align="center" width="68">N</td>
+<td align="center" width="66">N</td>
+<td align="center" width="78">N</td>
+</tr>
+<tr>
+<td align="center" width="51">lat and <br />long of <br />station</td>
+<td align="center" width="69">Y</td>
+<td align="center" width="70">Y</td>
+<td align="center" width="67">Y</td>
+<td align="center" width="68">N</td>
+<td align="center" width="66">Y</td>
+<td align="center" width="78">Y</td>
+</tr>
+<tr>
+<td align="center" width="51">sunrise <br />and <br />sunset</td>
+<td align="center" width="69">N</td>
+<td align="center" width="70">Y</td>
+<td align="center" width="67">Y</td>
+<td align="center" width="68">N</td>
+<td align="center" width="66">Y</td>
+<td align="center" width="78">N</td>
+</tr>
+<tr>
+<td align="center" width="51">current <br />observation</td>
+<td align="center" width="69">Y</td>
+<td align="center" width="70">Y</td>
+<td align="center" width="67">Y</td>
+<td align="center" width="68">Y</td>
+<td align="center" width="66">Y</td>
+<td align="center" width="78">Y</td>
+</tr>
+</tbody>
+</table>
+<p>Beyond the simple matter of features it is also worth mentioning some further details about the main candidates</p>
+<!--more-->
+<h3>custom <span>weather</span></h3>
+<p><a href="http://www.customweather.com/cw_products_forecast.html">Custom weather</a> is the provider we currently use for the mobile application. Its feed is very feature rich and reliable, easy to parse and accurate. All in all it is great the only downside is this it is not free and for a shareware or freeware application this cost is nontrivial. If you are using a commercial application or just have lots of money then I can heartily recommend this feed.</p>
+<h3>the weather <span>channel</span></h3>
+<p>We use the weather channel (<a href="http://www.weather.com/">weather.com</a>) for our forecasts on the web site. The data is also very rich, reliable, accurate and easy to parse and it is free. However the downside the license restrictions</p>
+<ol>
+<li>it cannot be used on a mobile device</li>
+<li>you also have to provide a number links back to weather.com</li>
+<li>you cannot display weather for more than one city at a time (we do this on the mobile version)</li>
+</ol>
+<h3>yahoo <span>weather</span></h3>
+<p><a href="http://developer.yahoo.com/weather/">Yahoo weather</a> is another form of the weather channel feed, though bizarrely their license seems less restrictive than the weather channel. The forecast is limited to today and tomorrow.</p>
+<h3>google <span>weather</span></h3>
+<p><a href="http://animaonline.blogspot.com/2007/07/google-weather-api.html">google weather</a> seems a better bet than yahoo weather but it is still rather data poor.</p>
+<h3>BBC <span>backstage</span></h3>
+<p><a href="http://backstage.bbc.co.uk/data/WeatherFeeds">the bbc</a> does have a lot of data in the feed however as <a href="http://www.cordinc.com/blog/2008/11/using-bbc-backstage-weather.html">this post points out</a> its not exactly set up for parsing and reuse, it does require some use of regular expressions to pick out the required data.</p>
+<h3>the weather <span>underground</span></h3>
+<p>The forecast is for 6 days which is excellent and they do provide a large amount of geographical information as well however maybe it was just bad luck but I couldn&rsquo;t actually get the feed to work for me.</p>
+<h3>NWS at <span>NOAA</span></h3>
+<p>The <a href="http://www.nws.noaa.gov/forecasts/xml/">national weather service at NOAA</a> does provide a very good quality feed however the last time I checked it only did this for locations in the US and as such cannot really be used for applications that use worldwide locations.</p>

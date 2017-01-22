@@ -1,0 +1,56 @@
+---
+layout: post
+title: "How to fix Tivo Suggestions in the UK"
+date: 2009-01-21 14:01:00 +1300
+published: true
+tags: ["How Do I", "TiVo"]
+categories: ["How Do I", "TiVo"]
+alias: ["/derekblog/post/2009/01/21/How-to-fix-Tivo-Suggestions-in-the-UK.aspx", "/derekblog/post/2009/01/21/how-to-fix-tivo-suggestions-in-the-uk.aspx"]
+---
+<p>If you own a Tivo and are based in the UK then you will have probably noticed that your Tivo has not been recording suggestions for the last few months. I sort of noticed it as part of the background noise in life and finally managed to find some time to see what was going on.</p><!--more-->
+<p><a href="http://www.tivocommunity.com/tivo-vb/showthread.php?p=6723619">It would appear that the problem has been identified by Tivo</a>, however there are no plans to fix it. Whatever the rights and wrongs of this decision I just wanted suggestions to work and waiting to see if the problem is resolved did not seem like a viable solution.</p>
+<p>I occasionally watch things on the suggestions list and I also use the number of suggestions held on the Tivo as an indication of how full my Tovi is. So although suggestions are not crucial to my use of the Tivo I do miss them.</p>
+<p>After some digging around I have them back. I should point out I have done nothing original here, I am only documenting how I setup suggestions as I found it a bit fiddly. Special thanks go to mikerr and Tivo Community for filling the gap left by Tivo.</p>
+<!--more-->
+<p>To get suggestions back using this method you will need</p>
+<ol>
+<li>Your Tivo to be networked</li>
+<li>The ability to edit text files and copy them onto your Tivo</li>
+<li>CRON installed</li>
+</ol>
+<p>First of all I <a href="http://tivocommunity.com/tivo-vb/showthread.php?t=404932">downloaded the suggs ZIP from Tivo Community</a>. Basically the ZIP contains a TCL script and some documentation. I copied the TCL script to my Tivo and put it in /var/hack/suggs, the using Telnet I made it executable and then ran it once from the command prompt to check that it would work. Like this</p>
+<pre class="sql">Tivo: /var/tmp &gt; cd /var/hack/suggs 
+Tivo: /var/hack/suggs &gt; 
+Tivo: /var/hack/suggs &gt; chmod 755 suggs.tcl 
+Tivo: /var/hack/suggs &gt; 
+Tivo: /var/hack/suggs &gt; /var/hack/suggs/suggs.tcl -debug 
+Friday 12:16:45: reading channel list from mfs 
+Friday 12:16:47: Checking for free space 
+Friday 12:17:16: Scanning todo list 
+Friday 12:17:21: Scanning now playing 
+Friday 12:17:21: Processing schedule 
+Friday 12:17:21: SKYNEWS 
+Friday 12:17:22: BBC2 
+Friday 12:17:23: C4 
+...snip... 
+Friday 12:18:27: SCHEDULE {Zoo Days} (000 / 101) on FIVE at 12:20 
+Friday 12:18:34: SCHEDULE Weather (000 / 101) on BBCR4FM at 21:58 
+Tivo: /var/hack/suggs &gt;</pre>
+<p>Running the script with the -debug option causes the output to go the console and exit after running rather than running every 30 minutes in the background.</p>
+<p>Now I needed a mechanism to ensure that the suggestions are always running and there are two options.</p>
+<ol>
+<li>Run the TCL script from the <a href="http://tivo.stevejenkins.com/network_cd.html#_Toc101001765">rc.init</a> script that is run when the Tivo is first started, the process would then run all the time and update the suggestions every 30 minutes.</li>
+<li>Run the TCL script every day from CRON.</li>
+</ol>
+<p>I decided that I did not want the script to be run every 30 minutes, the processor in a Tivo is a very old Power PC and it would be better if I did not ask it to do too much. People had commented that running the script all the time could cause picture stutter, and even though it appears from the comments that this issues has been resolved I thought that it would be better to run it once a day.</p>
+<p><a href="http://www.planetbuilders.org/tivo/tivo_cron.html">Installing CRON</a> can be a bit tricky, however I have already installed it to get daily emails sent to me from the Tivo. Adding another job to the CRON jobs was pretty straightforward. Here are my crontab entries; I run suggestions, tracker and the dailymail scripts every day.</p>
+<pre class="sql"># m h dom mon dow	command 
+#*/10 * * * *	date &gt;&gt; /var/hack/cron.test.out 
+# run suggs before email 
+00 4 * * 0-6  /var/hack/suggs/suggs.tcl -debug -threshold 1  &gt; /var/log/suggs_cron.log &amp; 
+# run tracker 
+00 5 * * 0-6 	/tvbin/tivosh /var/hack/trackerupdate31.tcl &gt; /var/log/trackerupdate_cron.log 2&gt;&amp;1 
+# run dailymail every day at 5.45am 
+45 5 * * 0-6  /var/hack/dailymail/dailymail_jazz &amp; </pre>
+<p>As you can see I added the suggestions script so that it runs before the daily email so that I can see what will be happening that day. I run the suggestions script with the -debug option to ensure that it only gets run once and then send the console output to a log file that I can view from TivoWeb. The Threshold option is as per the documentation, the option that is most like the old Tivo suggestions.</p>
+<p>This has worked very well for me; I was surprised how much I had missed suggestions.</p>

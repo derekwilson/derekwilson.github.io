@@ -1,0 +1,154 @@
+---
+layout: post
+title: "Setting up for Pebble development on Ubuntu"
+date: 2016-04-09 23:02:00 +1200
+published: true
+tags: ["Development", "Pebble", "General", "Gadgets"]
+categories: ["Development", "Pebble", "General", "Gadgets"]
+alias: ["/derekblog/post/2016/04/09/Setting-up-for-Pebble-development-on-Ubuntu.aspx", "/derekblog/post/2016/04/09/setting-up-for-pebble-development-on-ubuntu.aspx"]
+---
+<p>I bought myself a Pebble watch at Christmas and even wrote an app, <a href="https://apps.getpebble.com/en_US/application/56904b60e74aedc6b600000b?dev_settings=true&amp;query=cricket&amp;section=watchapps">wrist-spin</a>, to display live cricket scores on the watch. Its a great device and its been fun to develop for, however the setup is not straightforward.</p><!--more-->  <p>The Pebble SDK only runs on Mac OSX and Linux. Now given that 90% of desktop machines run Windows and that the life blood of a device like Pebble depends on the availability of a lot of high quality app this decision seems to border on lunacy, but that's the place we are in.</p>  <p>So if you are one of the 90% that run Windows what is the easiest way to get started writing apps for the Pebble. A virtual machine is the most obvious solution, which rules out Apple products.</p>  <h2>Setting up Ubuntu</h2>  <p>First select your virtual host, I have used <a href="https://www.virtualbox.org/wiki/Downloads">VirtualBox</a> for years and like it so I started with it. Next I decided that I would use the latest LTS (Long Term Support) version of Ubuntu from the <a href="http://www.ubuntu.com/download/desktop">downloads page</a>, in my case this was 14.04. I wanted a newish stable version.</p>  <p>There are any number of <a href="http://askubuntu.com/questions/142549/how-to-install-ubuntu-on-virtualbox">guides on how to install Ubuntu in VirtualBox</a>, I made it a dynamic disk and by the time I has finished it was 16GB. There are a few gotchas&#160; by <a href="http://askubuntu.com/questions/453106/ubuntu-14-04-very-slow-ui-in-oracle-virtualbox">default the VirtualBox 3D acceleration is off</a> and Ubuntu will run very slowly until you turn it on. Even when it is turned on you will sometimes see console errors however some of the errors are expected which does make this whole area confusing the best quote I found was in <a href="https://www.virtualbox.org/ticket/12941">this article</a></p>  <blockquote>   <p>General note to everyone commenting on this ticket. If 3D is working in your guest then the output of &quot;glxinfo&quot; should include:</p>    <pre>OpenGL vendor string: Humper
+OpenGL renderer string: Chromium</pre>
+
+  <p>The following warnings will always appear, even when 3D is working, due to a problem in the way our driver is implemented which is not simple to fix:</p>
+
+  <pre>libGL error: core dri or dri2 extension not found
+libGL error: failed to load driver: vboxvideo</pre>
+</blockquote>
+
+<h2>Installing the Pebble SDK</h2>
+
+<p>The Pebble SDK now comes in two parts, isn't that great. Actually it is a good idea to help you switch between SDK’s easily once you are up and going however it does make it a bit more complex to get going.</p>
+
+<p>First of all I installed the stand alone PebbleTool SDK and following the installation <a href="https://developer.pebble.com/sdk/install/linux/">instructions for&#160; Linux</a>. I found that adding the “pebble” command to the .bash_profile in the instructions did not work and I ended up adding the following two lines to my .bashrc file</p>
+
+<pre>export PATH=~/pebble-dev/pebble-sdk-4.2-linux64/bin:$PATH
+export PEBBLE_EMULATOR=basalt</pre>
+
+<p>The installation is a little complex and needs to be done every time the PebbleTool is updated, including altering the .bashrc file so I tend to checkout the <a href="https://github.com/pebble/pebble-tool/releases">release log</a> to see if there is enough in the release.</p>
+
+<p>The <a href="https://developer.pebble.com/guides/tools-and-resources/pebble-tool/">PebbleTool</a> command line can be used to build and deploy your app as well as download SDKs and switch between them. pebble sdk list will list all the SDKs you have downloaded as well as the available SDKs, you will need to download at least one to start work, probably the latest one by typing pebble sdk install </p>
+
+<pre>derek@ubuntu1-VirtualBox:~/pebble-dev/code/wrist-spin$ pebble sdk list
+Installed SDKs:
+3.11.1 (active)
+3.10
+3.9.2
+3.8.2
+
+Available SDKs:
+3.11
+3.10.1
+3.9
+3.8.1
+3.8
+3.7
+3.6.2
+3.4
+3.3
+3.2.1
+3.1
+3.0
+2.9</pre>
+
+<h2>Installing basic apps</h2>
+
+<p>Before installing pretty much anything you are going to need Java I installed the OpenJDK 1.7 and its worked pretty well so far, I used the <a href="http://askubuntu.com/questions/48468/how-do-i-install-java">instructions</a> from the Ubuntu site.</p>
+
+<p>I needed some form of editor to work with code and I’d used <a href="https://atom.io">Atom</a> so I installed that. Its not completely straightforward however following <a href="https://github.com/pebble/pebble-tool/releases">these instructions</a> got it installed.</p>
+
+<p>Pretty soon I got frustrated with Atom and decided to switch to <a href="https://code.visualstudio.com">Visual Studio Code</a>. Its much faster and much less likely to crash <a href="http://www.sitepoint.com/visual-studio-code-linux/">the installation</a> is pretty straightforward.</p>
+
+<p>One of the real bonuses with Visual Studio Code has been that I can add build and test tasks by following the instructions here I created this file in .vscode/tasks.json in my application folder</p>
+
+<pre>// A task runner that calls the Pebble compiler (pebble) and
+// compiles a program
+{
+  &quot;version&quot;: &quot;0.1.0&quot;,
+  &quot;command&quot;: &quot;${workspaceRoot}/../../pebble-sdk-4.2-linux64/bin/pebble&quot;,
+  &quot;isShellCommand&quot;: true,
+  &quot;showOutput&quot;: &quot;silent&quot;,
+  &quot;echoCommand&quot;: true,
+  &quot;tasks&quot;: [
+    {
+      &quot;taskName&quot;: &quot;build&quot;,
+      &quot;isBuildCommand&quot;: true
+    },
+    {
+      &quot;taskName&quot;: &quot;install-aplite&quot;,
+      &quot;suppressTaskName&quot;: true,
+      &quot;args&quot;: [
+        &quot;install&quot;, &quot;--emulator&quot;, &quot;aplite&quot;  
+      ]
+    },
+    {
+      &quot;taskName&quot;: &quot;install-basalt&quot;,
+      &quot;isTestCommand&quot;: true,
+      &quot;suppressTaskName&quot;: true,
+      &quot;args&quot;: [
+        &quot;install&quot;, &quot;--emulator&quot;, &quot;basalt&quot;  
+      ]
+    },
+    {
+      &quot;taskName&quot;: &quot;install-chalk&quot;,
+      &quot;suppressTaskName&quot;: true,
+      &quot;args&quot;: [
+        &quot;install&quot;, &quot;--emulator&quot;, &quot;chalk&quot;  
+      ]
+    }
+  ]
+}</pre>
+
+<p>Now I can just press CTRL-SHIFT-B to build and it even remembers to save my files first (something I keep forgetting to do). and CTRL-SHIFT-T runs the build in the emulator.</p>
+
+<p>Next you are going to need some form of GIT client, I used SmartGit, <a href="http://eric.sau.pe/how-to-install-smartgit-on-ubuntu/">instructions are here</a>.</p>
+
+<h2>Building your first app</h2>
+
+<p>There are any number of tutorials on building “hello world”. I found <a href="http://www.jayway.com/2014/07/08/setting-up-a-pebble-simulator-in-64-bit-linux-mintubuntu/">this article</a> had some good tips for extra libraries you might need and <a href="https://ninedof.wordpress.com/2013/12/02/pebble-sdk-2-0-tutorial-1-your-first-watchapp/">this one</a> had some good skeleton code.</p>
+
+<h2>Development lifecycle</h2>
+
+<p>In general I would edit the code. Then save everything. Then </p>
+
+<pre>pebble build</pre>
+
+<p>in the root of the application. Then</p>
+
+<pre>pebble install –emulator basalt</pre>
+
+<p>or</p>
+
+<pre>pebble install –phone 1.2.3.4</pre>
+
+<p>If the code crashes then you are writing in C and there wasn’t a debugger, the emulator would just crash and you would get the sad face. If your app just crashes on your watch then make sure you have the latest SDK installed on your watch or at least the SDK you built with matches your watch.</p>
+
+<p>&#160;</p>
+
+<p><a href="/images/Screenshot2.png"><img title="Screenshot2" style="border-left-width: 0px; border-right-width: 0px; border-bottom-width: 0px; display: inline; border-top-width: 0px" border="0" alt="Screenshot2" src="/images/Screenshot2_thumb.png" width="152" height="204" /></a> </p>
+
+<p>The later SDK release do seem to have some debugging support but I haven't tried it yet. In general I use a lot of logging like this</p>
+
+<pre>static void init(void) {
+  APP_LOG(APP_LOG_LEVEL_DEBUG, &quot;wrist-spin v %s&quot;, get_version());
+
+  init_persistent_data();
+  showMainWindow();
+  init_app_sync();
+  open_app_sync();
+  init_timer_tick();
+  init_bluetooth_event();
+}</pre>
+
+<p>And then using include files I can make suppress the logging for a release build</p>
+
+<pre>#ifdef SUPRESS_LOGGING
+#undef APP_LOG
+#define APP_LOG(...)
+#endif</pre>
+
+<p>The logging can be displayed from an emulator or the phone using the PebbleTool </p>
+
+<pre>pebble logs --emulator basalt</pre>
+
+<p>Its a bit primitive but I think that's part of the appeal of building apps for the pebble. The source for my first app is <a href="https://bitbucket.org/derekwilson/wrist-spin">here</a>.</p>

@@ -1,0 +1,33 @@
+---
+layout: post
+title: "Mixing fire and water: ASP.NET and WordPress"
+date: 2008-10-08 13:10:00 +1300
+published: true
+tags: ["Development", "General", "Web"]
+categories: ["Development", "General", "Web"]
+alias: ["/derekblog/post/2008/10/08/Mixing-fire-and-water-ASPNET-and-WordPress.aspx", "/derekblog/post/2008/10/08/mixing-fire-and-water-aspnet-and-wordpress.aspx"]
+---
+<p>In my <a href="/2008/10/01/how-did-we-get-here.html">previous post</a> I was describing the earlier incarnations of this web site and the slow but steady draw to trying to rework the web site again. There was a definite sequence of steps that led to this site.</p><!--more-->
+<p>During the summer I have been doing some work on WPF and this lead me to reading about <a href="http://www.hanselman.com/blog/">Scott Hanselman's</a> new project <a href="http://www.hanselman.com/babysmash/">Baby Smash</a>. His posts about WPF are interesting, especially as I seem to be making the same transition from Winforms to WPF, but what really caught my eye was the use of a web site design from <a href="http://www.freecsstemplates.org/">free CSS templates</a>. I have been developing web sites for a long time and in that time I have had to write CSS and use paint packages but I am defiantly from the developer end of the spectrum. Discovering these templates seemed a great leap forward: they looked good, they were a lot more standard compliant and also the HTML source was pretty much raw text which does lend itself to content management systems and also to the production of HTML by compiling other formats - documents, databases etc.</p>
+<p>I has been listening to <a href="http://therissingtonpodcast.co.uk/">the rissington podcast</a>, which to be fair aims to be more entertaining than educational but despite John and Jon's best efforts I did manage to pick up some information about content management systems. In particular their insistence that no matter how small your site is you would be better off with a CMS. I already have a Windows, IIS, ASP.NET host and I need this platform to support a shareware produce called <a href="http://www.worldolio.com">Worldolio</a> (its very good, please rush out and buy it - look into the eyes not around the eyes) I did start to look at ASP.NET based CMS's but in general they either did not inspire a lot of confidence or if they looked really slick they needed SQLServer. SQLServer is expensive and MySQL is cheap so I widened the net. It appeared that the most popular CMS was WordPress and people had used it on my <a href="http://www.webstrikesolutions.com/">host</a> and as a bonus I could play with PHP and MySQL for the first time.</p>
+<p>One of the things that I did notice was that some of the free CSS templates were available as WordPress themes as well as static HTML and CSS downloads. I considered the content this I need to migrate to the new site and the best method of supporting that content.</p>
+<!--more-->
+<h3>Home <span>Page</span></h3>
+<p>The templates are available has HTML and CSS files and having a home page that is HTML appeals to me as</p>
+<ol>
+<li>it will load quickly</li>
+<li>it is very resilient as it does not depend on any server side technology</li>
+<li>there is only one of them and it tends not to change very often meaning that there are little maintenance issues that you would normally associate with static HTML.</li>
+</ol>
+<h3>My <span>CV</span></h3>
+<p>In my previous site my CV (and Steph's CV) was a navigable set of HTML pages compiled from a Microsoft Word document. The current expectations of the market are that they can download my CV in PDF and DOC format rather than looking at HTML pages.</p>
+<p>I could support this using static pages, though some server side code may be required if I wanted to restrict or approve access to the downloads. To minimise the maintenance of these pages and to leave the option of server code available I will use static ASP.NET pages that make use of the free CSS templates once I have converted them into ASP.NET site master pages. The master pages should use the same CSS file as the static HTML.</p>
+<h3>Books <span>Catalogue</span></h3>
+<p>The books catalogue has been with me for a long time. Ostensibly the purpose it serves is that friends who want to buy me a book can check ahead of time if I already have the book and it does server this purpose well - for a limited audience. The other purpose is that it gives me a vehicle to experiment with different techniques. The catalogue started out as a SuperBase DB on the Atari ST, then as an Access DB and Access Basic forms application, and lately as a set of pages compiled from the Access DB into static HTML.</p>
+<p>I want to try and build a dynamic data web site for the catalogue. The most appealing strategic starting point for this is to use ASP.NET as I have nearly 10 years experience building ASP.NET data based web sites I would like to think I could do this. These pages will also need to derive from the free CSS templates site master used in the static ASP.NET pages.</p>
+<h3>Download <span>Pages</span></h3>
+<p>The only real content I have to manage is the page that contain downloads of software I have written, at the moment this runs out at less than 10 pages. However installing WordPress appeared to be easy and the benefit is that managing and searching the pages is easy and maybe I might actually write some blog entries if the blog was there. If I was careful I hoped that I could use the same CSS for the entire site (master pages, static HTML and WordPress).</p>
+<p>Using WordPress and its supporting technology PHP gives me something to contrast with the ASP.NET pages. I think it will be informative comparing the different challenges I find between using both sets of technologies and it will be interesting which technology I select for areas that I add in as time goes on.</p>
+<h3>Site <span>architecture</span></h3>
+<p>So that is what I have done the site may look like it is one contiguous piece but the tabs and the home page are supported by different piece of technology.</p>
+<p><a href="/images/wordpress/2008/10/windowslivewritermixingfireandwateraspnetandwordpress-12626site2-2.png"><img style="border-width: 0px;" src="/images/wordpress/2008/10/windowslivewritermixingfireandwateraspnetandwordpress-12626site2-thumb.png" alt="Web Site Architecture" width="487" height="309" border="0" /></a></p>

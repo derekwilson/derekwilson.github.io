@@ -1,0 +1,234 @@
+---
+layout: post
+title: "Migrating UsernameOverTransport security from WSE to WCF"
+date: 2014-11-18 22:05:00 +1300
+published: true
+tags: ["Web", "Development"]
+categories: ["Web", "Development"]
+alias: ["/derekblog/post/2014/11/18/Migrating-UsernameOverTransport-security-from-WSE-to-WCF.aspx", "/derekblog/post/2014/11/18/migrating-usernameovertransport-security-from-wse-to-wcf.aspx"]
+---
+<p><a href="http://www.microsoft.com/en-us/download/details.aspx?id=14089">WSE</a> was, and I suppose is, a wrapper library to help make talking to WS-* compliant services easier. Specifically it can make <a href="http://msdn.microsoft.com/en-us/library/ff647197.aspx">communicating with secure services</a> easier. However WSE was targeted at .NET v2, there is not a v4 version and development appears to to stopped. The current mechanism for talking to services like this is to use WCF.</p><!--more-->  <p>With that in mind I have had to migrate a client library away from WSE to WCF. The library was used to communicate with an external service so from the server point of view nothing should change, however to make continued development easier it had been decided to use WCF.</p>  <p>The call in WSE looked something like this</p>  <pre>ServiceRequest request = GetTestRequest();
+Service proxy = new Service();
+string username = ConfigurationManager.AppSettings[&quot;Username&quot;];
+string password = ConfigurationManager.AppSettings[&quot;Password&quot;];
+UsernameToken token = new UsernameToken(username, password, PasswordOption.SendHashed);
+proxy.SetClientCredential(token);
+proxy.SetPolicy(&quot;usernameTokenSecurity&quot;);
+proxy.Url = ConfigurationManager.AppSettings[&quot;ServiceUrl&quot;];
+
+ServiceResponse result = proxy.MethodCall(request);</pre>
+
+<p>The config looked like this</p>
+
+<pre>&lt;microsoft.web.services3&gt;
+ &lt;diagnostics&gt;
+  &lt;trace enabled=&quot;true&quot; input=&quot;C:\Logs\input.log&quot; output=&quot;C:\Logs\output.log&quot;/&gt;
+ &lt;/diagnostics&gt;
+ &lt;policy fileName=&quot;wse3policyCache.config&quot;/&gt;
+&lt;/microsoft.web.services3&gt;</pre>
+
+<p>the policy file like this</p>
+
+<pre>&lt;policies xmlns=&quot;http://schemas.microsoft.com/wse/2005/06/policy&quot;&gt;
+ &lt;extensions&gt;
+  &lt;extension name=&quot;usernameOverTransportSecurity&quot;
+      type=&quot;Microsoft.Web.Services3.Design.UsernameOverTransportAssertion, Microsoft.Web.Services3, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35&quot; /&gt;
+  &lt;extension name=&quot;requireActionHeader&quot;
+      type=&quot;Microsoft.Web.Services3.Design.RequireActionHeaderAssertion, Microsoft.Web.Services3, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35&quot; /&gt;
+ &lt;/extensions&gt;
+ &lt;policy name=&quot;usernameTokenSecurity&quot;&gt;
+  &lt;usernameOverTransportSecurity /&gt;
+  &lt;requireActionHeader /&gt;
+ &lt;/policy&gt;
+&lt;/policies&gt;</pre>
+
+<p>The security token is the UsernameToken which derives from System.Collections.ObjectModel.SecurityToken. This is all reasonably straight forward and there are a number of <a href="http://www.codeproject.com/Articles/19508/WebService-Authentication-with-UsernameToken-in-WS">good examples</a> of setting up the token.</p>
+
+<p>It turns out that we can use exactly the same UsenameToken in WCF, in fact we need to be able to as the server will not be changing.</p>
+
+<p>The call looks like this</p>
+
+<pre>string username = ConfigurationManager.AppSettings[&quot;Username&quot;];
+string password = ConfigurationManager.AppSettings[&quot;Password&quot;];
+UsernameClientCredentials credentials = new UsernameClientCredentials(new UsernameInfo(userName, passWord));
+
+WcfService service = new WcfService(&quot;MyService&quot;);
+service.Endpoint.EndpointBehaviors.Remove(typeof(ClientCredentials));
+service.Endpoint.EndpointBehaviors.Add(credentials);
+ServiceResponse result = service.MethodCall(request);</pre>
+
+<p>The WCFService is a class that derives from the WCF client like this System.ServiceModel.ClientBase&lt;IMyService&gt;, IMyService. The config to hook it up looks like this, notice we are using UserNameOverTransport security</p>
+
+<pre>&lt;system.serviceModel&gt;
+ &lt;bindings&gt;
+  &lt;customBinding&gt;
+   &lt;binding name=&quot;httpsWithCredentialBinding&quot;&gt;
+    &lt;security 
+      enableUnsecuredResponse=&quot;true&quot;
+      authenticationMode=&quot;UserNameOverTransport&quot;
+      includeTimestamp=&quot;false&quot;
+      allowInsecureTransport=&quot;true&quot;/&gt;
+    &lt;textMessageEncoding messageVersion=&quot;Soap11&quot;/&gt;
+    &lt;httpsTransport maxReceivedMessageSize=&quot;655360000&quot;/&gt;
+   &lt;/binding&gt;
+  &lt;/customBinding&gt;
+ &lt;/bindings&gt;
+ &lt;client&gt;
+  &lt;endpoint
+    address=&quot;https://service&quot;
+    binding=&quot;customBinding&quot;
+    bindingConfiguration=&quot;httpsWithCredentialBinding&quot;
+    contract=&quot;IMyService&quot;
+    name=&quot;MyService&quot;/&gt;
+ &lt;/client&gt;
+&lt;/system.serviceModel&gt;</pre>
+
+<p>In WCF the UsernameToken needs to be wrapped in classes to provide a token and serialise a token like this</p>
+
+<pre>public class UsernameClientCredentials : ClientCredentials
+{
+ private readonly UsernameInfo usernameInfo;
+ public UsernameClientCredentials(UsernameInfo usernameInfo) : base()
+ {
+  if (usernameInfo == null)
+  {
+   throw new ArgumentNullException(&quot;usernameInfo&quot;);
+  }
+
+  this.usernameInfo = usernameInfo;
+ }
+
+ public UsernameInfo UsernameInfo
+ {
+  get { return this.usernameInfo; }
+ }
+
+ public override SecurityTokenManager CreateSecurityTokenManager()
+ {
+  return new UsernameClientCredentialsSecurityTokenManager(this);
+ }
+
+ protected override ClientCredentials CloneCore()
+ {
+  return new UsernameClientCredentials(this.usernameInfo);
+ }
+}
+
+public class UsernameInfo
+{
+ private readonly string userName;
+ private readonly string password;
+ public UsernameInfo(string userName, string password)
+ {
+  this.userName = userName;
+  this.password = password;
+ }
+ public string Username
+ {
+  get { return this.userName; }
+ }
+ public string Password
+ {
+  get { return this.password; }
+ }
+}
+
+public class UsernameClientCredentialsSecurityTokenManager : ClientCredentialsSecurityTokenManager
+{
+ private readonly UsernameClientCredentials userNameClientCredentials;
+ public UsernameClientCredentialsSecurityTokenManager
+   (UsernameClientCredentials userNameClientCredentials)
+      : base(userNameClientCredentials)
+ {
+  this.userNameClientCredentials = userNameClientCredentials;
+ }
+
+ public override SecurityTokenProvider CreateSecurityTokenProvider(SecurityTokenRequirement tokenRequirement)
+ {
+  if (tokenRequirement.TokenType == SecurityTokenTypes.UserName)
+  {
+   return new UsernameTokenProvider(this.userNameClientCredentials.UsernameInfo);
+  }
+  return base.CreateSecurityTokenProvider(tokenRequirement);
+ }
+
+ public override SecurityTokenSerializer CreateSecurityTokenSerializer(SecurityTokenVersion version)
+ {
+  return new UsernameSecurityTokenSerializer(version);
+ }
+}
+
+// this class delivers the same UsernameToken that was used in WSE
+internal class UsernameTokenProvider : SecurityTokenProvider
+{
+ private readonly UsernameInfo usernameInfo;
+ public UsernameTokenProvider(UsernameInfo usernameInfo) : base()
+ {
+  if (usernameInfo == null)
+  {
+   throw new ArgumentNullException(&quot;usernameInfo&quot;);
+  }
+  this.usernameInfo = usernameInfo;
+ }
+ protected override SecurityToken GetTokenCore(TimeSpan timeout)
+ {
+  SecurityToken result = new UsernameToken(this.usernameInfo);
+  return result;
+ }
+}
+
+// this class serialises the token onto the wire
+public class UsernameSecurityTokenSerializer : WSSecurityTokenSerializer
+{
+ internal const string UsernameTokenPrefix = &quot;wsse&quot;;
+ internal const string UsernameTokenNamespace = &quot;http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd&quot;;
+ internal const string UsernameTokenName = &quot;UsernameToken&quot;;
+ internal const string IdAttributeName = &quot;Id&quot;;
+ internal const string WsUtilityPrefix = &quot;wsu&quot;;
+ internal const string WsUtilityNamespace = &quot;http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd&quot;;
+ internal const string UsernameElementName = &quot;Username&quot;;
+ internal const string PasswordElementName = &quot;Password&quot;;
+ internal const string NonceElementName = &quot;Nonce&quot;;
+ internal const string CreatedElementName = &quot;Created&quot;;
+ internal const string TypeAttributeName = &quot;Type&quot;;
+ internal const string PasswordDigestType = &quot;http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordDigest&quot;;
+
+ public UsernameSecurityTokenSerializer(SecurityTokenVersion version) : base()
+ {
+ }
+
+ protected override void WriteTokenCore(XmlWriter writer, SecurityToken token)
+ {
+  if (writer == null)
+  {
+   throw new ArgumentNullException(&quot;writer&quot;);
+  }
+
+  if (token == null)
+  {
+   throw new ArgumentNullException(&quot;token&quot;);
+  }
+
+  UsernameToken c = token as UsernameToken;
+  if (c != null)
+  {
+    writer.WriteStartElement(UsernameTokenPrefix, UsernameTokenName, UsernameTokenNamespace);
+    writer.WriteAttributeString(WsUtilityPrefix, IdAttributeName, WsUtilityNamespace, token.Id);
+    writer.WriteElementString(UsernameElementName, UsernameTokenNamespace, c.UsernameInfo.Username);
+    writer.WriteStartElement(UsernameTokenPrefix, PasswordElementName, UsernameTokenNamespace);
+    writer.WriteAttributeString(TypeAttributeName, PasswordDigestType);
+    writer.WriteValue(c.GetPasswordDigestAsBase64());
+    writer.WriteEndElement();
+    writer.WriteElementString(NonceElementName, UsernameTokenNamespace, c.GetNonceAsBase64());
+    writer.WriteElementString(CreatedElementName, WsUtilityNamespace, c.GetCreatedAsString());
+    writer.WriteEndElement();
+    writer.Flush();
+  }
+  else
+  {
+   base.WriteTokenCore(writer, token);
+  }
+ }
+}</pre>
+
+<p>There are some loose ends to tie up, for example WSE logging is far nicer than WCF, it would be good to be able to ,log the wire packets.</p>

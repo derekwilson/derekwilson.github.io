@@ -1,0 +1,107 @@
+---
+layout: post
+title: "HTML UL bullet alignment in different browsers"
+date: 2010-04-11 04:04:00 +1200
+published: true
+tags: ["CSS", "Development", "Web"]
+categories: ["CSS", "Development", "Web"]
+alias: ["/derekblog/post/2010/04/11/HTML-UL-bullet-alignment-in-different-browsers.aspx", "/derekblog/post/2010/04/11/html-ul-bullet-alignment-in-different-browsers.aspx"]
+---
+<p>In previous posts I have explored strange effects on HTML and CSS in different browsers. I do like it when I have the time to find out exactly how to fix fender problems across browsers by understanding what is going on. I came across a problem in IE where the bullets for a UL element were rendering at the bottom of each list element and the solution to this problem is interesting in that it has affected how I style all my UL lists now to ensure that they work properly.</p><!--more-->
+<p>In trying to understand what was going on I found a very interesting <a href="http://www.communitymx.com/content/article.cfm?page=1&amp;cid=01DB3">background article on how lists are rendered</a> in different browsers, and what bullets might disappear completely (I&rsquo;ve fallen into this trap as well). The problem I was seeing was slightly different and it manifested itself like this</p>
+<p>&nbsp;</p>
+<!--more-->
+<pre class="c#">&lt;html&gt; 
+ &lt;head&gt; 
+  &lt;title&gt;List&lt;/title&gt; 
+  &lt;style type="text/css"&gt; 
+    .list1
+    {  
+    }  
+    .list1 li  
+    {
+        padding: 20px;
+        width: 400px;
+        border: solid 1px green;
+    }  
+  &lt;/style&gt; 
+ &lt;/head&gt; 
+ &lt;body&gt; 
+  &lt;ul class="list1"&gt; 
+   &lt;li&gt;
+      Lorem ipsum dolor sit amet, 
+      consectetur adipisicing elit,
+      sed do eiusmod tempor incididunt
+      ut labore et dolore magna aliqua.
+      Ut enim ad minim veniam,
+      quis nostrud exercitation ullamco
+      laboris nisi ut aliquip ex ea
+      commodo consequat.
+   &lt;/li&gt; 
+  &lt;/ul&gt; 
+ &lt;/body&gt; 
+&lt;/html&gt;</pre>
+<p>I needed a list of items with bullets and the list had to fit into a particular area on the page, this meant that I needed the list to be a specific width, 400 pixels in this example. When I looked at this in Firefox or Opera all was well it looked like this</p>
+<p><a href="/images/wordpress/HTMLULbulletalignmentindifferentbrowsers_9C04/lists1ff.png"><img style="display: inline; border-width: 0px;" title="lists1ff" src="/images/wordpress/HTMLULbulletalignmentindifferentbrowsers_9C04/lists1ff_thumb.png" alt="lists1ff" width="288" height="157" border="0" /></a></p>
+<p>However in IE it looked like this</p>
+<p><a href="/images/wordpress/HTMLULbulletalignmentindifferentbrowsers_9C04/lists1ie.png"><img style="display: inline; border-width: 0px;" title="lists1ie" src="/images/wordpress/HTMLULbulletalignmentindifferentbrowsers_9C04/lists1ie_thumb.png" alt="lists1ie" width="288" height="165" border="0" /></a></p>
+<p>Notice that in all versions of IE (6,7 and 8) the bullets are aligned at the bottom of each block of text</p>
+<p>This was not what I wanted. At first I started playing around with <a href="http://www.w3schools.com/Css/pr_pos_vertical-align.asp">vertical-align</a> however as <a href="http://www.communitymx.com/content/article.cfm?page=1&amp;cid=01DB3">I dug into HTML bullets</a> and understood more it became obvious that vertical-align had nothing to do with the placement of bullets.</p>
+<p>It turns out that the problem is that I am applying the with style to the LI elements within the UL, If I styled the width of the UL itself then all versions of IE render the bullets at the top of each LI. I have needed to add padding to the UL to stop the bullets from disappearing altogether in IE.</p>
+<pre class="c#">&lt;html&gt; 
+ &lt;head&gt; 
+  &lt;title&gt;List&lt;/title&gt; 
+  &lt;style type="text/css"&gt; 
+    .list1
+    {  
+    }  
+    .list1 li  
+    {
+        padding: 20px;
+        width: 400px;
+        border: solid 1px green;
+    }  
+    .list2
+    {  
+        width: 400px;
+        padding: 20px;
+    }  
+    .list2 li  
+    {  
+        border: solid 1px blue;
+    }  
+  &lt;/style&gt; 
+ &lt;/head&gt; 
+ &lt;body&gt; 
+  &lt;ul class="list1"&gt; 
+   &lt;li&gt;
+      Lorem ipsum dolor sit amet, 
+      consectetur adipisicing elit,
+      sed do eiusmod tempor incididunt
+      ut labore et dolore magna aliqua.
+      Ut enim ad minim veniam,
+      quis nostrud exercitation ullamco
+      laboris nisi ut aliquip ex ea
+      commodo consequat.
+   &lt;/li&gt; 
+  &lt;/ul&gt; 
+  &lt;ul class="list2"&gt; 
+   &lt;li&gt;
+      Lorem ipsum dolor sit amet, 
+      consectetur adipisicing elit,
+      sed do eiusmod tempor incididunt
+      ut labore et dolore magna aliqua.
+      Ut enim ad minim veniam,
+      quis nostrud exercitation ullamco
+      laboris nisi ut aliquip ex ea
+      commodo consequat.
+   &lt;/li&gt; 
+  &lt;/ul&gt; 
+ &lt;/body&gt; 
+&lt;/html&gt;</pre>
+<p>In Firefox we see this</p>
+<p><a href="/images/wordpress/HTMLULbulletalignmentindifferentbrowsers_9C04/lists2ff.png"><img style="display: inline; border: 0px;" title="lists2ff" src="/images/wordpress/HTMLULbulletalignmentindifferentbrowsers_9C04/lists2ff_thumb.png" alt="lists2ff" width="288" height="254" border="0" /></a></p>
+<p>and in IE this</p>
+<p><a href="/images/wordpress/HTMLULbulletalignmentindifferentbrowsers_9C04/lists2ie.png"><img style="display: inline; border: 0px;" title="lists2ie" src="/images/wordpress/HTMLULbulletalignmentindifferentbrowsers_9C04/lists2ie_thumb.png" alt="lists2ie" width="288" height="281" border="0" /></a></p>
+<p>Notice that list2, with the blue border, has its bullets at the top of each LI. Styling the UL and using padding like this does give a different width from the the original list but its straightforward to get the right width and by styling my lists in this way I can avoid most of the bullet problems in IE.</p>
+<p>While I was putting this post together I stumbled upon a bizarrely fascinating site about <a href="http://www.lipsum.com/">the Lorem ipsum</a> text itself.</p>

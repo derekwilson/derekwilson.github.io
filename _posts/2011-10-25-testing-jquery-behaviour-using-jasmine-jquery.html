@@ -1,0 +1,156 @@
+---
+layout: post
+title: "Testing jQuery behaviour using jasmine-jquery"
+date: 2011-10-25 05:10:00 +1300
+published: true
+tags: ["Development", "JavaScript", "Web"]
+categories: ["Development", "JavaScript", "Web"]
+alias: ["/derekblog/post/2011/10/25/Testing-jQuery-behaviour-using-jasmine-jquery.aspx", "/derekblog/post/2011/10/25/testing-jquery-behaviour-using-jasmine-jquery.aspx"]
+---
+<p>Recently I was working on a web page and I needed to add the ability to have certain LABEL element be highlighted with an icon and to have an alternative prompt. As often happens in web development the elements to be highlighted were delivered to the page using a JavaScript array planted from the server side and although I could have changed this mechanism it would be less intrusive if I could work within the existing framework.</p><!--more-->
+<p>The behaviour that was required was that each LABEL to be highlighted would have the its FOR attribute value listed in a global array. Each LABEL needs to be wrapped in a SPAN with a specific CLASS (this was due to the CSS delivered by a design agency) and then the highlight prompt displayed.</p>
+<p>In reality I would write the behaviour tests first however as I want to contrast different methods of testing I will list the code first.</p>
+<pre class="c#">function HandleOneLabel(label,labelForId) {
+  // add the tip icon with a derived ID
+  // prepend to get the vertical position right in IE8
+  label.prepend("&lt;span id='" + this + "_tip' class='tip'&gt;&lt;/span&gt;");
+
+  // display the correct prompt
+  $(".normalPrompt", label).hide();
+  $(".highlightPrompt", label).show();
+}
+
+function HandleAllLabels() {
+  if (typeof allLabels !== "undefined") {
+
+    jQuery.each(allLabels, function (index, value) {
+      // find the label element for each label listed
+      var label = $("label[for='" + this + "']");
+
+      HandleOneLabel(label,this);
+    });
+  };
+}</pre>
+<p>Testing HandleOneLabel seems relatively straightforward, for this project I was using <a href="http://pivotal.github.com/jasmine/">jasmine</a> as the testing framework so I wrote a test like this.</p>
+<pre class="c#">describe("HandleOneLabels", function () {
+
+  var label;
+
+  beforeEach(function () {
+  });
+
+  describe("When handling one label", function () {
+
+    beforeEach(function () {
+      label = jasmine.createSpyObj("label", [
+        "prepend"
+      ]);
+
+      HandleOneLabel(label, 'TESTID');
+    });
+
+    it("should add the tip icon", function () {
+      expect(label.prepend).toHaveBeenCalledWith(
+          "&lt;span id='TESTID_tip' class='tip'&gt;&lt;/span&gt;");
+    });
+  });
+});</pre>
+<p>This form of testing appears to work well because the HandleOneLabel can easily be called with a jasmine mock object.</p>
+<p>However when I looked at the kind of testing that would be possible for HandleAllLabels then it would obviously be more tricky. In general for a lot of the pages in the site the structure of the JavaScript was to have a view with all the <a href="http://jquery.com/">jQuery</a> selectors and a controller with the logic however this code was global utility code and splitting it up into controllers and views just to make testing easier seemed wrong to me.</p>
+<p>I looked around and found an interesting project called <a href="https://github.com/velesin/jasmine-jquery">jasmine-javascript</a> that provided a framework for testing jQuery and JavaScript together.</p>
+<p>I was (and I guess I am still) considering the validity of this approach, after all the separation into views and controllers is a good model, however I did like the way the tests mapped very well onto the desired behaviour. The tests looked like this (the multiline string literal labelHtml is laid out over multiple lines for readability)</p>
+<pre class="c#">// this is planted in the ASPX file in the real web site
+var allLabels = [];
+
+describe("HandleAllLabels", function () {
+
+  var labelHtml = "&lt;label for='TESTLABEL'&gt;
+       &lt;span class='highlightPrompt'&gt;highlight prompt&lt;/span&gt;
+       &lt;span class='normalPrompt'&gt;normal prompt&lt;/span&gt;
+       &lt;span id='TESTSPANID'&gt;always here&lt;/span&gt;
+       &lt;/label&gt;";
+
+  beforeEach(function () {
+  });
+
+  describe("When handling all labels", function () {
+
+    var labelAfterProcessing;
+
+    beforeEach(function () {
+
+      allLabels = ['TESTLABEL'];
+      setFixtures(labelHtml);
+
+      HandleAllLabels();
+      labelAfterProcessing = $("label[for='TESTLABEL']");
+    });
+
+    describe("When adding the info tip", function () {
+
+      var tipIcon;
+
+      beforeEach(function () {
+        // the tip icon should be the 1st child - for a bug in IE8
+        tipIcon = labelAfterProcessing.children(":first");
+      });
+
+      it("tip icon has the correct ID", function () {
+        expect(tipIcon).toHaveId("TESTLABEL_tip");
+      });
+
+      it("should have the correct class", function () {
+        expect(tipIcon).toHaveClass('tip');
+      });
+
+      it("should have the correct element type", function () {
+        expect(tipIcon).toBe("SPAN");
+      });
+    });
+
+    describe("When setting up the prompt", function () {
+
+      it("should hide the normal prompts", function () {
+        var normalPrompts =
+          labelAfterProcessing.children(".normalPrompt");
+
+        expect(normalPrompts.length).not.toEqual(0);
+        normalPrompts.each(function (index) {
+          expect($(this)).toBeHidden();
+        });
+      });
+      it("should show the highlight prompts", function () {
+        var highlightPrompts = 
+          labelAfterProcessing.children(".highlightPrompt");
+
+        expect(highlightPrompts.length).not.toEqual(0);
+        highlightPrompts.each(function (index) {
+          expect($(this)).toBeVisible();
+        });
+      });
+      it("should leave other prompts alone", function () {
+        var otherPrompt = 
+          labelAfterProcessing.children("#TESTSPANID");
+
+        expect(otherPrompt.length).not.toEqual(0);
+          otherPrompt.each(function (index) {
+            expect($(this)).toBeVisible();
+          });
+        });
+      });
+    });
+});</pre>
+<p><a href="https://github.com/velesin/jasmine-jquery">jasmine-jquery</a> enables me to inject test HTML into the code under test by using setFixtures call, it also enables the tests to access the HTML after the code has been run and assign it to labelAfterProcessing as well as providing a host of convenient jQuery matches such as toBe, toHaveId, toHaveClass etc.</p>
+<p>As it happens things are never as straightforward as they might be and it turns out that the match toBeHidden does not work correctly in IE8 (one of our target browsers) so I did need to rewrite one of the test like so</p>
+<pre class="c#">      it("should hide the normal prompts", function () {
+        var normalPrompts = 
+          labelAfterProcessing.children(".normalPrompt");
+
+        expect(normalPrompts.length).not.toEqual(0);
+          normalPrompts.each(function (index) {
+          // bug in IE8 with the current version of jQuery
+          //expect($(this)).toBeHidden();
+          expect($(this).attr("style").toLowerCase())
+            .toContain("display: none");
+        });
+      });</pre>

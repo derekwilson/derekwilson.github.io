@@ -1,0 +1,173 @@
+---
+layout: post
+title: "ASP.NET exception logging in a hosted environment"
+date: 2009-04-30 13:04:00 +1200
+published: true
+tags: ["Development", "Enterprise Library", "Web"]
+categories: ["Development", "Enterprise Library", "Web"]
+alias: ["/derekblog/post/2009/04/30/ASPNET-exception-logging-in-a-hosted-environment.aspx", "/derekblog/post/2009/04/30/aspnet-exception-logging-in-a-hosted-environment.aspx"]
+---
+<p>Fixing problems with web sites can be tricky. On the desktop, if I can replicate the problem then attach a debugger and find the problem, When I am writing a web application this is what I do, I run IIS locally and debug locally and all is fine. However after the site is deployed things become more tricky.</p><!--more-->
+<p>In many hosted environments I often find myself restricted.</p>
+<ol>
+<li>I cannot attach a debugger to the running IIS or W3WP process</li>
+<li>I have no access to the event log</li>
+<li>I have no remote access to run programs such as Remote Desktop</li>
+</ol>
+<p>There are good reasons for all these restrictions, and I am not complaining about them per say but they do mean that I have had to develop different techniques for diagnosing problems with a deployed web application in a hosted environment.</p>
+<!--more-->
+<p>I like Enterprise Library, <a>I have covered this before</a>. One of the techniques I use is to extend the exception logging mechanism of enterprise library so that I can</p>
+<p>&nbsp;</p>
+<ol>
+<li>Write exceptions to a text file. I can write to local data areas in the hosted environment. This is provided to local data stores and logging / temp areas</li>
+<li>Add in extra information that will help in a web environment. The standard exception logging in enterprise library is not targeted at a web environment, I have added in many things from the ASP.NET HTTP request object that will help with diagnosing a problem. Much of the code for adding in extra information was inspired and written by Liam Corner, thanks Liam.</li>
+</ol>
+<p>I address the two parts of this mechanism separately. In a <a href="/2008/12/01/rolling-flat-file-trace-listener-with-purging-for-enterprise-library.html">previous post</a> I have looked at the flat file logging with rollover and purging I have written for enterprise library.</p>
+<p>To add in the extra information I have the logged event I have extended the Enterprise Library TextFormatter to add in extra information from the current HTTP context like this.</p>
+<pre class="c#">[ConfigurationElementType(typeof(CustomFormatterData))]
+public class HttpTextFormatter : TextFormatter
+{
+    public HttpTextFormatter(NameValueCollection attributes)
+              : base()
+    {}
+
+    ///
+    /// Adds some HTTP context items,
+    /// then calls the base class to do the formatting.
+    ///
+    public override string Format(
+          Microsoft.Practices.EnterpriseLibrary.Logging.LogEntry log
+        )
+    {
+        // Be VERY careful not to do anything clever in here.
+        // eg if you try to access the DB,
+        // if DB access is broken you could end up in an
+        // infinite loop of logging!
+        try
+        {
+            HttpRequest request = HttpContext.Current.Request;
+            log.ExtendedProperties.Add("Url",
+                                        request.Url.ToString());
+            log.ExtendedProperties.Add("UserHostAddress",
+                                        request.UserHostAddress);
+
+            foreach (string key in request.Headers.AllKeys)
+            {
+                log.ExtendedProperties.Add(
+                       String.Format("Request header '{0}'", key),
+                       request.Headers[key]
+                   );
+            }
+
+            IPrincipal user = HttpContext.Current.User;
+
+            if (user != null)
+            {
+                log.ExtendedProperties.Add("User name",
+                      user.Identity.Name);
+
+                RolePrincipal principal = user as RolePrincipal;
+
+                if (principal != null &amp;&amp; principal.IsRoleListCached)
+                {
+                    // Do not use the RoleProvider here
+                    // in case it throws and logs another exception
+                    log.ExtendedProperties.Add("User roles",
+                          String.Join(",", principal.GetRoles()));
+                }
+            }
+        }
+        catch
+        { }
+
+        return base.Format(log);
+    }
+}</pre>
+<p>The Enterprise Library logging mechanism is a pipeline and all I am doing here is hooking into the pipeline by adding into the ExtendedPropoerties dictionary in the LogEntry. Calling the base class formatter causes Enterprise Library to iterate over this dictionary serialise it into the text file trace listener.</p>
+<p>The extra information I am adding into the log entry is all the HTTP headers and the requested url.</p>
+<p>Next I need to plug the formatter into the application, I did this by using the Enterprise Library configuration like this</p>
+<p><a href="/images/wordpress/ASP.NETexceptionlogginginahostedenvironm_11CC0/httplogging.png"><img style="display: inline; border-width: 0px;" title="httplogging" src="/images/wordpress/ASP.NETexceptionlogginginahostedenvironm_11CC0/httplogging_thumb.png" alt="httplogging" width="481" height="318" border="0" /></a></p>
+<p>The key node is in the logging application block where I specified that for exceptions the formatter to be the HttpTextFormatter described above and the trace listener to be the rolling purging flat file trace listener described here. I also needed to configure the web site such that my web site could write to a folder called &ldquo;Logging&rdquo; below the root, the exceptions would be captured into a file called &ldquo;exceptions.txt&rdquo;.</p>
+<p>Here is an excerpt from the txt file for a 404 error on the web site., it has been reformatted a bit to fit on this page.</p>
+<pre class="c#">----------------------------------------
+  Timestamp: 10/26/2008 6:32:22 AM
+  Message: HandlingInstanceID: 6fe50290-e169-4f4e-8a7a-ec3b2cec1c10
+&lt;Exception&gt;
+&lt;Description&gt;An exception of type 'System.Web.HttpException'
+      occurred and was caught.&lt;/Description&gt;
+&lt;DateTime&gt;2008-10-26 00:32:22Z&lt;/DateTime&gt;
+&lt;ExceptionType&gt;System.Web.HttpException, System.Web,
+      Version=2.0.0.0, Culture=neutral,
+      PublicKeyToken=b03f5f7f11d50a3a&lt;/ExceptionType&gt;
+&lt;Message&gt;The file '/WorldolioWin.aspx' does not exist.
+&lt;/Message&gt;
+&lt;Source&gt;System.Web&lt;/Source&gt;
+&lt;HelpLink /&gt;
+&lt;Property name="ErrorCode"&gt;-2147467259
+&lt;/Property&gt;
+&lt;Property name="Data"&gt;
+      System.Collections.ListDictionaryInternal
+&lt;/Property&gt;
+&lt;Property name="TargetSite"&gt;
+      Void CheckVirtualFileExists(System.Web.VirtualPath)
+&lt;/Property&gt;
+&lt;StackTrace&gt;
+    ... stack trace removed ...
+&lt;/StackTrace&gt;
+&lt;additionalInfo&gt;
+&lt;info name="MachineName"
+       value="NT8"
+   /&gt;
+&lt;info name="TimeStamp"
+       value="10/26/2008 6:32:22 AM"
+   /&gt;
+&lt;info name="FullName"
+     value="Microsoft.Practices.EnterpriseLibrary.ExceptionHandling,
+                   Version=4.0.0.0, Culture=neutral,
+                   PublicKeyToken=31bf3856ad364e35"
+   /&gt;
+&lt;info name="AppDomainName"
+       value="/LM/W3SVC/402/ROOT-1-128694185817341515"
+   /&gt;
+&lt;info name="ThreadIdentity"
+       value=""
+   /&gt;
+&lt;info name="WindowsIdentity"
+       value="NT8\worldolio"
+   /&gt;
+&lt;/additionalInfo&gt;
+&lt;/Exception&gt;
+  Category: Exceptions
+  Priority: 0
+  EventId: 100
+  Severity: Error
+  Title:Enterprise Library Exception Handling
+  Machine: NT8
+  App Domain: /LM/W3SVC/402/ROOT-1-128694185817341515
+  ProcessId: 7096
+  Process Name: c:\windows\system32\inetsrv\w3wp.exe
+  Thread Name:
+  Win32 ThreadId:2964
+  Extended Properties: ASPIMPERSONATING -
+  Url - &lt;a
+   href="http://www.worldolio.com/WorldolioWin.aspx?ctrl=screens"
+   &gt;http://www.worldolio.com/WorldolioWin.aspx?ctrl=screens&lt;/a&gt;
+  UserHostAddress - 65.98.224.4
+  Request header 'Accept' -
+      text/html,
+      text/plain,
+      application/pdf,
+      application/msword,
+      text/rtf,
+      application/vnd.ms-excel,
+      application/vnd.ms-powerpoint
+  Request header 'Accept-Encoding' - gzip, x-gzip
+  Request header 'Host' - www.worldolio.com
+  Request header 'If-Modified-Since' - Sat, 30 Aug 2002 00:00:01 GMT
+  Request header 'User-Agent' - TurnitinBot/2.1
+     (&lt;a href="http://www.turnitin.com/robot/crawlerinfo.html)"
+      &gt;http://www.turnitin.com/robot/crawlerinfo.html)&lt;/a&gt;
+  User name -
+----------------------------------------</pre>
+<p>The section after Extended Properties has been added by the new formatter. It does make it a lot easier to tell what was in the original request that caused the error.</p>
+<p>The formatter and the trace listener for Enterprise Library can be <a href="/downloads/AADProvidersLibrary.zip">downloaded</a> if you want to use them.</p>

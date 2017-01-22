@@ -1,0 +1,121 @@
+---
+layout: post
+title: "Passing Gmail attachments to PhoneGap apps on Android part2"
+date: 2014-02-01 15:42:00 +1300
+published: true
+tags: ["Android", "Web", "Mobile", "JavaScript", "Development"]
+categories: ["Android", "Web", "Mobile", "JavaScript", "Development"]
+alias: ["/derekblog/post/2014/02/01/Passing-Gmail-attachments-to-PhoneGap-apps-on-Android-part2.aspx", "/derekblog/post/2014/02/01/passing-gmail-attachments-to-phonegap-apps-on-android-part2.aspx"]
+---
+<p><a href="http://derekwilson.net/derekblog/post/2014/01/25/Passing-Gmail-attachments-to-PhoneGap-apps-on-Android-part1.aspx">In part 1</a> we had got the data from a Gmail attachment and passed it though the Java native application into the Phonegap JavaScript.</p><!--more-->  <p>On the JavaScript side the code we want to call is in a KnockoutJs view model but the mechanism should be similar for other frameworks. In the main index.html we have</p>  <pre>&lt;script&gt;
+ var enigmaMessaging = new EnigmaViewModel(); 
+ ko.applyBindings(enigmaMessaging);
+&lt;/script&gt;</pre>
+
+<p>And within the EnigmaViewModel we have</p>
+
+<pre>function EnigmaViewModel() {
+
+ var self = this;
+
+ self.handleIntentData = function (data) {
+
+  var object = null;
+        
+  try {
+   object = eval('(' + data + ')');
+  } catch (e) {
+   console.log('JSON parse error: ' + e.message);
+  }       
+
+  if (object.data == null) {
+   return;
+  }
+
+  if (object.data.indexOf('-----BEGIN PGP MESSAGE-----') !== -1) {
+   // we have been passed a message
+   self.displayTabAsActive($(&quot;#decryptTab&quot;));
+   self.encryptedText(object.data);
+   self.decryptMessage(object.data); 
+  }
+ };</pre>
+
+<p>The actual message decryption is done by OpenPGP. The Javascript function that we call is enigmaMessaging.handleIntentData In theory this should work however in practice it does not quite work. In fact when I was testing it in the debugger it worked fine but when run normally it did not. The problem is that we cannot just call the Phonegap JavaScript before the application has started up properly. If we do then there is no error but nothing happens. The solution is instead of pushing the data into the JavaScript we need to pull it from the native Java code but only when the JavaScript application has started up. So we need to change the Javascript view model like this </p>
+
+<pre>function EnigmaViewModel() {
+
+ var self = this;
+
+ self.onDeviceReady = function () {
+  // Now safe to use the PhoneGap API
+  // notify the native shell we are ready
+  window.MainActivity.deviceReady();
+ };
+
+ // code
+ document.addEventListener(&quot;deviceready&quot;, self.onDeviceReady, false);
+}</pre>
+
+<p>The onDeviceReady method will only be called when the Phonegap JavaScript application has been fully initialised and is ready to go. We then calla method called deviceReady in the native Java code that will in turn call the handleIntentData method shown above. In reality there is only one EnigmaViewModel. To hook up the method in the native code the first thing we need to do is to make our class callable from JavaScript we do this by calling addJavascriptInterface, note that MainActivity is the namespace we will use in JavaScript. Also note that we have removed the call to pushDataToJavascript. </p>
+
+<pre>@Override
+ public void onCreate(Bundle savedInstanceState)
+ {
+  super.onCreate(savedInstanceState);
+  super.init();
+
+  // make us callable from JS
+  appView.addJavascriptInterface(this, &quot;MainActivity&quot;); 
+
+  // Set by <content src="index.html" /> in config.xml
+  super.loadUrl(Config.getStartUrl());
+
+  super.appView.getSettings().setBuiltInZoomControls(true);
+  super.appView.getSettings().setDefaultZoom(ZoomDensity.MEDIUM);
+  super.appView.getSettings().setSupportZoom(true);
+
+  // handle and data that was passed to the application
+  intent_uri = getIntent().getData();
+  if (intent_uri != null)
+  {
+   getIntent().setData(null);
+   try
+   {
+    intent_data = importData(intent_uri);
+   }
+   catch (Exception e)
+   {
+    Log.e(&quot;EnigmaPOC&quot;, &quot;Error processing intent data: &quot; + e.getMessage());
+    finish(); 
+    return;
+   }
+  }
+ }</pre>
+
+<p>Next we need to write the deviceReady method which is pretty much the same as the old pushDataToJavascript method.</p>
+
+<pre>@JavascriptInterface
+public void deviceReady()
+{
+ if (intent_data == null)
+ {
+  Log.i(&quot;EnigmaPOC&quot;, &quot;No Intent Data&quot;);
+  return;
+ }
+    	
+ JSONObject data = new JSONObject();
+ try {
+  data.put(&quot;uri&quot;, intent_uri.toString());
+  data.put(&quot;data&quot;, intent_data);
+ } catch (JSONException e) {
+  Log.e(&quot;EnigmaPOC&quot;, &quot;JSON error&quot; + e.getMessage());
+ }
+
+ String statement = String.format(
+  &quot;enigmaMessaging.handleIntentData('%s');&quot;,
+  data.toString());
+
+ this.sendJavascript(statement);
+}</pre>
+
+<p>This mechanism always works because the JavaScript application is always given time to start up. There is an important change: the addition of the @JavascriptInterface annotation. If this is not added then the whole thing will work on older Android devices but not if you target Jelly Bean or newer devices. This is covered in the <a href="http://developer.android.com/guide/webapps/webview.html">Android documentation</a></p>

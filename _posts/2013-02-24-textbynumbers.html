@@ -1,0 +1,52 @@
+---
+layout: post
+title: "TextByNumbers"
+date: 2013-02-24 18:29:00 +1300
+published: true
+tags: ["Android", "Development", "Mobile", "Web"]
+categories: ["Android", "Development", "Mobile", "Web"]
+alias: ["/derekblog/post/2013/02/24/TextByNumbers.aspx", "/derekblog/post/2013/02/24/textbynumbers.aspx"]
+---
+<p>I&rsquo;ve been taking a break from <a href="https://bitbucket.org/derekwilson/podcastutilities" target="_blank">PodcastUtilities</a> to start work on a new project TextByNumbers. TextByNumbers is designed to enable people putting together letters / emails / SMS messages from snippets that the user can easily produce. Its should be useable on phones with or without a data connection.</p><!--more-->
+<p>I did think of writing a native app, I guess it would be an android app as I have an adroid phone but then I thought that I could do something cross platform if I used <a href="http://www.w3.org/html/wg/drafts/html/master/single-page.html" target="_blank">HTML5</a>. I selected <a href="http://jquerymobile.com/" target="_blank">JQuery Mobile</a> and <a href="http://knockoutjs.com/" target="_blank">Knockoutjs</a> for my architecture. So I have come up with the <a href="http://apptest.derekwilson.net/tbn/index.html" target="_blank">first cut version of the app</a>. The basic functionality has been done and the app does work and has a couple of users already</p>
+<p><a href="/images/tbn1.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border-width: 0px;" title="tbn1" src="/images/tbn1_thumb.png" alt="tbn1" width="299" height="252" border="0" /></a></p>
+<h3>Key features</h3>
+<ol>
+<li>As its HTML5 it works on modern smartphones and desktops and tablets</li>
+<li>It is entirely client side code there is no server side code at all, the web server is just used to deliver static content.</li>
+<li>It is an offline app using an appcache so that it will work when disconnected from the network</li>
+<li>The format of the snippets is a JSON packet meaning that its pretty easy to drop in a new set of snippets &ndash; see below</li>
+</ol>
+<p>Catagories</p>
+<pre>[
+{"CatagoryId":1,"Display":"Query Type"},
+{"CatagoryId":2,"Display":"Impact"},
+{"CatagoryId":3,"Display":"Action"},
+{"CatagoryId":4,"Display":"Timescale"}
+]</pre>
+<p>Snippets</p>
+<pre>[
+{"CatagoryId":1,"Display":"I have got your email"},
+{"CatagoryId":1,"Display":"I have received a report from a customer on {DATE} at {TIME}"},
+{"CatagoryId":2,"Display":"The system is completely down"},
+{"CatagoryId":2,"Display":"I cannot reproduce this problem"},
+{"CatagoryId":2,"Display":"There is an issue, however there is a workaround"},
+{"CatagoryId":2,"Display":"I do not understand the impact of the problem yet"},
+{"CatagoryId":3,"Display":"We must fix production as soon as possible"},
+{"CatagoryId":3,"Display":"We can live with the workaround until tomorrow"},
+{"CatagoryId":3,"Display":"This needs to be raised as a defect"},
+{"CatagoryId":4,"Display":"I will contact you again in one hour"},
+{"CatagoryId":4,"Display":"We can discuss this tomorrow"},
+{"CatagoryId":4,"Display":"Let me know the issue number and I will prioritise the fix"},
+]</pre>
+<h3>Main things I learnt</h3>
+<ol>
+<li><a href="http://derekwilson.net/derekblog/post/2012/10/20/appcache-MIME-type-for-IIS.aspx" target="_blank">appcache is not a configured MIME type by default in IIS7</a> &ndash; sigh</li>
+<li>Chrome is by far and away the easiest browser to debug in &ndash; it has direct support for appcache files</li>
+<li>The appcache must be updated to force the browser to reload all the content from the server &ndash; only after the new appcache is downloaded will the new content be fetched, this meant when a new version is deployed you will have to press F5 twice in the browser</li>
+<li>In general phone based browsers are a bit more flaky than desktop, for instance some times I have to manually empty the cache to get the app updated, sometime my local storage will go away etc.</li>
+<li>I used JQuery Mobile and Knockoutjs and at times they got in each others way. I will do a separate blog post of the tweaking that I found myself doing.</li>
+<li>Prepopulating an SMS message does not work on older Samsung phones due to a bug in its implementation of the SMS protocol, I&rsquo;ve had no problems with my HTC handsets and apparently Samsung have fixed this in their handsets that use version 4 of Android. It does not work on iOS &ndash; as far as I can tell this is by design so it will probably never be fixed. However a manual cut and paste method can be used and is still quicker than typing text from scratch</li>
+</ol>
+<h3>Conclusion</h3>
+<p>In general the platform was pretty much what I was expecting its still an immature architecture by comparison to .NET development or even native development however I think that the results are completely acceptable (I&rsquo;ll will await user feedback) and I can see that for some scenarios that the significantly lower cost against native development will be compelling. As it stands at the moment I think that a native app will deliver a more polished solution, but will require multiple implementations across the market place (iOS, Android, Windows Phone etc).&nbsp;</p>

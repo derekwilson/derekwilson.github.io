@@ -1,0 +1,30 @@
+---
+layout: post
+title: "Medium Trust, SQLServer CE, log4net and NHibernate"
+date: 2012-06-22 17:20:00 +1200
+published: true
+tags: ["Development", "Enterprise Library", "Web"]
+categories: ["Development", "Enterprise Library", "Web"]
+alias: ["/derekblog/post/2012/06/22/Medium-Trust-SQLServer-CE-log4net-and-NHibernate.aspx", "/derekblog/post/2012/06/22/medium-trust-sqlserver-ce-log4net-and-nhibernate.aspx"]
+---
+<p>I have been moving hosting provider to <a href="http://www.godaddy.com/">godaddy</a>. Easily the biggest hurdle to overcome has been medium trust. <a href="http://support.godaddy.com/help/article/1039/what-is-medium-trust-level-and-how-does-it-affect-my-hosting-account">Enforcing medium trust policy</a> is a common approach in shared hosting environments the intention being to stop applications from trampling on each other. The existing site were a mixture of web applications and static pages that used a mix of technologies.</p><!--more-->
+<h3><a href="http://derekwilson.net/index.html">Static pages</a></h3>
+<p>Obviously no real problem moving these, though they were redesigned on the way.</p>
+<h3><a href="http://derekwilson.net/derekblog/">Blog</a> &ndash; BlogEngine.NET</h3>
+<p>Part of the main reason for me to move was to get away from Wordpress and move to <a href="http://www.dotnetblogengine.net/">Blogengine.NET</a>, Blogengine.NET seemed to pretty much work fine except that it ran very slowly until I made the following <a href="http://blogengine.codeplex.com/discussions/252956">change to the web.config</a>, though I don&rsquo;t think that this had anything to do with medium trust.</p>
+<pre class="csharp">    &lt;system.webserver&gt;
+      &lt;urlcompression dostaticcompression="false" dodynamiccompression="false" /&gt;
+    &lt;/system.webserver&gt;</pre>
+<h3><a href="http://derekwilson.net/books/author/1">Books</a> &ndash; SQL Server CE4 and NHibernate</h3>
+<p>This used a NHibernate repository pattern over a SQLite DB. I could not find any way of <a href="http://sqlite.phxsoftware.com/forums/p/457/1931.aspx">getting SQLite to work in a medium trust environment</a>. Whereas one of the big ticket items in <a href="http://weblogs.asp.net/scottgu/archive/2010/06/30/new-embedded-database-support-with-asp-net.aspx">CE4 is its ability to run in Medium Trust</a>. It turns out that it was reasonably easy to migrate from SQLite to CE &ndash; I had scripted the SQLite DB so I just had to tweak the script. I made use of the rather excellent <a href="http://sqlcetoolbox.codeplex.com/">SQLCEToolbox</a>.</p>
+<p>NHibernate really did do its job in that the new DB worked without any code change &ndash; however I did find that the performance of CE4 was much slower than SQLite so in the end I had to tweak the way I was retrieving information and ended up modifying my HQL. The only slightly complex part is that all the <a href="http://msdn.microsoft.com/en-us/library/gg286946.aspx">DLLs for CE4 must be copied to the local BIN folder</a> on the web site &ndash; the easiest method is to <a href="http://www.bartlannoeye.be/blog/deploying-your-site-with-sql-ce-4.0-to-shared-webhosting-part-2">Add Deployable Dependencies</a></p>
+<p>NHibernate was a different matter &ndash; as I said it worked fine locally when I swapped databases however it would not work in medium trust. It turns out that <a href="http://stackoverflow.com/questions/1956190/godaddy-com-shared-hosting-with-nhibernate-and-mvc-1-0">others had run into the same problems</a> and that the root of the problem was in the lazy generation of proxies, and also that the DLLs need to be marked to AllowPartiallyTrustedCallers. There is a <a href="http://nhforge.org/wikis/howtonh/pre-generate-lazy-loading-proxies.aspx">project to pre generate proxies</a> but I could not get it to work.</p>
+<p>Then I found <a href="http://iamdotnetcrazy.blogspot.co.nz/2010/09/how-to-get-fluent-nhibernate-nhibernate.html">this article</a> &ndash; its genius Option 4 &ndash; use somebody else&rsquo;s files. It worked a treat. I just referenced the borrowed DLLs and everything was fine</p>
+<p>I did need to move my configuration into my web.config &ndash; did this for a lot of things. The config sections need the requirePermission attribute setting to false, as you can see I also did this for log4net, there probably is a way to apply this to an external file but in the end I just put it all in one file for a quiet life.</p>
+<pre class="csharp">  &lt;configSections&gt;
+    &lt;section name="hibernate-configuration" requirePermission="false" type="NHibernate.Cfg.ConfigurationSectionHandler, NHibernate"/&gt;
+    &lt;section name="log4net" requirePermission="false" type="log4net.Config.Log4NetConfigurationSectionHandler, log4net"/&gt;
+  &lt;/configSections&gt;</pre>
+<h3><a href="http://derekwilson.net/worldolio/default.aspx">Worldolio</a> &ndash; log4net and System.Runtime.Caching</h3>
+<p>Worldolio is an shareware product I was also moving it to the new host. It made use of EnterpriseLibrary for caching and logging. I have liked EnterpriseLibrary for a long time but I could not get it to work in a medium host environment. In the and it appeared that the <a href="http://www.devx.com/dotnet/Article/32951/1763/page/2">instructions presumed that I could redefine Medium trust</a> to add extra permissions &ndash; I think that in a real shared hosting environment this would not be the case.</p>
+<p>So I decided to bite the bullet and replace EnterpriseLibrary logging with log4net and caching with System.Runtime.Caching Pretty much the only thing that needed doing for log4net was adding requirePermission into the web.config and the System.Runtime.Caching worked fine from the word go.</p>

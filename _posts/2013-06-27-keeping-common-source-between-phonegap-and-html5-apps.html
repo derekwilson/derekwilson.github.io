@@ -1,0 +1,106 @@
+---
+layout: post
+title: "Keeping common source between Phonegap and HTML5 apps"
+date: 2013-06-27 00:25:00 +1200
+published: true
+tags: ["Android", "Development", "JavaScript", "Mobile", "Web"]
+categories: ["Android", "Development", "JavaScript", "Mobile", "Web"]
+alias: ["/derekblog/post/2013/06/27/Keeping-common-source-between-Phonegap-and-HTML5-apps.aspx", "/derekblog/post/2013/06/27/keeping-common-source-between-phonegap-and-html5-apps.aspx"]
+---
+<p>I have written a small utility app to help compose SMS texts and emails out of text snippets &ndash; <a href="http://derekwilson.net/derekblog/post/2013/02/24/TextByNumbers.aspx" target="_blank">TextByNumbers</a>. Initially I created this as an <a href="http://apptest.derekwilson.net/tbn/index.html" target="_blank">HTML5 app</a> using jQueryMobile and Knockout.js. It seems to work OK in its HTML5 form however I wanted to explore how easy it was to get into natively hosted apps using <a href="http://phonegap.com/" target="_blank">Phonegap</a>. The app is completely client side &ndash; the server is only used to serve files - so it should be easy to port. There were some advantages I was looking for by being native</p><!--more-->
+<ol>
+<li>HTML5 apps depend upon the support offered by the browser which can be patchy</li>
+<li>HTML5 offline apps can be &ldquo;uninstalled&rdquo; if the browser cache is flushed</li>
+<li>HTML5 offers no real method of reading or writing to local storage, as I have not implemented a snippet editor within the app (text needs to edited externally this means that snippets need to be edited, uploaded to the server and then cached which is cumbersome.</li>
+</ol>
+<p>In contrast Phonegap apps</p>
+<ol>
+<li>Offer uniform support, for instance Samsung phones running Android 2 do not implements the sms:// protocol properly however from phonegap this protocol does work.</li>
+<li>Are not reliant on a shared cache for its program assets (HTML, JS etc)</li>
+<li>Phonegap enables snippets to be edited externally (either on the phone or on a PC) and then stored on the local SD card. TextByNumbers then reads the snippets from local storage</li>
+</ol>
+<p>Phonegap is a half-way house between HTML5 Applications and full native applications. It wraps the HTML / CSS / JavaScript assets in a chromeless browser. There is an <a href="http://derekwilson.net/downloads/textbynumbers.zip" target="_blank">apk file</a> for Android phones if you want to have a go (at your own risk).</p>
+<p>I was interested to find out how painless this process was and also how much code could be shared. It turns out that pretty much all of the code could be shared in fact I did not want to maintain separate assets for each version so I worked out the minimal set of changes needed to keep common source files.</p>
+<h3>Appcache reference</h3>
+<p>I needed to have an appache reference for the HTML5 app running in a browser, however this would be not used by phonegap. Luckily I just always include the reference and phonegap does not trip up. I only actually include the appcache file on the HTML5 app web site not in the native application. Like so</p>
+<pre>&lt;!DOCTYPE html&gt;
+&lt;html manifest="txt.appcache"&gt;
+	&lt;head&gt;</pre>
+<h3>Working out how the app is being run</h3>
+<p>I already had an Environment object so I extended it to have methods for determining which environment I was running in. There are two modes of operation for the app</p>
+<ol>
+<li>HTML5 app <br />Running in a browser. <br />URLs are HTTP:// based <br />Where everything including the snippets are served from the appcache</li>
+<li>Phonegap app <br />Running as a native mobile application. <br />An embedded browser with FILE:// based URLs <br />Where the snippets are loaded from local storage</li>
+</ol>
+<pre>self.isPhoneBrowser = function() {
+ return navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/);
+};
+
+self.isNetworkUrl = function() {
+ return !(document.URL.indexOf( 'http://' ) === -1 &amp;&amp; document.URL.indexOf( 'https://' ) === -1);
+}
+
+self.shouldUsePhoneGap = function() {
+ // only use phonegap / cordova if its a file URL in a mobile browser
+ return !self.isNetworkUrl() &amp;&amp; self.isPhoneBrowser();
+}</pre>
+<p>I also added a method that would effectively check if the cordova (phonegap) JavaScript had been loaded and a knockout bound property appVersion (which is the code version displayed on the footer of each page) that is suffixed with the mode we are running in, &ldquo;p&rdquo; for phonegap and &ldquo;b&rdquo; for browser.</p>
+<pre>self.isPhoneGap = ko.computed(function() {
+ return window.cordova != null;
+}, this);
+
+self.appVersion = ko.computed(function() {
+ return '341' + (self.isPhoneGap() ? '(p)' : '(b)');
+}, this);</pre>
+<h3>Including Phonegap / Cordova JavaScript</h3>
+<p>I did not want to include any phonegap JavaScript if the app was being run in a browser so I went old school and added the script reference using document.write like this</p>
+<pre>&lt;script src="viewmodel/environment.js" type="text/javascript"&gt;&lt;/script&gt;
+
+&lt;script language="javascript" type="text/javascript"&gt;
+if ((new Environment()).shouldUsePhoneGap()) {
+  document.write("&lt;script type='text/javascript' charset='utf-8' src='cordova-2.7.0.js'&gt;&lt;\/script&gt;");
+}			
+&lt;/script&gt;</pre>
+<p>Also there is some <a href="http://jquerymobile.com/demos/1.1.0/docs/pages/phonegap.html" target="_blank">general advice on using phonegap and jQueryMobile</a> that I included</p>
+<pre>&lt;!-- Since jQuery Mobile relies on jQuery core's $.ajax() functionality,
+ $.support.cors &amp; $.mobile.allowCrossDomainPages must be set to true to tell
+ $.ajax to load cross-domain pages. --&gt;
+&lt;script type="text/javascript"&gt;
+ if ((new Environment()).shouldUsePhoneGap()) {
+   $(document).bind("mobileinit", function () {
+     $.support.cors = true;
+     $.mobile.allowCrossDomainPages = true;
+   });
+ };
+&lt;/script&gt;</pre>
+<h3>Hooking deviceready</h3>
+<p>There is a danger in attempting to use cordova / phonegap functionality before the JavaScript has initialised. For many pages this is not an issue as they are only using HTML5, jQueryMobile and Knockout assets and resources. However the snippets page needs to read the snippets from local storage if we are running as a phonegap app and that requires phonegap functionality. The deviceready event is the mechanism that should be used.</p>
+<pre>self.onDeviceReady = function () {
+ // Now safe to use the PhoneGap API
+ console.log("Device Ready...");
+ self.catagoryFile = new TextFileIO("tbn","catagory.txt");
+ self.snippetsFile = new TextFileIO("tbn","snippets.txt");
+ self.catagoryFile.readJSON(self.loadCatagories);
+};
+
+if (self.environment.shouldUsePhoneGap()) {
+ document.addEventListener("deviceready", self.onDeviceReady, false);
+}
+
+$( '#home' ).live( 'pageinit',function(event){
+ // need to do this here as we do not store the snippets in persistant storage
+ // only do it on the page init as the page show event fires when backing out of the list view
+ if (!self.environment.isPhoneGap()) {
+  self.catagoryDataSource.getData(false, self.loadCatagories);
+ }
+});</pre>
+<p>We use the TextFileIO objects, categoryFile and snippetsFile if we are a phonegap app and after the deviceready event has fired. If we are an HTML5 app then we just hang off the usual jQueryMobile event pageinit and load the data from an ajax call using the categoryDataSource object.</p>
+<h3>Unit Tests</h3>
+<p>It turns out that generated new phonegap app has support for a jasmine unit test runner and so I also included the unit tests in both versions.</p>
+<h3>The source files</h3>
+<p>I started from getting all the assets together that are needed to work with phonegap these are stored in &lt;repo_root&gt;\phonegap\android\assets\www and look like this</p>
+<p><a href="/images/phonegap.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="phonegap" src="/images/phonegap_thumb.png" alt="phonegap" width="244" height="180" border="0" /></a></p>
+<p>These files are built into the apk (or other deployable native app)</p>
+<p>To release the HTML5 version to the web server I just copy www folder to my host and add in the following extra files</p>
+<p><a href="/images/html5.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="html5" src="/images/html5_thumb.png" alt="html5" width="244" height="200" border="0" /></a></p>
+<p>Then I can replace the categories and snippets in their text files in the data folder with a set than match my needs.</p>

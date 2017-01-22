@@ -1,0 +1,124 @@
+---
+layout: post
+title: "Using Microsoft Fakes to test legacy code"
+date: 2015-06-24 02:29:00 +1200
+published: true
+tags: ["Code Generation", "Development"]
+categories: ["Code Generation", "Development"]
+alias: ["/derekblog/post/2015/06/24/Using-Microsoft-Fakes-to-test-legacy-code.aspx", "/derekblog/post/2015/06/24/using-microsoft-fakes-to-test-legacy-code.aspx"]
+---
+<p>Recently I needed to do some maintenance work on some old code that was not written with unit testing in mind and had not been structured to enable testing, for example there was no inversion of control.</p><!--more-->  <p>Ideally I would have restructured the code to isolate it from external dependencies however this would have required a large QA resource cost to perform regression testing on the restructured code, and there were no existing unit tests to help. Another option is to just add more code without any tests. I was unhappy writing untested code but there was not enough recourse available to restructure the code so I took the opportunity to explore using Microsoft Fakes to isolate and test legacy code.</p>  <p>The structure of the code was like this</p>  <pre>public SoapServiceClient DataService
+{
+ get
+ {
+  if (_dataService == null)
+  {
+   _dataService = new SoapServiceClient();
+  }
+  return _dataService;
+ }
+}
+
+public DataXml GetDataXml(DataRequest request)
+{
+ DataXml data = new DataXml();
+
+ try
+ {
+  data = DataService.GetDataFromRequest(request);
+  BusinessLogic(data);
+ }
+ catch (WebException ex)
+ {
+  data.SetCallStatus(ex);
+  Logger.LogError(ex);
+ }
+ return data;
+}</pre>
+
+<p>Where the DataService is a SOAP service client that makes a network call and returns XML, the call to GetDataFromRequest sends an HTTP request to the service and gets its response back as XML. The objective here is to be able to write tests that will be able to explore the behaviour in the BusinessLogic() method, and also the exception processing mechanism. This code has been simplified from the real production code and restructuring it to use dependency injection of the DataService property would not be straightforward.</p>
+
+<p>We can test this code using Microsoft Fakes without making any changes to this code. The tests were written in a separate assembly. The test assembly has a reference to Microsoft.QualityTools.Testing.Fakes which enables tests to be written.</p>
+
+<p>Its worth noting that Fakes are <a href="https://www.visualstudio.com/en-us/products/compare-visual-studio-products-vs.aspx">only supported by VS 2012/2013 Ultimate and Premium</a>, they are not available in Professional or Express editions. Though there is a <a href="https://visualstudio.uservoice.com/forums/121579-visual-studio/suggestions/3619488-provide-microsoft-fakes-with-all-visual-studio-edi">uservoice page asking for it to be extended</a> so you might want to vote the feature up. We right click on the assembly we want to generate fakes for, the one that contains the above code, and then we select Add Fakes Assembly. This only need to be done when we are writing tests the generated assembly does not need to be regenerated every time we want to run.</p>
+
+<pre>[Test]
+public void Will_return_an_error_in_xml_when_an_error_is_thrown_in_the_dataservice()
+{
+ // screwy microsoft magic
+ using (ShimsContext.Create())
+ {
+  // arrange
+  _request = new TestRequest();
+  _exceptionToThrow = new WebException(&quot;TEST&quot;,WebExceptionStatus.Timeout);
+  ShimDataService();
+
+  // act
+  DataXml xml = _serviceProxy.GetDataXml(_request);
+
+  // assert
+  xml.Should().NotBeNull(&quot;because the error should be handled&quot;);
+  xml.CallStatus.Should().Be(_c_error_with_service);
+ }
+}
+
+private void ShimDataService()
+{
+ // stop the proxy from being called - the proxy is in the global namespace
+ Global.Fakes.ShimDataService.AllInstances.GetDataFromRequestRequest =
+  (SoapServiceClient dataService, Request request) =&gt;
+   {
+    if (_exceptionToThrow != null)
+    {
+     throw _exceptionToThrow;
+    }
+    return _dataToReturn;
+   };
+}</pre>
+
+<p>The call to ShimsContext.Create invokes the Microsoft magic that gets the whole fakes mechanism to work. All tests must be placed in the using block for the magic to work. </p>
+
+<p>The method ShimDataService then intercepts the call to the real DataService, so no HTTP requests are made, instead we either throw an exception or return specimen data. This enables us to be able to exercise the expected behaviours without the need for any external dependencies. The name of the method we intercept is GetDataFromRequestRequest which is the name of the method with the types of the parameters suffixed, this is so that we can distinguish between overloaded calls of the same name.</p>
+
+<p>When building the test assembly it can be slow to generate fakes for all classes in the specified assembly to be faked. To overcome this I have configured the tests to only generate fakes for the classes we are interested in. We do this by editing the configuration file in the Fakes folder of the tests assembly. The file is called &lt;DLLNAME&gt;.fakes, where the DLLNAME is the name of the assembly that we added the fakes for. Mine looked a bit like this.</p>
+
+<pre>&lt;Fakes xmlns=&quot;http://schemas.microsoft.com/fakes/2011/&quot; Diagnostic=&quot;true&quot;&gt;
+ &lt;Assembly Name=&quot;MyProductionCode&quot;/&gt;
+ &lt;!-- only generate the fakes we need --&gt;
+ &lt;StubGeneration&gt;
+  &lt;Clear/&gt;
+ &lt;/StubGeneration&gt;
+ &lt;ShimGeneration&gt;
+  &lt;Clear/&gt;
+  &lt;Add FullName=&quot;SoapServiceClient&quot;/&gt;
+  &lt;Add FullName=&quot;ServiceProxy&quot;/&gt;
+  &lt;Remove TypeName=&quot;IExceptionResponse&quot; /&gt;
+ &lt;/ShimGeneration&gt;
+&lt;/Fakes&gt;</pre>
+
+<p>Within the ShimGeneration we use Clear to remove all the classes the fakes generator has reflected from the assembly, then we Add back in the ones we want to generate fakes for. We also need to remove any type3s that cannot be generated. The Diagnostic=true will help spot any generation errors.</p>
+
+<p>In summary fakes can be great at testing production legacy code without refactoring. The main advantages are</p>
+
+<ol>
+  <li>The production code does not need to be changed just so it can be tested (though we should consider restructuring code so it is easier to test but that can be done when we want to) </li>
+
+  <li>Any funky code is isolated in the test assemblies </li>
+
+  <li>We can test business logic piece by piece until we have more confidence in our code coverage. This will make any future refactoring or upgrading of environment much less painful</li>
+
+  <li>We can write tests.&#160; <br /></li>
+</ol>
+
+<p>There are some disadvantages that we need to bear in mind.</p>
+
+<ol>
+  <li>These tests must be run by the Microsoft test runner. We cannot use the NUnit /Resharper runner, <a href="http://stackoverflow.com/questions/19385037/microsoft-fakes-wont-run-in-normal-unit-test-contexts">though Fakes are now supported by NCrunch</a>. 
+
+    <br />Though to be clear we can use NUnit/FluentAssertions testing framework but we must use the MS runner and the NUnit adapter. </li>
+
+  <li>Its <a href="https://www.visualstudio.com/en-us/products/compare-visual-studio-products-vs.aspx">only available in VS2012/2013 Ultimate and Premium editions</a>. </li>
+
+  <li>It could, in the wrong hands, encourage people to write tightly coupled code as it can be shimmed later. This technique should only be used with existing legacy code that would be too expensive in terms of regression testing to restructure, its not a device for writing new legacy code. 
+    <br /></li>
+</ol>

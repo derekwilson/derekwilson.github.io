@@ -1,0 +1,110 @@
+---
+layout: post
+title: "Running JUnit unit tests from Ant"
+date: 2014-10-20 01:29:00 +1300
+published: true
+tags: ["Android", "Development", "MeasureMe"]
+categories: ["Android", "Development", "MeasureMe"]
+alias: ["/derekblog/post/2014/10/20/Running-JUnit-unit-tests-from-Ant.aspx", "/derekblog/post/2014/10/20/running-junit-unit-tests-from-ant.aspx"]
+---
+<p>Having written <a href="http://derekwilson.net/derekblog/post/2014/09/19/Unit-Testing-in-native-Android-apps.aspx">unit tests for the Java business logic classes</a>, the next piece of the puzzle is to be able to run the tests from a command line build so that they can then be run on a build server or continuous integration server. Remember that these tests are pure logic tests and have no UI, also that they make use of <a href="http://robolectric.org">RoboElectric</a> to enable the tests to be run in a desktop JRE and do not require an emulator or device to be launched.</p><!--more-->
+<p>My development environment is Eclipse/Ant and I had already <a href="http://derekwilson.net/derekblog/post/2014/08/04/Build-configurations-in-native-Android-apps-using-Ant.aspx">setup an Ant script to build release and debug configurations</a> from the command line. I needed to extend the custom_rules.xml so that it would run the unit tests before building the release.</p>
+<p>I added a CI target to do this</p>
+<pre>&lt;!-- CI build --&gt;
+&lt;target name="ci" depends="clean, prod, run_tests"&gt;
+&lt;/target&gt;</pre>
+<p>This is pretty much the same as a release/production build, the new piece being run_tests which is implemented like this</p>
+<pre>&lt;!-- test project --&gt;
+&lt;property name="app.project.libs.dir" value="libs/"/&gt;
+&lt;property name="test.project.libs.dir" value="./tests/libs/"/&gt;
+&lt;property name="test.project.build.dir" value="./tests/bin/"/&gt;
+&lt;property name="test.project.source.dir" value="./tests/src/"/&gt;
+&lt;property name="android.project.classpath" value="./bin/classes/"/&gt;
+&lt;property name="test.report.dir" value="./test-reports/"/&gt;
+&lt;property name="test.html.dir" value="./test-report-html/"/&gt;
+
+&lt;!-- should I need to do this or is there a better way --&gt;
+&lt;filelist id="app_jars" dir="${app.project.libs.dir}"&gt;
+ &lt;file name="slf4j-api-1.7.5.jar"/&gt;
+ &lt;file name="roboguice-2.0.jar"/&gt;
+ &lt;file name="javax.inject.jar"/&gt;
+ &lt;file name="jsr305-1.3.9.jar"/&gt;
+ &lt;file name="guice-3.0-no_aop.jar"/&gt;
+ &lt;file name="android-support-v4.jar"/&gt;
+&lt;/filelist&gt;
+
+&lt;filelist id="android_jars" dir="${test.project.libs.dir}"&gt;
+ &lt;file name="android.jar"/&gt;
+ &lt;file name="maps.jar"/&gt;
+&lt;/filelist&gt;
+
+&lt;!-- Note 
+ we use slf4j-nop-1.7.5.jar as we do not want/need to log during unit tests 
+ we need to reference android-support-v7-appcompat.jar
+  as it is attached as a project reference in the main app
+--&gt;
+&lt;filelist id="libs_jars" dir="${test.project.libs.dir}"&gt;
+ &lt;file name="junit.jar"/&gt;
+ &lt;file name="hamcrest.jar"/&gt;
+ &lt;file name="robolectric-2.2-jar-with-dependencies.jar"/&gt;
+ &lt;file name="android-support-v7-appcompat.jar"/&gt;
+ &lt;file name="slf4j-nop-1.7.5.jar"/&gt;
+&lt;/filelist&gt;
+
+&lt;path id="test_classpath"&gt;
+ &lt;pathelement path="${test.project.build.dir}"/&gt;
+ &lt;pathelement path="${android.project.classpath}"/&gt;
+ &lt;!-- junit.jar must come before android.jar! --&gt;
+ &lt;filelist refid="libs_jars"/&gt;
+ &lt;filelist refid="android_jars"/&gt;
+ &lt;filelist refid="app_jars"/&gt;
+&lt;/path&gt;
+
+&lt;target name="init_test"&gt;
+ &lt;tstamp/&gt;
+ &lt;mkdir dir="${test.project.build.dir}"/&gt;
+&lt;/target&gt;
+
+&lt;target name="compile_test" depends="init_test" description="compile test source"&gt;
+ &lt;javac srcdir="${test.project.source.dir}" destdir="${test.project.build.dir}"
+     debug="true" includeantruntime="true"&gt;
+  &lt;classpath refid="test_classpath" /&gt;
+ &lt;/javac&gt;
+&lt;/target&gt;
+
+&lt;target name="test" depends="compile_test" description="Run JUnit tests"&gt;
+ &lt;mkdir dir="${test.report.dir}"/&gt;
+ &lt;echo message="Running JUnit Tests in directory ${test.project.source.dir}..."/&gt;
+ &lt;junit showoutput="true" printsummary="yes" failureproperty="junit.failure"
+     fork="yes" forkmode="once" maxmemory="512m"&gt;
+  &lt;formatter type="plain"/&gt;
+  &lt;formatter type="xml"/&gt;
+  &lt;batchtest todir="${test.report.dir}"&gt;
+   &lt;fileset dir="${test.project.source.dir}"&gt;
+    &lt;include name="**/*Test.java"/&gt;
+    &lt;include name="**/*Tests.java"/&gt;
+   &lt;/fileset&gt;
+  &lt;/batchtest&gt;
+  &lt;classpath refid="test_classpath"/&gt;
+ &lt;/junit&gt;
+ &lt;fail if="junit.failure" message="Unit test(s) failed. See reports in ${test.report.dir}"/&gt;
+&lt;/target&gt;
+
+&lt;target name="clean_test" description="Clean Up" &gt;
+ &lt;delete dir="${test.project.build.dir}"/&gt;
+ &lt;delete dir="${test.report.dir}"/&gt;
+ &lt;delete dir="${test.html.dir}"/&gt;
+ &lt;delete file="${basedir}/tmp/cached-robolectric-classes.jar"/&gt;
+&lt;/target&gt;
+
+&lt;target name="run_tests" depends="clean_test, test" description="Generate JUnit HTML reports"&gt;
+ &lt;mkdir dir="${test.html.dir}"/&gt;
+ &lt;junitreport todir="${test.report.dir}"&gt;
+  &lt;fileset dir="${test.report.dir}" includes="TEST-*.xml"/&gt;
+  &lt;report format="frames" todir="${test.html.dir}"/&gt;
+ &lt;/junitreport&gt;  
+&lt;/target&gt;    </pre>
+<p>The properties at the start configure directory structure of the android project and the test project, in my case the structure looks like this.</p>
+<p><a href="/images/test%20structure.png"><img style="display: inline; border: 0px;" title="test structure" src="/images/test%20structure_thumb.png" alt="test structure" width="187" height="347" border="0" /></a></p>
+<p>And running the tests from the command line generates a report in XML and a rendered HTML version.</p>
+<p><a href="/images/test%20results.png"><img style="display: inline; border: 0px;" title="test results" src="/images/test%20results_thumb.png" alt="test results" width="332" height="204" border="0" /></a></p>

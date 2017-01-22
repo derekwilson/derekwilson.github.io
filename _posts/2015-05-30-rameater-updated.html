@@ -1,0 +1,20 @@
+---
+layout: post
+title: "RamEater updated"
+date: 2015-05-30 17:53:00 +1200
+published: true
+tags: ["Android", "Development", "RamEater"]
+categories: ["Android", "Development", "RamEater"]
+alias: ["/derekblog/post/2015/05/30/RamEater-updated.aspx", "/derekblog/post/2015/05/30/rameater-updated.aspx"]
+---
+<p>Last month the <a href="http://derekwilson.net/derekblog/post/2015/04/20/RamEater-released.aspx">first version of RamEater was released</a>.</p><!--more-->  <p>I’ve done a bit of polishing of the code. The main change has been to support older Android 2 devices. The problem is that activityManager.getLargeMemoryClass is only available in Android 3 and later.</p>  <pre>private void eatAllMemory() {
+ //Get amount of memory this app is allowed to use (in MBs)
+ int availMem = activityManager.getLargeMemoryClass();
+ eatMemory(availMem);
+}</pre>
+
+<p>The code has been changed so that the amount of memory each service will eat up can be specified in MB (this must be used for Android 2 devices) however if you are using a newer device then the service can get the maximum allowed memory. </p>
+
+<p><a href="/images/2015-05-31%2000.48.42.png"><img title="2015-05-31 00.48.42" style="border-top: 0px; border-right: 0px; background-image: none; border-bottom: 0px; padding-top: 0px; padding-left: 0px; border-left: 0px; display: inline; padding-right: 0px" border="0" alt="2015-05-31 00.48.42" src="/images/2015-05-31%2000.48.42_thumb.png" width="148" height="244" /></a></p>
+
+<p>The updated <a href="https://play.google.com/store/apps/details?id=derekwilson.net.rameater">app is in the play store</a> and the code is in <a href="https://github.com/derekwilson/RamEater">github</a></p>

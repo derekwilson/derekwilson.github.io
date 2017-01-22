@@ -1,0 +1,21 @@
+---
+layout: post
+title: "PodcastUtilities now supports MTP"
+date: 2013-07-27 16:15:00 +1200
+published: true
+tags: ["Android", "Development", "PodcastUtilities"]
+categories: ["Android", "Development", "PodcastUtilities"]
+alias: ["/derekblog/post/2013/07/27/PodcastUtilities-now-supports-MTP.aspx", "/derekblog/post/2013/07/27/podcastutilities-now-supports-mtp.aspx"]
+---
+<p>We have been working with PodcastUtilities <a href="http://derekwilson.net/derekblog/post/2011/07/30/podcastutilities-now-supports-downloading-and-synchronising.aspx" target="_blank">for a couple of years now</a>. Just recently we have both ended up with devices that use MTP (Media Transfer Protocol) rather than USB Mass Storage so we have needed to extend PodcastUtilities to support both MTP and USB.</p><!--more-->
+<p>The new version with MTP support is <a href="https://bitbucket.org/derekwilson/podcastutilities/wiki/Home" target="_blank">now in BitBucket</a> and also available as a <a href="https://bitbucket.org/derekwilson/podcastutilities/downloads" target="_blank">binary download</a> if you just want to run PodcastUtilities. A spin off from this work is that that source code now contains a managed wrapper assembly to access MTP devices as well as a fully working example of how to use the assembly.</p>
+<p>To recap PodcastUtilities got written because we needed a lightweight, portable podcast downloader and synchroniser that would be more stable that <a href="http://juicereceiver.sourceforge.net/" target="_blank">Juice</a> and lighter weight and more flexible than iTunes.</p>
+<p>PodcastUtilities is</p>
+<p>&middot; Portable <br />Podcast Utilities is a &ldquo;portable&rdquo; application, in that it does not need to be installed and can be run from any drive type, local network or removable flash drive</p>
+<p>&middot; Configurable <br />Almost any synchronisation solution can be configured, for example copy 3 of this podcast, all of these podcasts, in this order, and leave a certain amount of space on the device. The number of concurrent downloads can easily be configured.</p>
+<p>&middot; Lightweight <br />The application does not use large amounts of memory in a system tray icon all the time its not being used, it only uses system resources when its being run.</p>
+<p>&middot; Support for UMS and MTP <br />PodcastUtilities supports USB Mass Storage (UMS) devices, where the device appears as a drive letter in Explorer like a flash drive, as well as MTP where the device appears as a portable device, for example many phones.</p>
+<p>&middot; Scriptable <br />Podcast Utilities lends itself to being run as a scheduled task or from a script. The API is &ldquo;headless&rdquo; and can easily be called and used from other applications</p>
+<p>&middot; Open Source <br />The source is open and available</p>
+<p>&middot; Free <br />There is no cost to using Podcast Utilities for any use.</p>
+<p>&middot; No need for an iTunes account <br />Podcasts promoted on iTunes can be downloaded however there is no need to have an iTunes account.</p>

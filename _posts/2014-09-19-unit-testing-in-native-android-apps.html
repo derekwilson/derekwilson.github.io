@@ -1,0 +1,56 @@
+---
+layout: post
+title: "Unit Testing in native Android apps"
+date: 2014-09-19 18:48:00 +1200
+published: true
+tags: ["Android", "Development"]
+categories: ["Android", "Development"]
+alias: ["/derekblog/post/2014/09/19/Unit-Testing-in-native-Android-apps.aspx", "/derekblog/post/2014/09/19/unit-testing-in-native-android-apps.aspx"]
+---
+<p>Given that the target machine for an Android app is an Android VM the only real way of running any tests is in the emulator. This seemed like a very complex operation especially for unit tests on individual method calls. There are test that I would only want to run in an emulator or a device such as UI testing but I like to test base components before I get into assembling them as it tends to eliminate bugs while I am writing the base objects and produces a stable product.</p><!--more-->  <p>In <a href="https://play.google.com/store/apps/details?id=net.derekwilson.measureme">MeasureMe</a> I have used the <a href="http://robolectric.org">RoboElectric</a> unit testing framework as it enables me to test my pure java business objects outside the emulator just using <a href="http://www.cavdar.net/2008/07/21/junit-4-in-60-seconds/">JUnit syntax</a>. My background is NUnit so I find it most natural to use the JUnit syntax.</p>  <p>To add the unit tests to MeasureMe I found this page had an <a href="https://github.com/bkiers/notes/wiki/Create-new-Eclipse-Android-projects-with-Robolectric-unit-test-support-and-Ant">excellent description</a> on how to get started. Including a <a href="https://github.com/bkiers/notes/raw/master/resources/android-test-libs.zip">ZIP file</a> with all the required JARs in, I then replaced the RoboElectric JAR with the most recent release on <a href="http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.robolectric%22">Maven Central</a>. Or you could just get them from the <a href="https://bitbucket.org/derekwilson/measureme">MeasureMe source</a>.</p>  <p>Then just</p>  <ol>   <li>Create a <strong>plain Java</strong> project called MeasureMeTests, I put it in a folder called test as I may add UI tests in the future </li>    <li>Add MeasureMe (the native android app) as a project reference      <br /><a href="/images/project%20references.png"><img title="project references" style="border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px; display: inline" border="0" alt="project references" src="/images/project%20references_thumb.png" width="323" height="231" /></a> </li>    <li>Add the following library references, I don't do anything more complicated than copy the jars into the lib folder of the test project and then reference the jars. You do need to make sure that the JUnit jar is added <strong>before</strong> the Android jar       <br /><a href="/images/libraries.png"><img title="libraries" style="border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px; display: inline" border="0" alt="libraries" src="/images/libraries_thumb.png" width="322" height="231" /></a> </li> </ol>  <p>The sort of code that I wanted to test is the alarms in MeasureMe. Alarms can be set to trigger with a wide variety of intervals from 1 second to 52 weeks and by using day and hour masks the alarms can be supressed at particular times and on certain days. This is complex and easy to get wrong so I wrote tests like this</p>  <pre>package net.derekwilson.measureme.model.alarm;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
+import net.derekwilson.measureme.AndroidTestRunner;
+import net.derekwilson.measureme.model.Alarm;
+import net.derekwilson.measureme.model.Interval;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+@RunWith(AndroidTestRunner.class)
+public class NextTriggerTests {
+ protected Alarm GetSUT() {
+  return new Alarm(GetNow());
+ }
+	
+ protected Calendar GetNow() {
+  Calendar cal = Calendar.getInstance();
+   cal.set(Calendar.AM_PM,2);
+   cal.set(Calendar.YEAR,2014);
+   cal.set(Calendar.MONTH,3);
+   cal.set(Calendar.DAY_OF_MONTH,16);
+   cal.set(Calendar.HOUR,20);
+   cal.set(Calendar.MINUTE,15);
+   return cal;
+ }
+
+ @Test
+ public void Next_Trigger_After_1_Hour() {
+  Alarm alarm = GetSUT();
+  alarm.setInterval(new Interval(1,Interval.STRIDE_HOUR));
+  assertThat(alarm.getNextTriggerTimeFormatted(GetNow()), is(&quot;Thu 17 Apr at 21:00&quot;));		
+ }
+
+ @Test
+ public void Next_Trigger_After_1_Hour_With_Hour_Mask_Of_1_Hour() {
+  Alarm alarm = GetSUT();
+  alarm.setInterval(new Interval(1,Interval.STRIDE_HOUR));
+  alarm.setHourMask(0x6FFFC0);
+  // mask forces the trigger onto 10pm
+  assertThat(alarm.getNextTriggerTimeFormatted(GetNow()), is(&quot;Thu 17 Apr at 22:00&quot;));		
+ }
+}</pre>
+
+<p>Running the tests can easily be dome from Eclipse, I just use the standard JUnit runner.</p>

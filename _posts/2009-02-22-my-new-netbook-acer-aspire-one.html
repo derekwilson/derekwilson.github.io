@@ -1,0 +1,68 @@
+---
+layout: post
+title: "My new netbook: Acer Aspire One"
+date: 2009-02-22 12:02:00 +1300
+published: true
+tags: ["Gadgets", "General", "How Do I"]
+categories: ["Gadgets", "General", "How Do I"]
+alias: ["/derekblog/post/2009/02/22/My-new-netbook-Acer-Aspire-One.aspx", "/derekblog/post/2009/02/22/my-new-netbook-acer-aspire-one.aspx"]
+---
+<p>I decided to treat myself to a new netbook after Christmas and given that Dixons / Currys were selling Acer Aspires at less than 200 pounds for the Linux version with the 120 GB hard disk I decided have a play. I quite liked the idea of using Linux</p><!--more-->
+<ol>
+<li>It is purpose configured for the hardware</li>
+<li>Its quick to boot</li>
+<li>its something new to play around with, I have used various flavours of unix in the past but I've been using Windows a lot recently</li>
+<li>I don't need a lot of functionality, the netbook is for use in fron of the fire and in coffee shops so email, IM, a bit of media playing</li>
+</ol>
+<p>I forced myself to use the pre-installed Limpus Linux for at least a month as I felt there would be a temptation to install Windows and not try Linux just for an easy life. Well its been a month and I have decided to ditch Limpus Linux because</p>
+<ol>
+<li>It cannot easily see the Windows network shares on the home network</li>
+<li>It cannot write to NTFS USB keys</li>
+<li>I cannot find a podcast client that I like for Unix, I use Juice and Portable Juice but they will not run even under Wine</li>
+<li>The OS has been <span style="text-decoration: line-through;">hacked to bits</span> configured to the point where its not very easy to add bits of functionality</li>
+<li>Part of the configuration means that the user can assume root access without the need for a password, even for a Windows user this is a little lax :-)</li>
+<li>I cannot get little bits to work like live radio playback on the BBC iPlayer</li>
+</ol>
+<p>Limpus Linus did work and it was fine for surfing the net and the laptop was quick to boot but in the end I needed real operating systems.</p>
+<p>So I could not decide between Windows (so that I could get things done) and Ubuntu to learn things, so I settled on both.</p>
+<!--more-->
+<h3>Disk <span>Partitions</span></h3>
+<p>I needed to think how to partition the disk before I could install anything. I found this <a href="http://www.linuxdevcenter.com/pub/a/linux/2006/05/08/dual-boot-laptop.html?page=2">great article</a> describing how to setup partitions in a multiple boot environment. The Aspire has a 120GB disk and I settled on laying out the partitions like this</p>
+<table style="width: 400px;" border="1" cellspacing="0" cellpadding="2">
+<tbody>
+<tr>
+<td valign="top" width="133">Use</td>
+<td valign="top" width="133">Type</td>
+<td valign="top" width="133">Size</td>
+</tr>
+<tr>
+<td valign="top" width="133">Windows XP System</td>
+<td valign="top" width="133">NTFS</td>
+<td valign="top" width="133">40GB</td>
+</tr>
+<tr>
+<td valign="top" width="133">Ubuntu System</td>
+<td valign="top" width="133">ext3</td>
+<td valign="top" width="133">40GB</td>
+</tr>
+<tr>
+<td valign="top" width="133">Ubuntu Swap</td>
+<td valign="top" width="133">swap</td>
+<td valign="top" width="133">1GB</td>
+</tr>
+<tr>
+<td valign="top" width="133">Shared Data</td>
+<td valign="top" width="133">FAT32</td>
+<td valign="top" width="133">38GB</td>
+</tr>
+</tbody>
+</table>
+<h3>Installing <span>Windows XP</span></h3>
+<p>The little machine only has 512 MS of memory so Vista was right out, maybe Windows 7 will run but for the moment it had to be XP. Installing was pretty simple thanks to the very nice people over at BootLand. I found instructions and downloads <a href="http://www.boot-land.net/forums/index.php?s=de94100f30b8a119c4f1a0b71ab2a629&amp;showtopic=4900&amp;st=0&amp;p=41273&amp;#entry41273">here</a>.</p>
+<p>I used the USB_Multiboot_10.cmd script to create a USB flash drive which would act as a Windows XP installation CD, it even managed to fit it on an old 512 MB flash drive. You do need to supply your own real XP CD and license key to prepare the USB flash drive.</p>
+<p>Then just boot from the USB stick (press F12 when booting), use the Windows installed to create and format the first partition and just leave the rest empty.</p>
+<p>I downloaded the Windows XP drivers from the Acer support site and Windows was up and functional in less than an hour.</p>
+<h3>Installing <span>Ubuntu 8.10 Intrepid</span></h3>
+<p>This was a bit more fiddely but I suspect because I had not installed Ubuntu before. I downloaded <a href="http://unetbootin.sourceforge.net/">UNetbootin</a> and the <a href="http://www.ubuntu.com/getubuntu/download">Ubuntu Installer CD ISO</a> and created another USB stick installer. This time it was about 1GB .</p>
+<p>I booted off the stick and in the Ubuntu installer I selected to manually configure the partitions and I added the other three partitions, mounting the primary ext3 partition as / and the FAT32 as /windows.</p>
+<p>I also followed the <a href="https://help.ubuntu.com/community/AspireOne">addition instructions for getting the wireless network to work</a> and updated the OS and then added <a href="https://launchpad.net/netbook-remix">Ubuntu Netbook Remix</a> and everything seems to playing nicely with each other.</p>

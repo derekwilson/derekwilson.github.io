@@ -1,0 +1,153 @@
+---
+layout: post
+title: "Build configurations in native Android apps using Ant"
+date: 2014-08-04 07:31:00 +1200
+published: true
+tags: ["Android", "Development", "MeasureMe"]
+categories: ["Android", "Development", "MeasureMe"]
+alias: ["/derekblog/post/2014/08/04/Build-configurations-in-native-Android-apps-using-Ant.aspx", "/derekblog/post/2014/08/04/build-configurations-in-native-android-apps-using-ant.aspx"]
+---
+<p>Last month I was looking at <a href="http://derekwilson.net/derekblog/post/2014/07/25/Logging-in-native-Android-apps.aspx">logging in native android apps</a> and in that post I did mention that the logging configuration would need to change based on what I was trying to build. I build <a href="https://play.google.com/store/apps/details?id=net.derekwilson.measureme">MeasureMe</a> for two different reasons.</p><!--more-->  <ol>   <li>A release build to go in the play store      <br />In this build I want almost no logging (only if an unhandled exception is thrown. </li>    <li>A build for me to test with      <br />This build has maximal logging so that if something goes wrong I get as much information as possible to help trace it. </li> </ol>  <p>In .NET there are any number of ways of doing this for example using #ifdef in the code. I was interested to see how this was usually done in Java. Also I needed a mechanism to build from the command line if I was going to start using some form of CI server.</p>  <p>Apparently the new way of doing this is to use <a href="https://developer.android.com/sdk/installing/studio.html">Android Studio</a> and <a href="http://www.gradle.org">Gradle</a>, however as I have explained I was in a hurry and already using <a href="https://developer.android.com/sdk/installing/index.html?pkg=adt">Eclipse</a> so I went with <a href="http://ant.apache.org">Ant</a> as there were lots more examples to help me.</p>  <p>After downloading and installing Ant then this command will add a default ant build.xml to an existing ADT project</p>  <pre>android update project --path .</pre>
+
+<p>At this point we can use Ant to do compile the project just like Eclipse, so far so pointless. The standard build.xml can include custom_rules.xml and its this file that I added my tasks to.</p>
+
+<p>There are any number of ways of altering build configurations but the mechanism I used is to keep template files in a folder called config and to copy and replace tokens in the files before compiling the project.</p>
+
+<p>There are only two template files in the config folder one is the logging configuration file like this</p>
+
+<pre>&lt;configuration debug=&quot;true&quot;&gt;
+  &lt;!-- WARNING templated file ONLY edit this file in the CONFIG folder --&gt;    
+  &lt;property name=&quot;LOG_HOME&quot; value=&quot;/sdcard/MeasureMe&quot; /&gt;
+  &lt;!-- Create a logcat appender --&gt;
+  &lt;appender name=&quot;logcat&quot; class=&quot;ch.qos.logback.classic.android.LogcatAppender&quot;&gt;
+    &lt;encoder&gt;
+      &lt;pattern&gt;%msg&lt;/pattern&gt;
+    &lt;/encoder&gt;
+  &lt;/appender&gt;
+
+  &lt;appender name=&quot;FILE&quot; class=&quot;ch.qos.logback.core.rolling.RollingFileAppender&quot;&gt;
+    &lt;file&gt;${LOG_HOME}/mm_main.log&lt;/file&gt;
+    &lt;rollingPolicy class=&quot;ch.qos.logback.core.rolling.FixedWindowRollingPolicy&quot;&gt;
+      &lt;fileNamePattern&gt;${LOG_HOME}/mm_main.%i.log&lt;/fileNamePattern&gt;
+      &lt;minIndex&gt;1&lt;/minIndex&gt;
+      &lt;maxIndex&gt;2&lt;/maxIndex&gt;
+    &lt;/rollingPolicy&gt;
+
+    &lt;triggeringPolicy class=&quot;ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy&quot;&gt;
+      &lt;maxFileSize&gt;500KB&lt;/maxFileSize&gt;
+    &lt;/triggeringPolicy&gt;
+    &lt;encoder&gt;
+      &lt;pattern&gt;%date{yyyy-MMM-dd HH:mm:ss.SSS} %t %r %logger{15} - %msg%n&lt;/pattern&gt;
+    &lt;/encoder&gt;
+  &lt;/appender&gt;
+
+  &lt;logger 
+    name=&quot;main&quot; 
+    level=&quot;@CONFIG.LOGLEVEL@&quot; 
+  &gt;
+    &lt;appender-ref ref=&quot;logcat&quot; /&gt;
+    &lt;appender-ref ref=&quot;FILE&quot; /&gt;
+  &lt;/logger&gt;
+
+  &lt;root level=&quot;@CONFIG.LOGLEVEL@&quot;&gt;
+    &lt;appender-ref ref=&quot;logcat&quot; /&gt;
+    &lt;appender-ref ref=&quot;FILE&quot; /&gt;
+  &lt;/root&gt;
+  
+&lt;/configuration&gt;</pre>
+
+<p>and the other one is a static Java method that can be used in the code to tell which configuration we are running without the need for many Java files to be templated.</p>
+
+<pre>package net.derekwilson.measureme;
+
+// WARNING templated file ONLY edit this file in the CONFIG folder    
+
+public class MeasureMeBuildConfig {
+  /** Whether or not to include logging statements in the application. */
+  public final static boolean PRODUCTION = @CONFIG.PRODUCTION@;
+}</pre>
+
+<p>We need to replace the configuration tokens @CONFIG.PRODUCTION@ and @CONFIG.LOGLEVEL@ with the correct values depending on the configuration we are trying to build and then copy the files from the config folder to their correct place in the project structure, that the is the src folder for the Java file and the assets folder for the logback XML file.</p>
+
+<p>The ant build tasks to do this token substitution and copy look like this</p>
+
+<pre> &lt;!-- Copy Config.java to our source tree, replacing custom tokens. --&gt;
+ &lt;target name=&quot;config_java&quot;&gt;
+  &lt;property name=&quot;config-java-target-path&quot; value=&quot;${source.dir}/net/derekwilson/measureme&quot;/&gt;
+ 
+  &lt;chmod file=&quot;${config-java-target-path}/MeasureMeBuildConfig.java&quot; perm=&quot;+w&quot;/&gt;
+  &lt;attrib file=&quot;${config-java-target-path}/MeasureMeBuildConfig.java&quot; readonly=&quot;false&quot;/&gt;
+   
+  &lt;!-- Copy the configuration file, replacing tokens in the file. --&gt;
+  &lt;copy file=&quot;config/MeasureMeBuildConfig.java&quot; todir=&quot;${config-java-target-path}&quot;
+              overwrite=&quot;true&quot; encoding=&quot;utf-8&quot;&gt;
+    &lt;filterset&gt;
+     &lt;filter token=&quot;CONFIG.PRODUCTION&quot; value=&quot;${config.production}&quot;/&gt;
+     &lt;filter token=&quot;CONFIG.LOGLEVEL&quot; value=&quot;${config.loglevel}&quot;/&gt;
+    &lt;/filterset&gt;
+  &lt;/copy&gt;
+   
+  &lt;!-- Now set it to read-only, as we don't want people accidentally
+             editing the wrong one. NOTE: This step is unnecessary, but I do
+             it so the developers remember that this is not the original file. --&gt;
+  &lt;chmod file=&quot;${config-java-target-path}/MeasureMeBuildConfig.java&quot; perm=&quot;-w&quot;/&gt;
+  &lt;attrib file=&quot;${config-java-target-path}/MeasureMeBuildConfig.java&quot; readonly=&quot;true&quot;/&gt;
+ 
+ &lt;/target&gt;
+    
+ &lt;!-- Copy Config.java to our source tree, replacing custom tokens.--&gt;
+  &lt;target name=&quot;config_asset&quot;&gt;
+ 
+  &lt;property name=&quot;config-asset-target-path&quot; value=&quot;./assets&quot;/&gt;
+ 
+  &lt;chmod file=&quot;${config-asset-target-path}/logback.xml&quot; perm=&quot;+w&quot;/&gt;
+  &lt;attrib file=&quot;${config-asset-target-path}/logback.xml&quot; readonly=&quot;false&quot;/&gt;
+   
+  &lt;!-- Copy the configuration file, replacing tokens in the file. --&gt;
+  &lt;copy file=&quot;config/logback.xml&quot; todir=&quot;${config-asset-target-path}&quot;
+              overwrite=&quot;true&quot; encoding=&quot;utf-8&quot;&gt;
+    &lt;filterset&gt;
+     &lt;filter token=&quot;CONFIG.PRODUCTION&quot; value=&quot;${config.production}&quot;/&gt;
+     &lt;filter token=&quot;CONFIG.LOGLEVEL&quot; value=&quot;${config.loglevel}&quot;/&gt;
+    &lt;/filterset&gt;
+  &lt;/copy&gt;
+   
+  &lt;!-- Now set it to read-only, as we don't want people accidentally
+             editing the wrong one. NOTE: This step is unnecessary, but I do
+             it so the developers remember that this is not the original file. --&gt;
+  &lt;chmod file=&quot;${config-asset-target-path}/logback.xml&quot; perm=&quot;-w&quot;/&gt;
+  &lt;attrib file=&quot;${config-asset-target-path}/logback.xml&quot; readonly=&quot;true&quot;/&gt;
+ 
+ &lt;/target&gt;</pre>
+
+<p>Then all we need is to hook these new targets into the standard ADT Ant build target. We do that like this</p>
+
+<pre>&lt;target name=&quot;dev&quot;
+    depends=&quot;-set-dev-props, config, -set-debug-files, -do-debug, -post-build&quot;
+    description=&quot;Builds the application and signs it with a debug key.&quot;&gt;
+&lt;/target&gt;
+ 
+&lt;target name=&quot;prod&quot;
+    depends=&quot;clean, -set-prod-props, config, -set-release-mode, -release-obfuscation-check, -package, -post-package, 
+                         -release-prompt-for-password, -release-nosign, -release-sign, -post-build&quot;
+    description=&quot;Builds the application in release mode.&quot;&gt;
+&lt;/target&gt;</pre>
+
+<p>I have added the set-dev-props, set-prod-props and config targets the rest of the depends are as standard. These new targets look like this.</p>
+
+<pre>&lt;target name=&quot;-set-dev-props&quot;&gt;
+ &lt;property name=&quot;config.production&quot; value=&quot;false&quot; /&gt;
+ &lt;property name=&quot;config.loglevel&quot; value=&quot;DEBUG&quot; /&gt;
+&lt;/target&gt;
+ 
+&lt;target name=&quot;-set-prod-props&quot;&gt;
+ &lt;property name=&quot;config.production&quot; value=&quot;true&quot; /&gt;
+ &lt;property name=&quot;config.loglevel&quot; value=&quot;WARN&quot; /&gt;
+&lt;/target&gt;
+     
+&lt;target name=&quot;config&quot; depends=&quot;config_java, config_asset&quot;&gt;
+&lt;/target&gt;</pre>
+
+<p>They just set the correct config variables, these are the values to be used to replace the tokens in the template files. Then we call the config_java and config_asset targets above that do the actual copying.</p>
+
+<p>This template mechanism is only performed when I run Ant from the command line, either “ant dev” or “ant prod”. It is never performed from inside eclipse, however if Eclipse is open when we run Ant then it can get confused and require the project to be refreshed or you may need to exit Eclipse and reopen the project.</p>

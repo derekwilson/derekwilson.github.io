@@ -1,0 +1,10 @@
+---
+layout: post
+title: "wrist-spin updated"
+date: 2016-03-18 17:02:00 +1300
+published: true
+tags: ["Pebble", "Gadgets", "Development"]
+categories: ["Pebble", "Gadgets", "Development"]
+alias: ["/derekblog/post/2016/03/18/wrist-spin-updated.aspx"]
+---
+<p>I have updated my pebble cricket score app <a href="https://apps.getpebble.com/en_US/application/56904b60e74aedc6b600000b?dev_settings=true&amp;query=cricket&amp;section=watchapps">wrist-spin</a>. It ended up being a larger updated than I originally planned, I guess one thing led to another, the update</p><!--more-->  <ol>   <li>Reworked the navigation so that its much easier to flip between views ranging from a minimal but easy to see at a glance time and score view through to a full detail view.</li>    <li>Added the ability to switch between data providers, I’ve found three suppliers of data and by switching between then I can cope with any one being offline.</li>    <li>Added stale data indicator so that I can tell if its raining at the ground or internet access has been lost.</li>    <li>Added a vibration alert if the watch looses connection with the phone.</li> </ol>  <p>Because of this change I needed to do some code restructuring.</p>  <ol>   <li>Made the main window just another window by removing all the application global code into separate files, this includes the timer function, the bluetooth management code and the watch comms code.</li>    <li>Moved all the windows into their own folder.</li>    <li>Added an “About” window to display the version number and the current data provider</li>    <li>Made the code that sends commands to the watch more resilient by attempting to reset the link if we get out of step.</li>    <li>Updated the build tool to 4.2 and the SDK to 3.10</li> </ol>  <p>The code is not perfect, its my first pebble app and its been a while since I wrote any C code but its not in too bad shape so I have made the <a href="https://bitbucket.org/derekwilson/wrist-spin">code repository</a> public.</p>  <p>The app has been very successful, there are over 100 active users already.</p>

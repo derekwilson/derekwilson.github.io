@@ -1,0 +1,34 @@
+---
+layout: post
+title: "Watching TiVo recordings on your PC"
+date: 2009-12-12 11:12:00 +1300
+published: true
+tags: ["General", "TiVo"]
+categories: ["General", "TiVo"]
+alias: ["/derekblog/post/2009/12/12/Watching-TiVo-recordings-on-your-PC.aspx", "/derekblog/post/2009/12/12/watching-tivo-recordings-on-your-pc.aspx"]
+---
+<p><a href="/2009/01/21/how-to-fix-tivo-suggestions-in-the-uk.html">I&rsquo;ve had a TiVo for ages</a> a very welcome Christmas present from Steph. Occasionally I need to watch programs that have been recorded on my TiVo on a PC or on another TV in a different room. The way I&rsquo;ve solved this problem for years was to use a pair of <a href="http://www.digisender.net/">digisenders</a>, a solution that does work but does have some limitations which mainly centre on the use of the 2.4GHz frequency band.</p><!--more-->
+<ol>
+<li>the digisender is <a href="http://www.avforums.com/forums/satellite-tv/167905-digisender-wireless-incompatible.html">incompatable with Wi-Fi networks</a>, you can switch your router and senders to different channels but there can still be problems with neighbour&rsquo;s devices.</li>
+<li>if the microwave oven goes on the digisender goes bananas</li>
+<li>I think that I would like to find a better solution so that I am not contributing to <a href="http://www.cisco.com/en/US/prod/collateral/wireless/ps9391/ps9393/ps9394/prod_white_paper0900aecd807395a9_ns736_Networking_Solutions_White_Paper.html">Wi-Fi pollution</a></li>
+</ol>
+<p>I did know that getting the video off a TiVo was possible but never really done it because</p>
+<ol>
+<li>I knew that the FTP service on the TiVo was very slow</li>
+<li>I would need to find some sort of player for TiVo files or transcode the video</li>
+</ol>
+<p>It just seemed as though it would be complex and time consuming to do. However I wanted to take some TV away with me on my <a href="/2009/02/22/my-new-netbook-acer-aspire-one.html">netbook</a> so I resolved to have a go.</p>
+<!--more-->
+<p>I started browsing around and found this brilliant page detailing <a href="http://www.planetbuilders.org/tivo/tivo_upgrade_diary.html">how to setup lots of different things on a TiVo</a>. The part I&rsquo;d never done but now needed was to install <a href="http://www.dealdatabase.com/forum/showthread.php?s=&amp;postid=128729&amp;perpage=1">MFS_FTP</a> an FTP service on the TiVo that can be used to get the video files off and <a href="http://sourceforge.net/projects/tyshow/">TyShow</a> a DirectShow filter that enables me to use any media player on Windows, including Media Center.</p>
+<p>I didn&rsquo;t want to leave the service running all the time, as I don&rsquo;t want to load down the aging PowerPC. So when I need to do this I open a telnet session to the TiVo and start the MFS_FTP service like this, as I have unzipped the TAR to /var/hack/mfs_ftp.</p>
+<pre class="sql">open tivo
+Tivo: cd /var/hack
+Tivo: mfs_ftp/mfs_ftp.tcl</pre>
+<p>Then I just use a regular FTP client and attach to the TiVo on port 3105, the default for MFS_FTP and I can transfer the TY files to my PC.</p>
+<p>Initially I was finding that it was taking about 1 hour to transfer a one hour program. However there are a couple of things that I did that really made it go faster, almost twice as fast, though your mileage may vary.</p>
+<ol>
+<li>Ensure you are not using passive mode (PASV) in the FTP client on the PC as this is slow and the TiVo will still work fine</li>
+<li>Use wired connections rather than wireless</li>
+</ol>
+<p>I did try transcoding the video but by far the best results were obtained by using TyShow and then I can just pop my laptop under another TV and use my Media Center remote control and its just like I&rsquo;m in front of my TiVo.</p>

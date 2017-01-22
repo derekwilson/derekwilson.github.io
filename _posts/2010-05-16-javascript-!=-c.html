@@ -1,0 +1,23 @@
+---
+layout: post
+title: "Javascript != C#"
+date: 2010-05-16 09:05:00 +1200
+published: true
+tags: ["Development", "JavaScript", "Web"]
+categories: ["Development", "JavaScript", "Web"]
+alias: ["/derekblog/post/2010/05/16/Javascript-!=-C.aspx", "/derekblog/post/2010/05/16/javascript-!=-c.aspx"]
+---
+<p>A while ago <a href="/2010/02/07/c-!=-vbnet.html">I blogged about the pitfalls of working in multiple languages</a>, and lo and behold I instantly went and fell down another of them.</p><!--more-->
+<p>I had some code that I had written in C# and I needed to port it to JavaScript, I did briefly think to use <a href="http://projects.nikhilk.net/ScriptSharp">Script#</a> but it seemed like complete overkill for a class with a few calculations in. Anyway the C# code looked like this</p>
+<pre class="c#">    double value1 = 10.50;
+    double value2 = 00.50;
+    double result = value1 + value2;</pre>
+<p>I know that the leading zero in the number assigned to value2 is not needed but it made the decimal points line up, which made the code a but easier to read (this is an excerpt, there was a large column of numbers in the real code). Well all I can say is that I should have used a space or tab but I didn&rsquo;t. All was well the code compiled and passed its tests.</p>
+<p>When I ported it to JavaScript it came out a bit like this.</p>
+<pre class="c#">    var value1 = 10.50;
+    var value2 = 00.50;
+    var result = value1 + value2;</pre>
+<p>But when I tried to get it to pass its tests using <a href="http://www.jsunit.net/">JsUnit</a> it didn&rsquo;t pass, in fact JsUnit couldn&rsquo;t load the file. Eventually I tried loading the javascript in Firefox and looked in the error console and saw</p>
+<p><a href="/images/wordpress/JavascriptC_10A9/javascriptError.png"><img style="display: inline; border: 0px;" title="javascriptError" src="/images/wordpress/JavascriptC_10A9/javascriptError_thumb.png" alt="javascriptError" width="244" height="164" border="0" /></a></p>
+<p>At first this confused me even more until I remembered that the <a href="http://www.w3schools.com/jsref/jsref_parseint.asp">Javascript octal number format</a> was causing me problems, the feature is deprecated but still present in most browsers, and the leading zero causes the browser to assume the number is in octal. The decimal place was causing the problem in that it made the number invalid.</p>
+<p>So once again, note to self, even though C# and JavaScript have a similar syntax, they are not the same language.</p>

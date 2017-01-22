@@ -1,0 +1,122 @@
+---
+layout: post
+title: "Android development for .NET developers"
+date: 2016-07-29 21:42:00 +1200
+published: true
+tags: ["Android", "Development", "General", "Mobile", "Web"]
+categories: ["Android", "Development", "General", "Mobile", "Web"]
+alias: ["/derekblog/post/2016/07/29/Android-development-for-NET-developers.aspx", "/derekblog/post/2016/07/29/android-development-for-net-developers.aspx"]
+---
+<p>A couple of years ago I switch tracks from being a .NET web developer to being an Android developer. Its not the first time I&rsquo;ve switched tracks and I am sure it will not be the last. Recently I did a presentation giving people with a .NET background a general map of the terrain in Android development and I wanted to capture the information in the presentation here.</p><!--more-->
+<h2>Prerequisites</h2>
+<p>You can use what you like, I use a Mac at work and Windows at home and they both work fine. I&rsquo;ve not done Android development on Linux but I have done other development there and it seems to work just fine. Use what you have or what you like.</p>
+<p>If you want to publish your app on the <a href="https://play.google.com/store">Google Play Store</a> then you will need a <a href="https://developer.android.com/distribute/googleplay/start.html">Google Developer account</a>. This will incur a one off cost of 25 USD. If you just want to side-load APKs onto devices then you don't been an account.</p>
+<p>The main prerequisite is that you want to write code. If you want to have a go and have the enthusiasm to build an app to solve a problem then you will be fine.</p>
+<h2>Tooling</h2>
+<p>The base set of tools from .NET all have equivalents and they all have free versions.</p>
+<table style="width: 400px;" border="1" cellspacing="0" cellpadding="2">
+<tbody>
+<tr>
+<td valign="top" width="144"><strong>Tool</strong></td>
+<td valign="top" width="134"><strong>.NET</strong></td>
+<td valign="top" width="121"><strong>Android</strong></td>
+</tr>
+<tr>
+<td valign="top" width="144">OS</td>
+<td valign="top" width="134">Windows <br />Linux Mono</td>
+<td valign="top" width="121">Windows <br />Linux <br />Mac</td>
+</tr>
+<tr>
+<td valign="top" width="144">IDE</td>
+<td valign="top" width="134"><a href="https://www.visualstudio.com">Visual Studio</a> <br /><a href="http://www.icsharpcode.net/OpenSource/SD/Default.aspx">SharpDevelop</a><br /><a href="https://code.visualstudio.com/c?utm_expid=101350005-24.YOq70TI1QcW9kAbMwmhePg.2&amp;utm_referrer=https%3A%2F%2Fcode.visualstudio.com%2Fc">Visual Studio Code</a></td>
+<td valign="top" width="121"><a href="https://developer.android.com/studio/index.html">Android Studio</a> <br /><a href="https://eclipse.org">Eclipse</a> <br /><a href="https://www.jetbrains.com/idea/">Intellij IDEA</a></td>
+</tr>
+<tr>
+<td valign="top" width="144">Build System</td>
+<td valign="top" width="134"><a href="https://github.com/Microsoft/msbuild">Msbuild</a></td>
+<td valign="top" width="121"><a href="https://gradle.org">Gradle</a> <br /><a href="http://ant.apache.org">Ant</a></td>
+</tr>
+<tr>
+<td valign="top" width="144">Code Refactoring</td>
+<td valign="top" width="134"><a href="https://www.jetbrains.com/resharper/">Resharper</a></td>
+<td valign="top" width="121">Android Studio</td>
+</tr>
+<tr>
+<td valign="top" width="144">Package Management</td>
+<td valign="top" width="134"><a href="https://www.nuget.org">Nuget</a></td>
+<td valign="top" width="121"><a href="https://maven.apache.org">Maven</a></td>
+</tr>
+<tr>
+<td valign="top" width="144">Build Server</td>
+<td valign="top" width="134"><a href="https://www.jetbrains.com/teamcity/">Team City</a> <br /><a href="https://jenkins.io">Jenkins</a></td>
+<td valign="top" width="121"><a href="https://jenkins.io">Jenkins</a></td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>In .NET most development is done in Visual Studio and in Android development most use Android Studio, unless you have a very good reason not to I&rsquo;d jus go with Android Studio. The functionality of Android Studio is easily on a par with Visual Studio. Android Studio is a tailored build of Intellij IDEA, so if you already use IDEA you might want to stick with it. Eclipse is for masochists.</p>
+<p>I was not a great fan of Nuget, I found it buggy and brittle however Maven appear to just work fine.</p>
+<h2>Libraries</h2>
+<p>There are equivalents for most libraries, however some areas are not as well represented. For example there are a lot of Data Access and ORM libraries for .NET but a lot less for Android, however android apps typically have a lot less use for an ORM.</p>
+<table style="width: 400px;" border="1" cellspacing="0" cellpadding="2">
+<tbody>
+<tr>
+<td valign="top" width="133"><strong>Library</strong></td>
+<td valign="top" width="133"><strong>.NET</strong></td>
+<td valign="top" width="133"><strong>Amdroid</strong></td>
+</tr>
+<tr>
+<td valign="top" width="133">Test Runner</td>
+<td valign="top" width="133"><a href="http://www.nunit.org">nUnit</a>, <br /><a href="https://xunit.github.io">xUnit</a></td>
+<td valign="top" width="133"><a href="http://junit.org/junit4/">jUnit</a></td>
+</tr>
+<tr>
+<td valign="top" width="133">Mocking</td>
+<td valign="top" width="133"><a href="https://github.com/moq/moq4">Moq</a>, <br /><a href="https://github.com/ayende/rhino-mocks">Rhino Mocks</a></td>
+<td valign="top" width="133"><a href="http://mockito.org">Mockito</a></td>
+</tr>
+<tr>
+<td valign="top" width="133">DI</td>
+<td valign="top" width="133"><a href="http://www.ninject.org">Ninject</a>, <br /><a href="http://www.castleproject.org/projects/windsor/">Castle Windsor</a>, <a href="https://github.com/philiplaureano/LinFu">LinFu</a></td>
+<td valign="top" width="133"><a href="http://google.github.io/dagger/">Dagger2</a>, <br /><a href="https://github.com/roboguice/roboguice">RoboGuice</a></td>
+</tr>
+<tr>
+<td valign="top" width="133">Logging</td>
+<td valign="top" width="133"><a href="http://nlog-project.org">nLog</a>, <br /><a href="https://logging.apache.org/log4net/">Log4Net</a></td>
+<td valign="top" width="133"><a href="http://www.slf4j.org">slf4j</a></td>
+</tr>
+<tr>
+<td valign="top" width="133">Framework</td>
+<td valign="top" width="133"><a href="http://www.asp.net/mvc">MVC</a>, <br /><a href="https://msdn.microsoft.com/en-us/library/hh848246.aspx">MVVM</a></td>
+<td valign="top" width="133">Roll your own, <br /><a href="https://github.com/square/mortar">Mortar</a></td>
+</tr>
+<tr>
+<td valign="top" width="133">Patterns</td>
+<td valign="top" width="133"><a href="https://github.com/Reactive-Extensions/Rx.NET">Rx.NET</a></td>
+<td valign="top" width="133"><a href="https://github.com/ReactiveX/RxAndroid/wiki">RxAndroid</a></td>
+</tr>
+<tr>
+<td valign="top" width="133">Plumbing</td>
+<td valign="top" width="133"><a href="http://www.newtonsoft.com/json">JSON.NET</a></td>
+<td valign="top" width="133"><a href="https://github.com/FasterXML/jackson">Jackson</a>, <br /><a href="https://github.com/google/gson">Gson</a></td>
+</tr>
+<tr>
+<td valign="top" width="133">REST Access</td>
+<td valign="top" width="133"><a href="https://www.nuget.org/packages/microsoft.aspnet.webapi.client/">Web API Client</a></td>
+<td valign="top" width="133"><a href="http://square.github.io/retrofit/">Retrofit</a></td>
+</tr>
+<tr>
+<td valign="top" width="133">Data Access</td>
+<td valign="top" width="133"><a href="https://msdn.microsoft.com/en-us/library/e80y5yhx(v=vs.110).aspx">ADO.NET</a>, <br /><a href="http://nhibernate.info">NHibernate</a>, <br /><a href="https://github.com/StackExchange/dapper-dot-net">Dapper</a>, <br /><a href="https://msdn.microsoft.com/en-nz/data/ef.aspx">Entity Framerowk</a>, <br /><a href="https://www.llblgen.com">LLBLGen</a>, <br /><a href="http://www.mindscapehq.com/products/lightspeed">Lightspeed</a> <br />etc.</td>
+<td valign="top" width="133"><a href="https://github.com/square/sqlbrite">SQLBrite</a>, <br />Roll your own</td>
+</tr>
+</tbody>
+</table>
+<h2>Android libraries without a direct equivalent</h2>
+<p>These are the common set of additional libraries I use. You do need to be aware that there is a DEX limit on the number of methods you can have and so you cannot use every library you can find and on that note be aware that Google Play Services are particularly heavy weight, and also require a Google phone as opposed to just an Android device, for example a Kindle, to run.</p>
+<p><a href="https://developer.android.com/topic/libraries/support-library/index.html">Android Support Libraries</a></p>
+<p><a href="http://jakewharton.github.io/butterknife/">ButterKinfe</a></p>
+<p><a href="https://firebase.google.com">Firebase</a></p>
+<p><a href="https://developers.google.com/android/guides/overview">Google Play Service</a></p>
+<p><a href="http://robolectric.org">Robolectric</a></p>

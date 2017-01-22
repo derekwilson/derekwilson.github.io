@@ -1,0 +1,38 @@
+---
+layout: post
+title: "Exception handling in services in a production environment"
+date: 2012-08-17 16:40:00 +1200
+published: true
+tags: ["Development", "General"]
+categories: ["Development", "General"]
+alias: ["/derekblog/post/2012/08/17/Exception-handling-in-services-in-a-production-environment.aspx", "/derekblog/post/2012/08/17/exception-handling-in-services-in-a-production-environment.aspx"]
+---
+<p>I have written about using Enterprise Library to log exceptions in a production environment, specifically <a href="http://derekwilson.net/derekblog/post/2010/08/25/Enterprise-Library-exception-handling-in-a-production-environment.aspx" target="_blank">how to cope when the loggers will not write</a> to files or event logs.</p><!--more-->
+<p>Recently I came across a problem where the whole logging framework was failing to initialise in a production environment. What we got was the usual generic error message and nothing useful in the event logs and obviously the logging framework did not receive anything.</p>
+<p><a href="/images/service.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border-width: 0px;" title="service" src="/images/service_thumb.png" alt="service" width="359" height="136" border="0" /></a></p>
+<p>In this instance the problem was that the config file (which was being rewritten between deployment environments) was malformed. However in principle the logging framework could fail to start for any number of reasons.</p>
+<p>Since this has happen as a matter of routine I always wrap the logging framework initialisation in a try catch the will write any errors to the debug console so that I can use DbgView to see what has gone wrong.</p>
+<pre class="csharp">        static private void OutputToDebugConsole(string format, params object[] args)
+        {
+            Trace.Write(string.Format(format, args));
+        }
+
+        protected override void OnStart(string[] args)
+        {
+            OutputToDebugConsole("RemoteControlService Starting");
+
+            try
+            {
+                _iocContainer = InitializeIocContainer();
+                _logwriter = _iocContainer.Resolve();
+            }
+            catch (Exception ex)
+            {
+                // we have no other method of communication - lets try the debug console
+                OutputToDebugConsole("RemoteControlService Error creating logger: {0}", ex.Message);
+                throw;
+            }</pre>
+<p>Writing to the debug console is a good choice because <a href="http://technet.microsoft.com/en-us/sysinternals/bb896647" target="_blank">DbgView</a> does not require any installation, just copy the EXE and run it. This means that operations are more likely to allow it to be run in a production environment. To be able to see the errors that are produced when trying to start the service you must run DbgView as administrator and also enable &ldquo;Capture Global Win32&rdquo; on the Capture menu of DbgView.</p>
+<p>For example this is what we see if an arbitrary error was thrown by trying to initialise the _logwriter.</p>
+<p><a href="/images/dbgview%20error2.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border-width: 0px;" title="dbgview error2" src="/images/dbgview%20error2_thumb.png" alt="dbgview error2" width="412" height="189" border="0" /></a></p>
+<p>Its also worth noting that Trace.Write is used rather than Debug.Write as calls to Trace will still produce output when we compile for release whereas Debug will not.</p>

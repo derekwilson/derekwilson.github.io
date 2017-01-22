@@ -1,0 +1,156 @@
+---
+layout: post
+title: "Rolling Flat File Trace Listener with Purging for Enterprise Library"
+date: 2008-12-01 03:12:00 +1300
+published: true
+tags: ["Development", "Enterprise Library"]
+categories: ["Development", "Enterprise Library"]
+alias: ["/derekblog/post/2008/12/01/Rolling-Flat-File-Trace-Listener-with-Purging-for-Enterprise-Library.aspx", "/derekblog/post/2008/12/01/rolling-flat-file-trace-listener-with-purging-for-enterprise-library.aspx"]
+---
+<p>I have used Microsoft's <a href="http://msdn.microsoft.com/en-us/library/cc467894.aspx">Enterprise Library</a> (EL) from Version 1 back in the day. I have to say I love EL, I have read lots of blog entries telling me that there are better components to do some of the parts of EL but EL has some very compelling reasons to use it</p><!--more-->
+<ol>
+<li>It has a lot of components of an application that I know I *should* write but that are just overhead. If I did write them I would do it in a stripped down manner so that I could get onto the *real* purpose of the application.</li>
+<li>Because the components are just there I do use it, for example its been years since I haven't fully instrumented my code, which has saved me so much grief.</li>
+<li>When it comes down to thread safe caching code I think Tom Hollander's team are smarter then me.</li>
+</ol>
+<p>So one of the key parts that I use a lot it the logging block to instrument my code and a key components of logging is a trace listener. A trace listener is a repository for logging information and there are many options available, for example database, event log etc. Many of my professional and personal applications exist in a hosted environment where the options for recording logging information are limited and writing to a flat file is a solution that works well in this environment. A rolling listener writes to a group of files, moving onto a new file when the previous one gets too big.</p>
+<p>When this web site was based around .NET v1 I used <a href="http://blog.hishambaz.com/default.aspx">Hisham Baz's</a> rolling flat file trace listener and professionally when using EL v2 we used <a href="http://bloggingabout.net/blogs/erwyn/archive/2006/02/15/11071.aspx">Erwyn van der Meer's trace listener</a> which provided similar functionality. When we got to version 3 (and 4) a rolling flat file was included in EL by Microsoft. However unfortunately the listener supplied by Microsoft did not include purging. The older listeners would delete old files from the group of files being written to. I spend some time looking for a listener and in the end gave up and wrote one. Its was fun seeing how EL was designed to be extended.</p>
+<!--more-->
+<p>The first step is to download and install the <a href="http://msdn.microsoft.com/en-us/vsts2008/aa718949.aspx">Guidance Automation Extensions and Guidance Automation Toolkit</a>, After installing the GAX / GAT and EL then you should see new additional project types in Visual Studio. I created this provider library for EL 3.1 in Visual Studio 2005 (and the screen shots are this environment however the download has been rebuilt to work with Visual Studio 2008 and EL4 and should work in either environment.</p>
+<p><a href="/images/wordpress/2008/11/windowslivewriterrollingflatfiletracelistenerwithpurgingf-7f6anewproject-2.png"><img style="border-width: 0px;" src="/images/wordpress/2008/11/windowslivewriterrollingflatfiletracelistenerwithpurgingf-7f6anewproject-thumb.png" alt="newproject" width="485" height="335" border="0" /></a></p>
+<p>I created a new provider library, and called it AAD.Providers, because I created it as part of a project I co-wrote with Andrew Trevarrow.</p>
+<p><a href="/images/wordpress/2008/11/windowslivewriterrollingflatfiletracelistenerwithpurgingf-7f6asolution-structure-2.png"><img style="border-width: 0px;" src="/images/wordpress/2008/11/windowslivewriterrollingflatfiletracelistenerwithpurgingf-7f6asolution-structure-thumb.png" alt="solution structure" width="485" height="431" border="0" /></a></p>
+<p>The solution that is created is made up of two assemblies a ProviderLibrary that contains the objects that we are adding to EL (a RollingFlatFileTraceListener in this case) and a Configuration.Design assembly that is used to extend the EL Configuration Editor GUI</p>
+<p>In this case I have created the RollingFlatFileTraceListener by using GAX/GAT Application Block Software Factory to add a trace listener into the provider library. This class derives from</p>
+<p>EnterpriseLibrary.Logging.TraceListeners.RollingFlatFileTraceListener</p>
+<p>as this listener does everything I want to do except purge.</p>
+<p>I found it very useful to have the source code for the class I was deriving from as it meant that I could get a real feel for how other types of listeners derived from each other. The RollingFlatFileTraceListener is pretty straightforward, The constructor has the same parameters as the base class with the addition of any extra configuration, in this case the number of files to keep, and then we override TraceData which calls the base class and then works out when to purge any extra files.</p>
+<pre class="csharp">public override void TraceData(
+    TraceEventCache eventCache,
+    string source,
+    TraceEventType eventType,
+    int id,
+    object data)
+{
+  // output data rolling if necessary
+  base.TraceData(eventCache, source, eventType, id, data);
+  // purge excess
+  if (_nFilesToKeep &gt; 0)
+    PurgeExcessFIles();
+}
+
+private void PurgeExcessFIles()
+{
+  string actualFileName =
+    ((FileStream)((StreamWriter)this.Writer).BaseStream).Name;
+  string directory =
+    Path.GetDirectoryName(actualFileName);
+  string fileNameWithoutExtension =
+    Path.GetFileNameWithoutExtension(actualFileName);
+  string extension =
+    Path.GetExtension(actualFileName);
+  string pattern =
+    fileNameWithoutExtension + "*" + extension;
+
+  DirectoryInfo dir = new DirectoryInfo(directory);
+  if (!dir.Exists)
+  {
+    return;
+  }
+
+  FileInfo[] files = dir.GetFiles(pattern);
+  int filesToPurge = files.Length - _nFilesToKeep;
+  if (filesToPurge &lt;= 0)
+  {
+    return;
+  }
+
+  // we must sort the folder rather than
+  // relying on the files being written in the correct order
+  IComparer fileComparer = new CompareFileByFilenameTimeStamp(
+                                  fileNameWithoutExtension,
+                                  _timestampFormat);
+  Array.Sort(files, fileComparer);
+
+  foreach (FileInfo file in files)
+  {
+    if (
+          CompareFileByFilenameTimeStamp.ConvertTimestampToTime(
+                                file.Name,
+                                fileNameWithoutExtension,
+                                _timestampFormat
+                     ) &lt; DateTime.MaxValue
+       )
+    {
+      // only delete files that match the pattern
+      file.Delete();
+      filesToPurge--;
+      if (filesToPurge &lt; 1)
+        break;
+    }
+  }
+}</pre>
+<p>If this was all we wanted to do it would be very simple however I wanted to try and get the designer to work as well.</p>
+<p>The next step is to create a Data class (in the Configuration folder of the ProvidersLibrary). This class hold the data needed to configure the listener. In our case we derived from</p>
+<pre class="csharp">EnterpriseLibrary.Logging.
+Configuration.RollingFlatFileTraceListenerData</pre>
+<p>and add the extra property FilesToKeep. There is a lot of boilerplate code in this class to wrap the data but it is all pretty much straightforward.</p>
+<p>Finally we add a RollingFlatFileTraceListenerNode into the Configuration.Design project. This class also inherits from the corresponding class in EL</p>
+<pre class="csharp">EnterpriseLibrary.Logging.
+Configuration.Design.TraceListeners.TraceListenerNode</pre>
+<p>Up until this point I had managed to derived from the EL class and just add in my extra property however at this point I did need to copy the property definitions into the configuration design class. The properties are all decorated to control how the EL Configuration UI with handle them.</p>
+<p>The Register method of the CommandRegistrar class is used to hook up the RollingFlatFileTraceListenerNode to the GUI commands like this</p>
+<pre class="csharp">public override void Register()
+{
+  AddRollingFlatFileTraceListenerNodeCommand();
+  AddDefaultCommands(typeof(RollingFlatFileTraceListenerNode));
+}
+
+private void AddRollingFlatFileTraceListenerNodeCommand()
+{
+  AddMultipleChildNodeCommand(
+    Resources.RollingFlatFileTraceListenerNodeUICommandText,
+    Resources.RollingFlatFileTraceListenerNodeUICommandLongText,
+    typeof(RollingFlatFileTraceListenerNode),
+    typeof(Microsoft.Practices.EnterpriseLibrary.Logging.
+      Configuration.Design.TraceListeners.TraceListenerCollectionNode)
+  );
+}</pre>
+<p>The NodeMapRegistrar class is used to hook up the RollingFlatFileTraceListenerNode and its RollingFlatFileTraceListenerData into the GUI designer</p>
+<pre class="csharp">public override void Register()
+{
+  AddMultipleNodeMap(
+    Resources.RollingFlatFileTraceListenerNodeUICommandText,
+    typeof(RollingFlatFileTraceListenerNode),
+    typeof(AAD.ProvidersLibrary.Configuration.
+                 RollingFlatFileTraceListenerData)
+  );
+}</pre>
+<p>The TraceListenerData property on the tracelistener node links the node in the GUI to the TraceListenerData class. The constructor of the TraceListenerData sets this.Type to be the TraceListener, This linkage mechanism ensures that the correct type are written to the xml configuration file for the application.</p>
+<p>To make the new TraceListener available in the EL Configuration GUI you must copy the ProviderLibrary and the Configuration.Design assembly to the folder that contains the EL Configuration GUI , usually</p>
+<pre class="csharp">C:\Program Files\Microsoft Enterprise Library 4.0 - May 2008</pre>
+<p>The TraceListener configuration GUI looks like this.</p>
+<p>&nbsp;<a href="/images/wordpress/2008/11/windowslivewriterrollingflatfiletracelistenerwithpurgingf-7f6agui-2.png"><img style="border-width: 0px;" src="/images/wordpress/2008/11/windowslivewriterrollingflatfiletracelistenerwithpurgingf-7f6agui-thumb.png" alt="gui" width="472" height="293" border="0" /></a></p>
+<p>and the XML that configures the application looks like this.</p>
+<pre class="csharp">&lt;loggingconfiguration
+  name="Logging Application Block"
+  logwarningswhennocategoriesmatch="true"
+  defaultcategory="Logging"
+  tracingenabled="false"&gt;
+  &lt;listeners&gt;
+    &lt;add
+      name="AAD Extended Rolling Flat File Trace Listener"
+      type="AAD.ProvidersLibrary.RollingFlatFileTraceListener, AAD.ProvidersLibrary, Version=1.0.0.11, Culture=neutral, PublicKeyToken=null"
+      traceoutputoptions="None"
+      listenerdatatype="AAD.ProvidersLibrary.Configuration.RollingFlatFileTraceListenerData, AAD.ProvidersLibrary, Version=1.0.0.11, Culture=neutral, PublicKeyToken=null"
+      footer=""
+      header=""
+      formatter="Text Formatter"
+      rollinterval="None"
+      rollfileexistsbehavior="Overwrite"
+      timestamppattern="yyyy-MM-dd HH.mm.ss"
+      rollsizekb="1024"
+      filename=".\application.log"
+      filestokeep="5" /&gt;</pre>
+<p>You need to deploy the ProviderLibrary assembly with the application but not the Configuration.Design assembly.</p>
+<p>You can <a href="/downloads/AADProvidersLibrary.zip">download the source for the TraceListener</a>, this solution is for VS2008, EL4 if you want the old version for EL3.1 then email me and I will send it to you.</p>

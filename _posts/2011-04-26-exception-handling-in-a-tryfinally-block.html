@@ -1,0 +1,98 @@
+---
+layout: post
+title: "Exception Handling in a try/finally block"
+date: 2011-04-26 13:04:00 +1200
+published: true
+tags: ["Development", "General"]
+categories: ["Development", "General"]
+alias: ["/derekblog/post/2011/04/26/Exception-Handling-in-a-tryfinally-block.aspx", "/derekblog/post/2011/04/26/exception-handling-in-a-tryfinally-block.aspx"]
+---
+<p>However I recently came across a problem I put into a system. I did not notice the problem until I was going through the exception logs and discovered that they were not as useful as they could have been.</p><!--more-->
+<p>I had written some code that was a client to a WCF service and if there was a problem with the service then the intention was to log the error for the main program to carry on &ndash; in other words the WCF service implemented something that was nice to have rather than must have. However it was important that we record the correct error.</p>
+<p>The code in question looked a bit like this</p>
+<pre class="csharp">public DataObject GetData(InputObject param)
+{
+  DataObject result = null;
+  using (ServiceClient client = new ServiceClient())
+  {
+    try
+    {
+      client.Open();
+      result = client.GetDataFromService(param);
+    }
+    finally
+    {
+      client.Close();
+    }
+  }
+  return result;
+}
+</pre>
+<p>If an error occurred in the GetDataFromService() method and it throws an exception then we want to record that exception, however because the Close() method is called from the finally block if it throws an exception then it will mask the exception from GetDataFromService(). This is exactly what did happen and my log was full of CommunicationException exceptions with the message,</p>
+<p>&ldquo;The communication object, System.ServiceModel.Channels.ServiceChannel, cannot be used for communication because it is in the Faulted state.&rdquo;</p>
+<p>It is interesting to note that I would have got that error message even if I had not explicitly coded the close() call in the finally block, <a href="http://msdn.microsoft.com/en-us/library/aa355056.aspx">as the using statement itself internally does exactly the same thing</a>. It appears to have <a href="http://stackoverflow.com/questions/530731/how-to-make-sure-you-dont-get-wcf-faulted-state-exception">tripped a number of people up</a>. Microsoft have even produced an <a href="http://msdn.microsoft.com/en-us/library/aa354510.aspx">example project</a> to show how to deal with this problem. The solution is to not put the ServiceClient in a using statement looks a bit like this</p>
+<pre class="csharp">try
+{
+    ...
+    double result = client.Add(value1, value2);
+    ...
+    client.Close();
+}
+catch (TimeoutException exception)
+{
+    Console.WriteLine("Got {0}", exception.GetType());
+    client.Abort();
+}
+catch (CommunicationException exception)
+{
+    Console.WriteLine("Got {0}", exception.GetType());
+    client.Abort();
+}</pre>
+<p>Now I know that this will work but I' am a bit unhappy about it because</p>
+<ol>
+<li>I think that everything that implements IDisposable should go in a using block, and making exceptions to that rule just makes me feel uneasy.</li>
+<li>It requires knowledge about which exceptions are &ldquo;expected&rdquo; and which are &ldquo;unexpected&rdquo;</li>
+<li>Its specific to calling WCF services and does not address the wider issues of things that are <a href="http://msdn.microsoft.com/en-us/library/aa355056.aspx">called from a Dispose() method in a using statement throwing an exception masking other exceptions</a>. This could happen with any kind of IDisposable object not just WCF.</li>
+</ol>
+<p>he method I used was as follows. It is verbose but it does not require any specific knowledge of &ldquo;expected&rdquo; exceptions, the using statement is retained and it would work for any IDisposable object.</p>
+<pre class="csharp">public DataObject GetData(InputObject param)
+{
+  DataObject result = null;
+  using (ServiceClient client = new ServiceClient())
+  {
+    // this is the excpetion we will throw
+    System.Exception exception = null;
+    try
+    {
+      client.Open();
+      result = client.GetDataFromService(param);
+    }
+    catch (System.Exception ex)
+    {
+      exception = ex;
+    }
+    finally
+    {
+      try
+      {
+        client.Close();
+      }
+      catch (System.Exception ex)
+      {
+        // only record the exception in the log
+        // if there&rsquo;s no exception in the try block
+        if (exception == null)
+        {
+          exception = ex;
+        }
+      }
+    }
+
+    if (exception != null)
+    {
+      throw exception;
+    }
+  }
+  return result;
+}
+</pre>

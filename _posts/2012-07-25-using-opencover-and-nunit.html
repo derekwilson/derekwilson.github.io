@@ -1,0 +1,42 @@
+---
+layout: post
+title: "Using OpenCover and nUnit"
+date: 2012-07-25 01:59:00 +1200
+published: true
+tags: ["Development", "How Do I"]
+categories: ["Development", "How Do I"]
+alias: ["/derekblog/post/2012/07/25/Using-OpenCover-and-nUnit.aspx", "/derekblog/post/2012/07/25/using-opencover-and-nunit.aspx"]
+---
+<p>Previously I have written about using <a href="http://derekwilson.net/derekblog/post/2012/05/29/Using-OpenCover-and-xUnit.aspx">OpenCover with xUnit</a>. It struck me that I should probably also do the same for nUnit as that is what we use in <a href="https://bitbucket.org/derekwilson/podcastutilities/wiki/Home">PodcastUtilities</a></p><!--more-->
+<p>The structure of these scripts is slightly different from the xUnit scripts as they have to work both 16 and 32 bit.</p>
+<p>The master script looks like this</p>
+<pre>call SetProgramFilesEnv.bat
+if "%ProgramFilesPath%" == "" exit 1
+set opencovercmd="%LocalAppData%\Apps\OpenCover\OpenCover.Console.exe"
+set nunitcmd="%ProgramFilesPath%\NUnit 2.6\bin\nunit-console-x86.exe"
+%opencovercmd% -register:user -target:%nunitcmd% -targetargs:"/noshadow /apartment:mta PodcastUtilities.nunit" -targetdir:"." -output:coverage.xml -filter:"+[PodcastUtilities.Common]* +[PodcastUtilities.Presentation]* -[PodcastUtilities.Common]PodcastUtilities.Common.Platform* -[PodcastUtilities.Common]PodcastUtilities.Common.Exceptions*"
+rem this is a generator available from http://reportgenerator.codeplex.com/
+.\Tools\ReportGenerator\ReportGenerator.exe coverage.xml .\Coverage</pre>
+<p>OpenCover installs into the %LocalAppData% path which does make writing scripts easy. Once again I have used the /noshadow option just for speed</p>
+<p>If I did not specify the /apartment option then I got the following error as by default it attempts to run the tests in the STA and the PodcastUtility tests need to be run in the MTA</p>
+<pre>1) SetUp Error : PodcastUtilities.Common.Tests.TaskPoolTests.WhenATaskCompletesAndThereAreStillTasksLeftToRun.ItShouldStartTheNextTask
+   SetUp : System.NotSupportedException : WaitAll for multiple handles on a STA thread is not supported.
+   at System.Threading.WaitHandle.WaitMultiple(WaitHandle[] waitHandles, Int32 millisecondsTimeout, Boolean exitContext, Boolean WaitAll)</pre>
+<p>To accommodate 32 bit and 64 bit users the SetProgramFilesEnv.bat sets up the correct path like this</p>
+<pre>set ProgramFilesPath=
+
+if not "%PROGRAMFILES(x86)%" == "" goto win64
+if not "%ProgramFiles%" == "" goto win32
+echo Cannot find program files environment variable
+pause
+goto end
+
+:win32
+set ProgramFilesPath=%ProgramFiles%
+goto end
+
+:win64
+set ProgramFilesPath=%PROGRAMFILES(x86)%
+
+:end</pre>
+<p>The excellent ReportGenerator is &ldquo;installed&rdquo; (unzipped) in a sub folder</p>

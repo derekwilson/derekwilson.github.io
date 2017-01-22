@@ -1,0 +1,67 @@
+---
+layout: post
+title: "Windows Media Center in New Zealand"
+date: 2013-01-19 16:33:00 +1300
+published: true
+tags: ["Gadgets", "General", "Travel"]
+categories: ["Gadgets", "General", "Travel"]
+alias: ["/derekblog/post/2013/01/19/Windows-Media-Center-in-New-Zealand.aspx", "/derekblog/post/2013/01/19/windows-media-center-in-new-zealand.aspx"]
+---
+<p>Last year I <a href="http://derekwilson.net/derekblog/post/2012/01/14/Things-I-have-learnt.aspx" target="_blank">moved from the UK to New Zealand</a>. I brought with me my Media Center hoping that I could get it to work.</p><!--more-->  <p>It turns out that TV is broadcast over here using DVB-T (and DVB-T2 for HD) just like Freeview in the UK so it does work to the extent that I can watch live TV. However getting the EPG working was another matter all together and the results are mixed, is does work – sort of.</p>  <p>First of all in New Zealand the full 5 day EPG is broadcast in MHEG5 format and Windows Media Center (WMC) does not support this format. There is a piece of software called <a href="http://sourceforge.net/projects/epgcollector/" target="_blank">EPG Collector</a> that can be used to get the EPG and then load it into the WMC guide database. I have to say that it is a very impressive piece of software and is very well supported.</p>  <p>I just installed EPG Collector and then I have this script that I run as administrator</p>  <pre class="csharp">c:
+cd &quot;\Program Files (x86)\Geekzone\EPG Collector&quot;
+pause
+EPGCollector.exe
+pause</pre>
+
+<p>The collector is configured using an INI file. The DVBT section is specific to the transmitter that I use (I live in Wellington) if you look in “C:\Program Files (x86)\Geekzone\EPG Collector\Configuration\TuningParameters” you will see that there are a large number of files.</p>
+
+<pre class="csharp">[GENERAL]
+Output=C:\ProgramData\Geekzone\EPG Collector\TVGuide.xml
+Timeouts=10,300,5
+Option=USEIMAGE,DUPLICATESAMECHANNELS,WMCIMPORT,AUTOMAPEPG,ALLSERIES,WMCSTARSPECIAL
+
+[DVBT]
+TuningFile=New Zealand.Wellington - Kaukau (After June 2012).xml
+ScanningFrequency=578000,8,MHEG5
+
+[LOOKUPS]
+MovieLookupEnabled=no
+TVLookupEnabled=no
+TVImage=poster
+LookupMatching=Exact
+LookupNotFound=yes
+LookupReload=no
+LookupIgnoreCategories=no
+LookupProcessAsTVSeries=no
+LookupErrors=5
+LookupTimeLimit=60</pre>
+
+<p>You can use the EPG Collector UI to generate this file or just edit it in notepad. There are <a href="http://www.geekzone.co.nz/forums.asp?forumid=126&amp;topicid=61903" target="_blank">full instructions here</a>.</p>
+
+<p>I just run the script every week and I have a complete EPG, scheduled recordings and series recording all work fine.</p>
+
+<p>There are a couple of problems. The first is that reception is not always great, I get digital breakup on some channels to the point that its not really watchable. It is strange and I do have line of sight on the Kaukau mast. Luckily it is only a few channels that are affected and for instance TV One is pretty bad but TV One +1 is fine so I just exclude TV One</p>
+
+<p>The other problem is more annoying, The dots. This is a problem that has been much discussed and the general consensus is that it is caused by WMC downloading EIT data and overwriting the EPG Collector data. It certainly seems to be the problem, the guide data will be fine and then after a couple of days some of the channels will just have dots (.) as the program title for all programs. I have applied the <a href="http://sourceforge.net/projects/epgcollector/forums/forum/1125946/topic/5844721" target="_blank">registry settings to disable WMC from downloading the EIT data</a></p>
+
+<pre class="csharp">Windows Registry Editor Version 5.00
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Media Center\Service\BackgroundScanner]
+&quot;PeriodicScanEnabled&quot;=dword:00000000
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Media Center\Service\GLID]
+&quot;DisableInbandScheduleLoading&quot;=dword:00000001</pre>
+
+<p>However it still happens intermittently, sometimes it will happen for three successive days and sometimes not at all for weeks. It is driving me nuts and I still haven't got a proper solution.</p>
+
+<p>Actually while writing this post I have noticed that one of the settings might be wrong, <a href="http://www.geekzone.co.nz/forums.asp?forumid=126&amp;topicid=105131&amp;page_no=3" target="_blank">this post</a> seems to think the the setting should be like this</p>
+
+<pre class="csharp">Windows Registry Editor Version 5.00
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Media Center\Service\BackgroundScanner]
+&quot;PeriodicScanEnabled&quot;=dword:00000000
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Media Center\Service\GLID]
+&quot;DisableInbandSchedule&quot;=dword:00000001</pre>
+
+<p>I will try this setting and see if the dots stay away.</p>

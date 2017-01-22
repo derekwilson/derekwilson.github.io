@@ -1,0 +1,124 @@
+---
+layout: post
+title: "ie does not display a space after an embedded SPAN element"
+date: 2011-02-20 11:02:00 +1300
+published: true
+tags: ["CSS", "Development", "Web"]
+categories: ["CSS", "Development", "Web"]
+alias: ["/derekblog/post/2011/02/20/ie-does-not-display-a-space-after-an-embedded-SPAN-element.aspx", "/derekblog/post/2011/02/20/ie-does-not-display-a-space-after-an-embedded-span-element.aspx"]
+---
+<p>I came across another odd render problem in IE. I had an a SPAN element enclosed by a DIV element. the span was being used to attract style to a part of the text in the div The HTML I thought I had was something like this.</p><!--more-->
+<pre class="c#">&lt;html&gt; 
+ &lt;head&gt; 
+  &lt;title&gt;Test&lt;/title&gt; 
+  &lt;style type="text/css"&gt; 
+  body {
+    font-size:20px;
+  }
+  .div
+  {
+    background-color: red;
+  }
+  .span
+  {
+    background-color: blue;
+  }
+  &lt;/style&gt; 
+ &lt;/head&gt; 
+ &lt;body&gt;
+  &lt;div&gt;
+   &lt;div class="div"&gt;
+   test before &lt;span id='span1'
+                    class='span'&gt;spanned text&lt;/span&gt; text after&lt;/div&gt;
+  &lt;/div&gt; 
+ &lt;/body&gt; 
+&lt;/html&gt;</pre>
+<p>The problem I saw was that IE would ignore the first space after the embedded SPAN like this.</p>
+<p><a href="/images/wordpress/iedoesnotdisplayaspaceafteranembeddedSPA_FD3D/start.png"><img style="display: inline; border-width: 0px;" title="start" src="/images/wordpress/iedoesnotdisplayaspaceafteranembeddedSPA_FD3D/start_thumb.png" alt="start" width="361" height="226" border="0" /></a></p>
+<p>When I looked closer at the problem and examined the HTML I saw that the span was actually rendered as an empty SPAN which was then filled from JavaScript when the page is loaded like this.</p>
+<!--more-->
+<pre class="c#">&lt;html&gt; 
+ &lt;head&gt; 
+  &lt;title&gt;Test&lt;/title&gt; 
+  &lt;style type="text/css"&gt; 
+  body {
+    font-size:20px;
+  }
+  .div
+  {
+    background-color: red;
+  }
+  .span
+  {
+    background-color: blue;
+  }
+  &lt;/style&gt;
+  &lt;script type='text/javascript'&gt;
+   function loaded()
+   {
+    document.getElementById('span1').innerHTML = 'spanned text';
+   }
+  &lt;/script&gt; 
+ &lt;/head&gt; 
+ &lt;body&gt;
+  &lt;div&gt;
+    &lt;div class="div"&gt;
+    test before &lt;span id='span1' class='span'&gt;&lt;/span&gt; text after&lt;/div&gt;
+  &lt;/div&gt; 
+ &lt;/body&gt; 
+&lt;/html&gt;</pre>
+<p>After some experimentation with different scenarios like this</p>
+<pre class="c#">&lt;html&gt; 
+ &lt;head&gt; 
+  &lt;title&gt;Test&lt;/title&gt; 
+  &lt;style type="text/css"&gt; 
+  body {
+    font-size:20px;
+  }
+  .div
+  {
+    background-color: red;
+  }
+  .span
+  {
+    background-color: blue;
+  }
+  &lt;/style&gt;
+  &lt;script type='text/javascript'&gt;
+   function loaded()
+   {
+    document.getElementById('span1').innerHTML = 'replaced text in span';
+    document.getElementById('span2').innerHTML = 'replaced text in span';
+    document.getElementById('span3').innerHTML = 'replaced text in span';
+    alert('loaded');
+   }
+  &lt;/script&gt; 
+ &lt;/head&gt; 
+ &lt;body&gt;
+  &lt;div&gt;
+    &lt;div class="div"&gt;
+    test1 before &lt;span id='span1' 
+                      class='span'&gt;spanned text&lt;/span&gt; text after,
+      span rendered with text, span has text updated from script
+    &lt;/div&gt;
+    &lt;div class="div"&gt;
+    test2 before &lt;span id='span2'
+                      class='span'&gt;&lt;/span&gt; text after, 
+      span rendered without text, span has text updated from script
+    &lt;/div&gt;
+    &lt;div class="div"&gt;
+    test3 before &lt;span id='span3'
+                      class='span'&gt;&lt;/span&gt; text after, 
+      span rendered without text, span has text updated from script, with nbsp
+    &lt;/div&gt;
+    &lt;div class="div"&gt;
+    test4 before &lt;span id='span3'
+                      class='span'&gt;spanned text&lt;/span&gt; text after, 
+      span rendered with text, no update
+    &lt;/div&gt;
+  &lt;/div&gt; 
+ &lt;/body&gt; 
+&lt;/html&gt;</pre>
+<p>it turns out that IE8 eliminates the first space after the SPAN if the span is rendered empty, this happens if IE8&rsquo;s document mode is Quirks or IE7 mode, it renders fine if IE8 is in IE8 mode. The same problem appears to happen in IE7 and IE6.</p>
+<p><a href="/images/wordpress/iedoesnotdisplayaspaceafteranembeddedSPA_FD3D/tests.png"><img style="display: inline; border-width: 0px;" title="tests" src="/images/wordpress/iedoesnotdisplayaspaceafteranembeddedSPA_FD3D/tests_thumb.png" alt="tests" width="446" height="122" border="0" /></a></p>
+<p>To resolve this problem there are a number of options, either place text in the span that is then replaced by the JavaScript, or use a non breaking space after the span.</p>

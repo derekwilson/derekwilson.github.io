@@ -1,0 +1,36 @@
+---
+layout: post
+title: "Restoring a image to an Acer Netbook from a Windows Home Server"
+date: 2010-06-16 14:06:00 +1200
+published: true
+tags: ["General", "How Do I"]
+categories: ["General", "How Do I"]
+alias: ["/derekblog/post/2010/06/16/Restoring-a-image-to-an-Acer-Netbook-from-a-Windows-Home-Server.aspx", "/derekblog/post/2010/06/16/restoring-a-image-to-an-acer-netbook-from-a-windows-home-server.aspx"]
+---
+<p>After <a href="http://www.hanselman.com/blog/TheCaseOfTheFailingDiskDriveOrWindowsHomeServerSavedMyMarriage.aspx">Scott going on about how good Windows Home Server (WHS) is</a> I decided to try it. I have to say on the whole I am very pleased, it works very well.</p><!--more-->
+<p>I did have one issue with restoring machine images. WHS will backup machines on the network. You can restore individual files by opening a backup set and copying any files you need. If you loose the whole machine, for example you suffer a disk malfunction you can restore a machine image.</p>
+<p>This all seemed like black magic to me so I tested it with an one Dell Inspiron Laptop that I was repurposing. I reformatted the machine, installed the new OS, attached it to the WHS network and backup up. Then I reformatted the machine and tried to restore, it worked, to very little time and like magic the machine was back.</p>
+<p>Hurrah it works test over. Well not quite. This has happened before, and undoubtedly will happen again, but would you believe it this was the only machine on the network that it worked on, The next two machines I really needed to restore failed, I had managed to test the only machine that would work. The machines I was trying to restore to were Acer Aspire One A150 and D250, given how popular these machines are it was surprisingly difficult to find a solution.</p>
+<p>&nbsp;</p>
+<!--more-->
+<p>The process of restoring a machine image is</p>
+<ol>
+<li>Boot of the Windows Home Server Restore CD, in the case of the netbooks <a href="http://www.intowindows.com/how-to-install-windows-7vista-from-usb-drive-detailed-100-working-guide/">I made a bootable USB flash driver</a> and copied the Home Server Restore CD onto it.</li>
+<li>Open any one of the backup sets from the machine in question and copy the folder &ldquo;Windows Home Server Drivers for Restore&rdquo; onto a flash driver (as I was booting of a flash driver I just copied onto the same drive as the Restore CD)</li>
+<li>Boot the sick netbook from the Restore CD / Flash drive.</li>
+<li>When prompted scan for additional drivers to get the wired LAN driver installed</li>
+<li>Select your Home Server, enter the password and make a cup of tea.</li>
+</ol>
+<p>However as I found out there can be problems where the <a href="http://social.microsoft.com/Forums/en/whssoftware/thread/648ec6a6-25f0-4c42-831e-f2506e71e9fa">wired LAN driver is not found</a> at step 4 or does not work at step 5 in the sense that <a href="http://social.microsoft.com/Forums/en-US/whssoftware/thread/c0b03db3-fe9c-4cc7-b70a-aa1aa8f582ae">it fails to find the home server</a> no matter how much cajoling. It seemed to me that to get the restore to work I was going to have to manually insert the drivers.</p>
+<p>There are some things to be remembered</p>
+<ol>
+<li>When you have booted from the Restore CD you have booted a version of Vista 32bit &ndash; only 32 bit Vista drivers will work no matter what OS you are trying to restore.</li>
+<li>You must restore over a wired connection, wireless will not do.</li>
+<li>You must resolve the home server by name not IP address</li>
+</ol>
+<p>The wired LAN driver for the D250 was easy to get, the <a href="http://us.acer.com/acer/service.do?LanguageISOCtxParam=en&amp;ctx2.c2att1=25&amp;CountryISOCtxParam=US&amp;ctx1g.c2att92=453&amp;ctx1.att21k=1&amp;CRC=3529792491">Acer support site</a> has Vista drivers for the LAN card, I downloaded &ldquo;Lan_Atheros_1.0.0.10_W7x86_A.zip&rdquo; and the files I needed were in &ldquo;Lan_Atheros_1.0.0.10_W7x86_A.zip\LAN_Atheros_(AR8132)_v1.0.0.10_Win7x86\8131\vista_32&rdquo; I create a folder on the USB flash driver like this.</p>
+<p><a href="/images/wordpress/RestoringaimagetoanAcerNetbookfromaWindo_127E1/D250.png"><img style="display: inline; border-width: 0px;" title="D250" src="/images/wordpress/RestoringaimagetoanAcerNetbookfromaWindo_127E1/D250_thumb.png" alt="D250" width="413" height="251" border="0" /></a></p>
+<p>The A150 was more tricky as the Acer site does not support Vista, I had to get the LAN driver from the <a href="http://www.realtek.com/downloads/downloadsView.aspx?Langid=1&amp;PNid=14&amp;PFid=7&amp;Level=5&amp;Conn=4&amp;DownTypeID=3&amp;GetDown=false">Realek support site</a> (I was having to guess a little about the exact hardware I had so I would recommend making a note of your hardware after installing a new OS). I downloaded &ldquo;Driver_Vista_6236_04202010.zip&rdquo;, the files I wanted were in &ldquo;Driver_Vista_6236_04202010.zip\Driver_Vista_6236_04202010\WINVISTA\32&rdquo; and once again I copied them onto the flash drive like this</p>
+<p><a href="/images/wordpress/RestoringaimagetoanAcerNetbookfromaWindo_127E1/A150.png"><img style="display: inline; border-width: 0px;" title="A150" src="/images/wordpress/RestoringaimagetoanAcerNetbookfromaWindo_127E1/A150_thumb.png" alt="A150" width="411" height="250" border="0" /></a></p>
+<p>&nbsp;</p>
+<p>I found it handy that I could name the folders with the proper name as then I give them meaningful names, and keep these drivers safe in case I need them in future.</p>

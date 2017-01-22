@@ -1,0 +1,29 @@
+---
+layout: post
+title: "Error messages are important"
+date: 2013-08-26 01:28:00 +1200
+published: true
+tags: ["Code Review", "Development"]
+categories: ["Code Review", "Development"]
+alias: ["/derekblog/post/2013/08/26/Error-messages-are-important.aspx", "/derekblog/post/2013/08/26/error-messages-are-important.aspx"]
+---
+<p>I’ve been doing some maintenance work on some old code. And I think that most of my effort has gone into making the error messages better. If a piece if software is successful then it means its going to be used in a live environment. It also means its going to break at some point and at that point its going to be a lot easier for everyone if the error message it produces makes sense.</p><!--more-->  <p>For example just the other day I came across this piece of code that loads a piece of XML</p>  <pre>new XDocument(xml).Validate(_schema, (sender, e) =&gt; {
+ throw new DomainException(&quot;XML configuration is invalid.&quot;);
+});</pre>
+
+<p>When it broke it produced this error message</p>
+
+<pre>XML configuration is invalid.</pre>
+
+<p>Not really very much use. And its so simple to make the error message better, a small change to this.</p>
+
+<pre>new XDocument(xml).Validate(_schema, (sender, e) =&gt; {
+ throw new DomainException(string.Format(&quot;XML configuration is invalid. {0}&quot;,e.Message),e.Exception);
+});</pre>
+
+<p>Gives this as an error message.</p>
+
+<pre>XML configuration is invalid. The element 'Config' has invalid child element 'BadElement'.
+List of possible elements expected: 'Start, End, Days, Overwrite, Discount'.</pre>
+
+<p>I know that I want to focus on the code “happy path”, however from past experience the quality of error messages is one of the major factors in how fast and easily defects can be corrected.</p>

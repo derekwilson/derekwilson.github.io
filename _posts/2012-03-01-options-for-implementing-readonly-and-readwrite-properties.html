@@ -1,0 +1,127 @@
+---
+layout: post
+title: "Options for implementing ReadOnly and ReadWrite properties"
+date: 2012-03-01 01:06:00 +1300
+published: true
+tags: ["Development"]
+categories: ["Development"]
+alias: ["/derekblog/post/2012/03/01/Options-for-implementing-ReadOnly-and-ReadWrite-properties.aspx", "/derekblog/post/2012/03/01/options-for-implementing-readonly-and-readwrite-properties.aspx"]
+---
+<p>This is a real problem, I did come up with a solution however it was not straightforward which probably means that I might have missed something, is there a better way of doing this?</p><!--more-->
+<h3>The problem</h3>
+<p>In PodcastUtilities we have a configuration file. This is the representation of the podcasts we want to download. The Downloader and the Sync need read access to the configuration however the GUI needs to be able to read and write. This is not an unusual pattern and I was keen to make the ReadWrite access object a superset of the ReadOnly object as there is business logic in the ReadOnly object that I did not want to duplicate.</p>
+<h3>A simplistic approach</h3>
+<p>What I envisaged was something like this</p>
+<pre class="csharp">    public interface IReadOnly
+    {
+        string TestProperty { get; }
+    }
+
+    public interface IReadWrite : IReadOnly
+    {
+        string TestProperty { get; set; }
+    }</pre>
+<p>However its never that simple, if we try and implement these interfaces we get this</p>
+<pre class="csharp">    public class BaseClass
+    {
+        protected string _testField = "DEFAULT";
+
+        public string TestProperty
+        {
+            get { return _testField; }
+        }
+    }
+
+    public class ReadOnly : BaseClass, IReadOnly
+    {
+    }
+
+    public class ReadWrite : BaseClass, IReadWrite
+    {
+        new public string TestProperty
+        {
+            get { return _testField; }
+            set { _testField = value; }
+        }
+    }
+
+...
+
+            ReadOnly readOnly = new ReadOnly();
+            ReadWrite readWrite = new ReadWrite();
+
+            readWrite.TestProperty = "updated";</pre>
+<p>This is not what we want, it might seem trivial but because the ReadOnly.TestProperty is completely different from the ReadWrite.TestProperty it means that any logic cannot be shared. We have to implement any logic associated with the getter twice.</p>
+<p>What we really want to be able to write is this</p>
+<pre class="csharp">    public interface IReadOnly
+    {
+        string TestProperty { get; }
+    }
+
+    public interface IReadWrite : IReadOnly
+    {
+        string TestProperty { set; }
+    }
+    public class BaseClass
+    {
+        protected string _testField = "DEFAULT";
+
+        public string TestProperty
+        {
+            get { return _testField; }
+        }
+    }
+
+    public class ReadOnly : BaseClass, IReadOnly
+    {
+    }
+
+    public class ReadWrite : BaseClass, IReadWrite
+    {
+        public string TestProperty
+        {
+            set { _testField = value; }
+        }
+    }</pre>
+<p>However that is not acceptable in the language.</p>
+<h3>A solution?</h3>
+<p>In the end the implementation we settled on for PodcastUtilities was like this</p>
+<pre class="csharp">    public interface IReadOnly
+    {
+        string GetTest();
+    }
+
+    public interface IReadWrite
+    {
+        void SetTest(string propertyValue);
+    }
+
+    public class BaseClass : IReadOnly
+    {
+        protected string _testField = "DEFAULT";
+
+        public string GetTest()
+        {
+            return _testField;
+        }
+    }
+
+    public class ReadOnly : BaseClass
+    {
+    }
+
+    public class ReadWrite : BaseClass, IReadWrite
+    {
+        public void SetTest(string propertyValue)
+        {
+            _testField = propertyValue;
+        }
+    }
+
+...
+
+            ReadOnly readOnly = new ReadOnly();
+            ReadWrite readWrite = new ReadWrite();
+
+            readWrite.SetTest("updated");</pre>
+<p>However I am still not sure its the best solution &ndash; thought it does have the virtue of not having any repeated code.</p>

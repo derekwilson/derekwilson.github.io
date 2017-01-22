@@ -1,0 +1,87 @@
+---
+layout: post
+title: "CSS margin, padding and background-image problems"
+date: 2009-07-12 09:07:00 +1200
+published: true
+tags: ["CSS", "Development", "Web"]
+categories: ["CSS", "Development", "Web"]
+alias: ["/derekblog/post/2009/07/12/CSS-margin-padding-and-background-image-problems.aspx", "/derekblog/post/2009/07/12/css-margin-padding-and-background-image-problems.aspx"]
+---
+<p><a href="/2009/06/19/css-z-index-with-containing-blocks-and-ie6-ie7.html">In my previous post</a> I was looking at problems with older versions of IE. It is always easy to poke fun at older browsers (and IE6 is getting on for 10 years old now) and as I noted at the time the problem migrates from browser to browser as time goes on, in the past it was Netscape 4 and undoubtedly it will be a different browser in the future. Recently I came across an issue that seems to affect IE6, IE7 and Firefox 2 and 3. Opera, Chrome and Safari seem to render correctly.</p><!--more-->
+<p>I guess developers tend to get quite grumpy about how different browsers render HTML because its often a struggle to understand how the standards should work and to find a common method that will work across all browsers especially when there are deadlines involved.</p>
+<p>The issue relates to using a DIV the contains a TABLE. The containing DIV has a background-image and the contained TABLE uses margin to position it correctly. This technique is often used to display dynamic data over a pretty image. At first I thought the the problem was with the <a href="http://en.wikipedia.org/wiki/WebKit">webkit browsers</a> (Chrome and Safari) as Firefox and IE7 appeared to render the page correctly but, without being an expert in the HTML / CSS standards and given that IE8 and Opera also render the same as the webkit browsers I think that the problem is with Firefox and older versions of IE. However, lets face it it doesn&rsquo;t really matter who is right and who is wrong as we still need to find a method that will work on all browsers.</p>
+<!--more-->
+<p>In this example I have used a background image with a tall blue bordered heading row and a red border around the table cells. In this simple example the image is fairly primitive and there are only two cells of data, I&rsquo;ve done this to strip the example back to its basics so that we can see what is happening with different browsers. The raw image looks like this.</p>
+<p><a href="/images/wordpress/CSSmarginpaddingandbackgroundimagesprobl_F42C/border.png"><img style="display: inline; border-width: 0px;" title="border" src="/images/wordpress/CSSmarginpaddingandbackgroundimagesprobl_F42C/border_thumb.png" alt="border" width="72" height="80" border="0" /></a></p>
+<p>The HTML uses this image as the background image for a containing DIV, the blue boxes are 50 pixels high and the red boxes are 26 pixels high, just for this simple example I&rsquo;ve ignored the widths. The inner TABLE has a 50 pixel top margin to place it in the red borders. The HTML also makes the background to the page grey just so we can see what is going on.</p>
+<pre class="c#">&lt;html&gt; 
+ &lt;head&gt; 
+  &lt;title&gt;Margin&lt;/title&gt; 
+  &lt;style type="text/css"&gt; 
+    .page
+    {
+    	background-color: Gray;
+    }
+    .outer
+    {
+    	height: 76px;
+    	background-image: url(border.png);
+    	background-repeat: no-repeat;
+    }
+    .inner
+    {
+    	margin-top: 50px;
+    }
+  &lt;/style&gt; 
+ &lt;/head&gt; 
+ &lt;body class="page"&gt; 
+  &lt;div class="outer"&gt; 
+   &lt;table class="inner"&gt;
+    &lt;tr&gt;
+     &lt;td&gt;cell1&lt;/td&gt;
+     &lt;td&gt;cell2&lt;/td&gt;
+    &lt;/tr&gt;
+   &lt;/table&gt; 
+  &lt;/div&gt; 
+ &lt;/body&gt; 
+&lt;/html&gt;</pre>
+<p>This HTML looks like this in Firefox</p>
+<p><a href="/images/wordpress/CSSmarginpaddingandbackgroundimagesprobl_F42C/margin_ff.png"><img style="display: inline; border-width: 0px;" title="margin_ff" src="/images/wordpress/CSSmarginpaddingandbackgroundimagesprobl_F42C/margin_ff_thumb.png" alt="margin_ff" width="135" height="191" border="0" /></a></p>
+<p>All appears to be well, I use Firefox a lot as Firbug is so good, the render is also like this in older versions of IE. However IE8 and the webkit browsers (Chrome and Safari) render it like this.</p>
+<p><a href="/images/wordpress/CSSmarginpaddingandbackgroundimagesprobl_F42C/margin_ie8.png"><img style="display: inline; border-width: 0px;" title="margin_ie8" src="/images/wordpress/CSSmarginpaddingandbackgroundimagesprobl_F42C/margin_ie8_thumb.png" alt="margin_ie8" width="134" height="221" border="0" /></a></p>
+<p>It would appear that these browsers are applying the top margin to the background image of the outer DIV as well as to the inner TABLE so that the image has moved down so that the text in each cell is no longer in the red boxes.</p>
+<p>The solution is to use top <strong>padding</strong> on the outer DIV rather than top <strong>margin</strong> on the inner TABLE. Its worth noting that the HTML for the page does not need to change &ndash; only the CSS.</p>
+<pre class="c#">&lt;html&gt; 
+ &lt;head&gt; 
+  &lt;title&gt;Margin Fix&lt;/title&gt; 
+  &lt;style type="text/css"&gt; 
+    .page
+    {
+    	background-color: Gray;
+    }
+    .outer
+    {
+    	height: 76px;
+    	background-image: url(border.png);
+    	background-repeat: no-repeat;
+    	padding-top: 50px;
+    }
+    .inner
+    {
+    }
+  &lt;/style&gt; 
+ &lt;/head&gt; 
+ &lt;body class="page"&gt; 
+  &lt;div class="outer"&gt; 
+   &lt;table class="inner"&gt;
+    &lt;tr&gt;
+     &lt;td&gt;cell1&lt;/td&gt;
+     &lt;td&gt;cell2&lt;/td&gt;
+    &lt;/tr&gt;
+   &lt;/table&gt; 
+  &lt;/div&gt; 
+ &lt;/body&gt; 
+&lt;/html&gt;</pre>
+<p>This HTML renders like this in all browsers.</p>
+<p><a href="/images/wordpress/CSSmarginpaddingandbackgroundimagesprobl_F42C/margin_fix_ie8.png"><img style="display: inline; border-width: 0px;" title="margin_fix_ie8" src="/images/wordpress/CSSmarginpaddingandbackgroundimagesprobl_F42C/margin_fix_ie8_thumb.png" alt="margin_fix_ie8" width="123" height="182" border="0" /></a></p>
+<p>This is obviously a problem as IE8 has already been fixed and its probable that a future version of Firefox will also address this problem which will mean that pages that use this technique will need to be fixed.</p>

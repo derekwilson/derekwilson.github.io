@@ -1,0 +1,14 @@
+---
+layout: post
+title: "TiddlyWiki on small screen devices - available for download"
+date: 2011-09-26 15:09:00 +1300
+published: true
+tags: ["Android", "Mobile", "TiddlyWiki"]
+categories: ["Android", "Mobile", "TiddlyWiki"]
+alias: ["/derekblog/post/2011/09/26/TiddlyWiki-on-small-screen-devices-available-for-download.aspx", "/derekblog/post/2011/09/26/tiddlywiki-on-small-screen-devices-available-for-download.aspx"]
+---
+<p>Last month I described <a href="/2011/08/24/tiddlywiki-on-android-phones-using-the-pipe-symbol.html">how I got the pipe symbol to work in TiddlyWiki on my HTC Wildfire</a>.</p><!--more-->
+<p>I got to TiddlyWiki for small screen devices by downloading <a href="http://www.appbrain.com/app/andtidwiki-beta/de.mgsimon.android.andtidwiki">AndTidWiki</a>, this in turn was based on <a href="http://itw.bidix.info/">iTW</a>. The thing is that its based on TiddlyWiki v2.4.1, the current version is v2.6.4 and now includes jQuery.</p>
+<p>I took a little time and also had help from <a href="http://www.lightbulbsoftware.com/andrew/blog/">Andrew</a> and we have put together a Powershell script that will take a release copy of the TiddlyWiki from the <a href="http://www.tiddlywiki.com/archive/">published archives</a> and will add in the modifications that were made to the base TiddlyWiki by <a href="http://bidix.info/TiddlyWiki/">bidx</a> (for iTW) as well the the modification that I made to use an alternative pipe symbol on HTC android phones. The effect of this is that it is now possible to generate a TiddlyWiki for phones that is based on the latest version of TiddlyWiki. Run the scripts and then just copy the HTML file to your phone.</p>
+<p>While I was doing it I also made another modification to automatically dismiss the popup div that is displayed as a successful save confirmation. The popup is all well and good but I found it annoying to have to dismiss it every time I pressed &ldquo;Done&rdquo;, the modification leaves the popup there for five seconds and then dismisses it.</p>
+<p>We have put the all the scripts that you need to generate your own Tiddlywiki in a repository called <a href="https://bitbucket.org/derekwilson/tiddlywiki4phone/overview">TiddlyWiki4Phone</a> on bitbucket &ndash; enjoy.</p>

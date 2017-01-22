@@ -1,0 +1,110 @@
+---
+layout: post
+title: "Code Review: Testing Behaviour"
+date: 2011-06-07 14:06:00 +1200
+published: true
+tags: ["Code Review", "Development"]
+categories: ["Code Review", "Development"]
+alias: ["/derekblog/post/2011/06/07/Code-Review-Testing-Behaviour.aspx", "/derekblog/post/2011/06/07/code-review-testing-behaviour.aspx"]
+---
+<p>During a code review of unit tests someone said something that I found very interesting. We had been looking at the structure of <a href="http://dannorth.net/introducing-bdd/">BDD</a> (GivenThat and When) style tests and he said that he wanted tests to be written in such a way that if he wanted to refractor code but not change the overall intent of code then the tests should not break &ndash; but of course they always did.</p><!--more-->
+<p>It made me think that when I have seen poor tests we end up with fragile tests that effectively just give us twice as much code to maintain. I do not think this should be used as an excuse to not write tests rather I think we should think about what we are trying to achieve.</p>
+<p>Tests, especially BDD tests, should test the behaviour not the implementation. As an artificial example if we had a method that discovered if a given list of numbers contain any two numbers that are adjacent. That is when it is called with 4,7,9,6 it will return true, if called with 4,7,9 it will return false.</p>
+<p>An obvious method of implementing this behaviour would be to sort the numbers and then look for adjacent numbers.</p>
+<h3>Tests <span>I would expect to see</span></h3>
+<p>The first two tests that string to mind, one a positive and one a negative, could be something like this.</p>
+<pre class="csharp">public abstract class ItemFinderTests : WhenTestingBehaviour
+{
+  protected ItemFinder _selctor1;
+  protected IList _numbers;
+  protected bool _result;
+
+  protected override void GivenThat()
+  {
+    base.GivenThat();
+    _selctor1 = new ItemFinder(new SystemDotNetSorter());
+  }
+}
+
+public class WhenFindingAdjasentNumbers : ItemFinderTests
+{
+  protected override void GivenThat()
+  {
+    base.GivenThat();
+    _numbers = new List() {7,3,6};
+  }
+
+  protected override void When()
+  {
+    _result = _selctor1.HasAdjasentNunbers(_numbers);
+  }
+
+  [Test]
+  public void ShouldFindAdjasentNumbers()
+  {
+    Assert.That(_result,Is.True);
+  }
+}
+
+public class WhenNotFindingAdjasentNumbers : ItemFinderTests
+{
+  protected override void GivenThat()
+  {
+    base.GivenThat();
+    _numbers = new List() {3,6};
+  }
+
+  protected override void When()
+  {
+    _result = _selctor1.HasAdjasentNunbers(_numbers);
+  }
+
+  [Test]
+  public void ShouldNotFindAdjasentNumbers()
+  {
+    Assert.That(_result, Is.False);
+  }
+}</pre>
+<p>There are other tests that could and in fact should be written, for example testing empty lists and lists with one or two items in</p>
+<h3>Tests <span>I would not expect to see</span></h3>
+<p>In these tests I have mocked the object that supports ISorter, the object that is used to sort the list. In the previous tests I used a real concrete implementation. In some cases it is desirable to isolate tests from the underlying operating system or environment however in this case I&rsquo;m not sure there is a great deal of benefit, in mocking the sorter, however I do not think that mocking (or not mocking) the sorter is a problem in itself.</p>
+<pre class="csharp">public class ItemFinderTests2 : WhenTestingBehaviour
+{
+  private ItemFinder _selctor1;
+  private IList _numbers;
+  private bool _result;
+  private ISorter _sorter;
+  private IList _sortedNumbers;
+
+  protected override void GivenThat()
+  {
+    base.GivenThat();
+
+    _numbers = new List() {7,3,6};
+    _sortedNumbers = new List() {3,6,7};
+
+    _sorter = GenerateMock();
+    _sorter.Stub(s =&gt; s.Sort(_numbers)).Return(_sortedNumbers);
+
+    _selctor1 = new ItemFinder(_sorter);
+  }
+
+  protected override void When()
+  {
+    _result = _selctor1.HasAdjasentNunbers(_numbers);
+  }
+
+  [Test]
+  public void ShouldSortTheNumber()
+  {
+    _sorter.AssertWasCalled(s =&gt; s.Sort(_numbers));
+  }
+
+  [Test]
+  public void ShouldFindAdjasentNumbers()
+  {
+    Assert.That(_result, Is.True);
+  }
+}</pre>
+<p>When I see tests like this I think that we should not be writing tests that ensure that there are particular lines of code in the method we are testing. We do not care that the method uses the supplied sorter (or calls its sort method) only that it returns the correct result.</p>
+<p>In general when we write code to satisfy BDD or TDD tests we are attempting to write the minimum amount of code that is needed to support the test and I think that we should also write the minimum amount of code in the tests that will test the behaviour we are expecting. Writing more than this gives us more code to maintain and more brittle tests.</p>

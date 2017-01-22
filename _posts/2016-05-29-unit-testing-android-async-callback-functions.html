@@ -1,0 +1,165 @@
+---
+layout: post
+title: "Unit Testing Android async callback functions"
+date: 2016-05-29 19:12:00 +1200
+published: true
+tags: ["Android", "Development"]
+categories: ["Android", "Development"]
+alias: ["/derekblog/post/2016/05/29/Unit-Testing-Android-async-callback-functions.aspx", "/derekblog/post/2016/05/29/unit-testing-android-async-callback-functions.aspx"]
+---
+<p>Android code will typically make use of async callback functions to do work that could take a long time, such as making network calls, or interacting with the file store or local databases. In fact the Android OS will <a href="https://developer.android.com/training/basics/network-ops/connecting.html">throw an exception</a> if you attempt to make a network call from the UI thread, which means that a common pattern of writing code is call a synchronous method and pass a callback function that will get called asynchronously when the long running operation is complete.</p><!--more-->  <p>For example this is the kind of code that gets written</p>  <pre>private void unpackFromUrlAsync(Intent intent) {
+ view.showProgress(R.string.progress_unpacking_intent);
+ subscription = unpackerFromUrl.
+    getRecommendationFromUrl(
+      intent, 
+      new ITaskResultHandler&lt;Recommendation&gt;() { 
+        @Override
+        public void onSuccess(Recommendation result) {
+          view.hideProgress();
+          view.showRecommendation(result);
+        }
+
+        @Override
+        public void onError(ITaskErrorResult error) {
+          view.hideProgress();
+          view.showErrorMessage(error);
+          view.end();
+        }
+      });
+}
+
+@Override
+public void unpackIntent(Intent intent) {
+ Recommendation recommendation = null;
+ switch (intentTypeFinder.getTypeOfContent(intent)) {
+  case Url:
+    unpackFromUrlAsync(intent);
+    return;
+  case Text:
+    recommendation = unpackerFromText.getRecommendationFromText(intent);
+    if (recommendation != null) {
+      view.showRecommendation(recommendation);
+    }
+    else {
+      view.showMessage(R.string.error_bad_share_receive);
+      view.end();
+    }
+    return;
+  }
+  view.showMessage(R.string.unknown_intent_type);
+  view.end();
+}</pre>
+
+<p>So as you can see the flow of this code is that when we are unpacking a Url intent we ask the view to ShowProgress then we make the getRecommendationFromUrl passing in the ITaskResultHandler async callback functions.</p>
+
+<p>We can easily test the synchronous side of the code like this.</p>
+
+<pre>@Before
+public void setup() {
+ setupPresenter(true);
+}
+
+@Test
+public void unpack_if_url() {
+  // arrange
+  Intent intent = new Intent(&quot;UNKNOWN&quot;);
+  IIntentContentTypeFinder typeFinder = getApplicationComponent().provideIntentContentTypeFinder();
+  when(typeFinder.getTypeOfContent(intent)).thenReturn(IntentContentType.Url);
+  IIntentUnpackerFromUrl unpacker = getApplicationComponent().provideIntentUnpackerUrl();
+ 
+  // act
+  presenter.unpackIntent(intent);
+ 
+  // assert
+  // this test only checks we start the async processing not that it completes
+  verify(mockView, never()).end();
+  verify(mockView, times(1)).showProgress(R.string.progress_unpacking_intent);
+  verify(unpacker, times(1)).
+    getRecommendationFromUrl(
+      any(Intent.class), 
+      Matchers.&lt;ITaskResultHandler&lt;Recommendation&gt;&gt;any());
+}</pre>
+
+<p>Testing that the async operation, getRecommendationFromUrl, completes is more complex.</p>
+
+<p>One approach would be to create a concrete object that implemented the IIntentUnpackerFromUrl interface and that concrete object could them store the callback method when getRecommendationFromUrl is called. Then we could use that concrete object to trigger the callback. However doing this makes the setup of the components more complex, sometimes we want a mock object in the unit test component and sometimes we would want the concrete test object. Also we end up creating test objects where untested code can live and the test objects have to be kept in step with the real implementation.</p>
+
+<p>So, an alternative approach is to use <a href="http://mockito.org">mockito</a> Captors. They enable the test to capture parameters passed to the mock, in this case the callback function and then we can examine, or call that captured parameter. </p>
+
+<pre>public class UnpackIntentTests extends PresenterTestSetup {
+
+private Recommendation recommendation;
+private IIntentUnpackerFromUrl mockUnpackerFromUrl;
+private Subscription mockSubscription;
+
+@Captor
+private ArgumentCaptor&lt;ITaskResultHandler&lt;Recommendation&gt;&gt; intentFromUrlCallbackCaptor;
+
+@Before
+public void setup() {
+  // so we can use generic captors - this links to the @Captor above
+  MockitoAnnotations.initMocks(this);
+
+  setupPresenter(true);
+
+  recommendation = new Recommendation();
+  mockSubscription = mock(Subscription.class);
+  mockUnpackerFromUrl = applicationComponent.provideIntentUnpackerUrl();
+  // we want to capture the async callback setup call
+  when(mockUnpackerFromUrl
+    .getRecommendationFromUrl(
+      any(Intent.class),
+      intentFromUrlCallbackCaptor.capture()))
+        .thenReturn(mockSubscription);
+}
+
+// this will get the captured callback function parameter
+private ITaskResultHandler&lt;recommendation&gt; getIntentFromUrlCallback() {
+  List&lt;ITaskResultHandler&lt;Recommendation&gt;&gt; capturedCallbacks =
+    intentFromUrlCallbackCaptor.getAllValues();
+
+  assertNotNull(
+    &quot;callback handler has not been set by the code under test but we are attempting to call it&quot;,
+    capturedCallbacks);
+  assertThat(
+    &quot;callback handler has not been set by the code under test but we are attempting to call it&quot;,
+    capturedCallbacks.size(),
+    is(greaterThan(0)));
+
+  return capturedCallbacks.get(0);
+}
+
+@Test
+public void unpack_if_url_succeeds() {
+  // arrange
+  Intent intent = new Intent(&quot;UNKNOWN&quot;);
+  IIntentContentTypeFinder typeFinder = getApplicationComponent().provideIntentContentTypeFinder();
+  when(typeFinder.getTypeOfContent(intent)).thenReturn(IntentContentType.Url);
+  presenter.unpackIntent(intent);
+ 
+  // act
+  getIntentFromUrlCallback().onSuccess(recommendation);
+ 
+  // assert
+  verify(mockView, times(1)).showRecommendation(recommendation);
+  verify(mockView, times(1)).hideProgress();
+}
+ 
+@Test
+public void exit_if_url_fails() {
+  // arrange
+  Intent intent = new Intent(&quot;UNKNOWN&quot;);
+  IIntentContentTypeFinder typeFinder = getApplicationComponent().provideIntentContentTypeFinder();
+  when(typeFinder.getTypeOfContent(intent)).thenReturn(IntentContentType.Url);
+  presenter.unpackIntent(intent);
+ 
+  // act
+  getIntentFromUrlCallback().onError(new TaskErrorResult(987));
+ 
+  // assert
+  verify(mockView, times(1)).showErrorMessage(any(TaskErrorResult.class));
+  verify(mockView, times(1)).hideProgress();
+  verify(mockView, times(1)).end();
+}</pre>
+
+<p>The two tests trigger the callback succeeding and failing.</p>

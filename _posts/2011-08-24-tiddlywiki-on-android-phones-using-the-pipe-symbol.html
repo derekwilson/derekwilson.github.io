@@ -1,0 +1,40 @@
+---
+layout: post
+title: "TiddlyWiki on android phones, using the pipe symbol"
+date: 2011-08-24 12:08:00 +1200
+published: true
+tags: ["Android", "Development", "Mobile", "TiddlyWiki", "Web"]
+categories: ["Android", "Development", "Mobile", "TiddlyWiki", "Web"]
+alias: ["/derekblog/post/2011/08/24/TiddlyWiki-on-android-phones-using-the-pipe-symbol.aspx", "/derekblog/post/2011/08/24/tiddlywiki-on-android-phones-using-the-pipe-symbol.aspx"]
+---
+<p>Solving this problem made me laugh, and cry. It did remind me of something I heard years ago</p><!--more-->
+<blockquote>
+<p>What is the difference between hardware and software? If you play with hardware enough you will break it, if you play with software enough you might just get it to work.</p>
+</blockquote>
+<p>I like using <a href="http://www.tiddlywiki.com/">tiddlywiki</a>, I&rsquo;ve used it as a super todo.txt for a long time. I stumbled on an <a href="http://www.appbrain.com/app/andtidwiki-beta/de.mgsimon.android.andtidwiki">implementation for Android</a> which in turn was based on <a href="http://itw.bidix.info/">iTW</a> for the iPhone. The iTW tiddlywiki has been tweaked to only display one tiddler at once and the render and toolbar has been optimised for a small screen.</p>
+<p>I got it and downloaded it and all was well it worked straight out of the box on my HTC Wildfire. I just wanted to put a few notes into it to get started, this worked fine and then I tried to edit a table, ahhhh problem.</p>
+<p>Like a lot of Wiki markup languages <a href="http://tiddlywiki.org/bags/tiddlywiki_public/tiddlers/TiddlyWiki%20Markup.html">tables are constructed out of the pipe symbol</a> and then I found a problem &ndash; the stock HTC keyboard <a href="http://www.geekzone.co.nz/forums.asp?forumid=97&amp;topicid=70626">does not have a pipe symbol</a>, you can get alternate keyboards but these seem to involve &ldquo;rooting&rdquo; the device &ndash; it seemed a bit of overkill to me. If I went to the symbol page of the keyboard input and pressed the 1/2 button to go the the second page of symbols there is a &brvbar; symbol which is not the same as a pipe |. Annoyingly there are even blank unused keys on the second page of symbols.</p>
+<p>Anyway it did give me an opportunity to have a go at starting to modify the TiddlyWiki. This is what I did, I found the section of code in the TiddlyWiki HTML file that was responsible for formatting a table, in a blank AndTidWiki file its at line 3185 but looking for &ldquo;table&rdquo; soon finds it &ndash; it looks like this</p>
+<pre class="c#">//--
+//-- Standard formatters
+//--
+
+config.formatters = [
+{
+ name: "table",
+ match: "^\\|(?:[^\\n]*)\\|(?:[fhck]?)$",
+ lookaheadRegExp: /^\|([^\n]*)\|([fhck]?)$/mg,
+ rowTermRegExp: /(\|(?:[fhck]?)$\n?)/mg,
+ cellRegExp: /(?:\|([^\n\|]*)\|)|(\|[fhck]?$\n?)/mg,
+ cellTermRegExp: /((?:\x20*)\|)/mg,
+ rowTypes: {"c":"caption", "h":"thead", "":"tbody", "f":"tfoot"},
+ handler: function(w)
+ {
+  var table = createTiddlyElement(w.output,"table",null,"twtable");</pre>
+<p>And I replaced it with this, which just modifies the regular expressions to accept either a pipe or the double vertical bar</p>
+<pre class="c#"> match: "^[\\|&brvbar;](?:[^\\n]*)[\\|&brvbar;](?:[fhck]?)$",
+ lookaheadRegExp: /^[\|&brvbar;]([^\n]*)[\|&brvbar;]([fhck]?)$/mg,
+ rowTermRegExp: /([\|&brvbar;](?:[fhck]?)$\n?)/mg,
+ cellRegExp: /(?:[\|&brvbar;]([^\n\|&brvbar;]*)[\|&brvbar;])|([\|&brvbar;][fhck]?$\n?)/mg,
+ cellTermRegExp: /((?:\x20*)[\|&brvbar;])/mg,</pre>
+<p>Basically its a very simple edit &ndash; I just made the pipe and the HTC double vertical bar work interchangeable and I could use either &ndash; pipe is easier on a PC keyboard and the &brvbar; the only option at the moment on the phone.</p>

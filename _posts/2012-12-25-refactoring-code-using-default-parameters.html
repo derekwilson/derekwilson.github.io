@@ -1,0 +1,50 @@
+---
+layout: post
+title: "Refactoring code using default parameters"
+date: 2012-12-25 02:22:00 +1300
+published: true
+tags: ["Code Review", "Development"]
+categories: ["Code Review", "Development"]
+alias: ["/derekblog/post/2012/12/25/Refactoring-code-using-default-parameters.aspx", "/derekblog/post/2012/12/25/refactoring-code-using-default-parameters.aspx"]
+---
+<p>Recently I have come across code that had been refactored using default parameters in C#. The refactoring had taken place in a DLL and it caused an interesting problem in the calling client code. When I looked at the code at first I could not understand how the refactoring had broken the client code so I experimented with this code to reproduce the problem.</p><!--more-->
+<p>The original code looked something like this.</p>
+<pre class="csharp">namespace Library
+{
+    public class Utility
+    {
+        public string TestMethod()
+        {
+            return "original";
+        }
+    }
+}</pre>
+<p>The client code like this</p>
+<pre class="csharp">namespace CallError
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var util = new Library.Utility();
+            Console.WriteLine(util.TestMethod());
+            Console.Read();
+        }
+    }
+}</pre>
+<p>This was refactored to this</p>
+<pre class="csharp">namespace Library
+{
+    public class Utility
+    {
+        public string TestMethod(System.Uri uri = null)
+        {
+            return "new";
+        }
+    }
+}</pre>
+<p>Now I thought this would just work, After all there is no need to change the client code as the missing parameter will be defaulted. However when the client code was executed against the new Library DLL I got the following error.</p>
+<pre class="csharp">Unhandled Exception: System.MissingMethodException: <br />  Method not found: 'System.String Library.Utility.TestMethod()'.
+   at CallError.Program.Main(String[] args)</pre>
+<p>However when I recompiled the CallError client code it ran fine. Then when I though about it there error made sense: even with a default parameter the method signature has actually changed.</p>
+<p>It made me think that care need to be taken when using default parameters in an external api interface.</p>

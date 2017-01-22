@@ -1,0 +1,165 @@
+---
+layout: post
+title: "Passing Gmail attachments to PhoneGap apps on Android part1"
+date: 2014-01-25 21:05:00 +1300
+published: true
+tags: ["Web", "Android", "Development", "JavaScript", "Mobile"]
+categories: ["Web", "Android", "Development", "JavaScript", "Mobile"]
+alias: ["/derekblog/post/2014/01/25/Passing-Gmail-attachments-to-PhoneGap-apps-on-Android-part1.aspx", "/derekblog/post/2014/01/25/passing-gmail-attachments-to-phonegap-apps-on-android-part1.aspx"]
+---
+<p>We have started a new project, Emigma. The plan it to be able to send and receive encrypted messages on Android devices.</p><!--more-->  <p>Obviously we want the flexibility to use and transport for the message and also we really don’t want to have to write a complete email package so we would like to be able to use an external email application such as Gmail. One of the first parts in this was to try and process a file attachment in a PhoneGap application in JavaScript. The proved to be quite fiddly and needed a surprising number of moving parts but in the end did provide a completely seamless mechanism. To achieve this we needed to link Gmail to the Javascript code using a native Java bridge.</p>  <p>The first part is to register Enigma as a handler for attachments that have the extension .enigma. <a href="http://richardleggett.co.uk/blog/2013/01/26/registering_for_file_types_in_android/">This article explained</a> how to setup the AndroidManifest.xml file to make Enigma appear on the list of applications when the attachment is selected in Gmail (or anywhere else)</p>  <pre>&lt;activity 
+ android:configChanges=
+  &quot;orientation|keyboardHidden|keyboard|screenSize|locale&quot; 
+ android:label=&quot;@string/app_name&quot; 
+ android:name=&quot;EnigmaPOC&quot; 
+ android:theme=&quot;@android:style/Theme.Black.NoTitleBar&quot;&gt;
+  &lt;intent-filter&gt;
+   &lt;action android:name=&quot;android.intent.action.MAIN&quot; /&gt;
+   &lt;category android:name=&quot;android.intent.category.LAUNCHER&quot; /&gt;
+  &lt;/intent-filter&gt;
+  &lt;intent-filter&gt;
+   &lt;action android:name=&quot;android.intent.action.VIEW&quot; /&gt;
+   &lt;action android:name=&quot;android.intent.action.EDIT&quot; /&gt;
+   &lt;category android:name=&quot;android.intent.category.DEFAULT&quot; /&gt;
+   &lt;data
+    android:mimeType=&quot;application/octet-stream&quot;
+    android:host=&quot;*&quot; 
+    android:pathPattern=&quot;.*\\.enigma&quot;
+   /&gt;
+  &lt;/intent-filter&gt;
+  &lt;intent-filter&gt;
+   &lt;action android:name=&quot;android.intent.action.VIEW&quot; /&gt;
+   &lt;action android:name=&quot;android.intent.action.EDIT&quot; /&gt;
+   &lt;category android:name=&quot;android.intent.category.DEFAULT&quot; /&gt;
+   &lt;data
+    android:mimeType=&quot;application/enigmakey&quot;
+    android:host=&quot;*&quot; 
+    android:pathPattern=&quot;.*\\.enigma&quot;
+   /&gt;
+ &lt;/intent-filter&gt;
+&lt;/activity&gt;</pre>
+
+<p>Adding these intent-filter elements to the manifest will mean that the EnigmaPOC activity in this app will be launched when the user selects an email with an extension of .engima. If multiple applications have registered an intent-filter then a menu of applications is displayed. We register for both enigma and octet-stream MIME types as we have no control of what the mime type that will be set by the email client and we want to be able to use any client. </p>
+
+<p>The next step is that we need to be able to read the data from the file attachment in the application. The EnigmaPOC application is a relatively standard PhoneGap application, we have used version 2.9 but it should work in any version. </p>
+
+<p>There are two parts to this first we need to accept the data in the native Java application and then we need to pass the data onto the JavaScript application that it hosts. </p>
+
+<p>Processing the data in the native Java application </p>
+
+<p>We need to add some code to the EnigmaPOC class in the src/com folder of the Java project. </p>
+
+<p>Firstly we setup the intent_uri a to contain the uri of the object that was passed to us and then we copy all the data into intent_data. This is fine for the small objects we are dealing with here however it may be that we would need a different mechanism if we wanted to pass large objects. </p>
+
+<pre>package com.enigmamessaging.enigma;
+
+import java.io.*;
+
+import android.os.Bundle;
+import android.net.*;
+import android.util.*;
+import android.content.*;
+import android.webkit.JavascriptInterface;
+import android.webkit.WebSettings.ZoomDensity;
+
+import org.apache.cordova.*;
+import org.apache.cordova.Config;
+
+import org.json.*;
+
+public class EnigmaPOC extends DroidGap
+{
+ private Uri intent_uri = null;
+ private String intent_data = null;
+
+ @Override
+ public void onCreate(Bundle savedInstanceState)
+ {
+  super.onCreate(savedInstanceState);
+  super.init();
+
+  // Set by <content src="index.html" /> in config.xml
+  super.loadUrl(Config.getStartUrl());
+
+  super.appView.getSettings().setBuiltInZoomControls(true);
+  super.appView.getSettings().setDefaultZoom(ZoomDensity.MEDIUM);
+  super.appView.getSettings().setSupportZoom(true);
+
+  // handle and data that was passed to the application
+  intent_uri = getIntent().getData();
+  if (intent_uri != null)
+  {
+   getIntent().setData(null);
+   try
+   {
+    intent_data = importData(intent_uri);
+    passDataToJavascript();
+   }
+   catch (Exception e)
+   {
+    Log.e(&quot;EnigmaPOC&quot;, &quot;Error processing intent data: &quot; + e.getMessage());
+    finish(); 
+    return;
+   }
+  }
+ }</pre>
+
+<p>Its worth noting that the intent_uri bears no relationship to the original attachment name that was in the email. Although the original attachment name and MIME type is used to discover which application has registered an intent-filter the intent_uri is some made up temporary uri that is just used to pass data.</p>
+
+<p>We also need to reinstate the line breaks in order that OpenPGP can decrypt the message.</p>
+
+<pre> private String importData(Uri data) throws Exception
+ {
+  try
+  {
+   ContentResolver cr = getContentResolver();
+   InputStream is = cr.openInputStream(data);
+   if (is == null) return null;
+
+   StringBuffer buf = new StringBuffer();			
+   BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+   String str;
+   if (is != null)
+   {							
+    while ((str = reader.readLine()) != null)
+    {
+     // line mreaks are needed for PGP to decrypt
+     buf.append(str + &quot;\\n&quot;);
+    }				
+   }		
+   is.close();
+
+   return buf.toString();
+  }
+  finally {}
+ }</pre>
+
+<p>Lastly we need to pass the collected data into the JavaScript code. We do this using the usual mechanism for JavaScript of using JSON, there are helper methods for working with&#160; JSON.</p>
+
+<p>sendJavascript is a Phonegap helper method to enable us to call JavaScript from Java. In this case we call the method enigmaMessaging.handleIntentData.</p>
+
+<pre>public void passDataToJavascript()
+ {
+  if (intent_data == null)
+  {
+   Log.i(&quot;EnigmaPOC&quot;, &quot;No Intent Data&quot;);
+   return;
+  }
+    	
+  JSONObject data = new JSONObject();
+  try {
+   data.put(&quot;uri&quot;, intent_uri.toString());
+   data.put(&quot;data&quot;, intent_data);
+  } catch (JSONException e) {
+   Log.e(&quot;EnigmaPOC&quot;, &quot;JSON error&quot; + e.getMessage());
+  }
+
+  String statement = String.format(
+   &quot;enigmaMessaging.handleIntentData('%s');&quot;,
+   data.toString());
+
+  this.sendJavascript(statement);
+ }
+}</pre>
+
+<p>Right we have got the data from a Gmail attachment through the native Java application and into the JavaScript. This mechanism should work fine but as we will see in part 2 there are still some issues to be sorted out.</p>

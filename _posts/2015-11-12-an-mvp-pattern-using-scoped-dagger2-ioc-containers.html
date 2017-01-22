@@ -1,0 +1,460 @@
+---
+layout: post
+title: "An MVP pattern using scoped Dagger2 IoC containers"
+date: 2015-11-12 01:48:00 +1300
+published: true
+tags: ["Android", "Development", "Recommender"]
+categories: ["Android", "Development", "Recommender"]
+alias: ["/derekblog/post/2015/11/12/An-MVP-pattern-using-scoped-Dagger2-IoC-containers.aspx", "/derekblog/post/2015/11/12/an-mvp-pattern-using-scoped-dagger2-ioc-containers.aspx"]
+---
+<p><a href="http://derekwilson.net/derekblog/post/2015/09/26/Using-Dagger2-and-Roboelectric-for-unit-testing-in-Android-development.aspx">I have previously written about using Dagger2</a> in my new project recommender. One of the things I found most frustrating about writing native android code in contrast to C# or JavaScript code is how hard it has been in the past to get a reasonable amount of test coverage from unit tests.</p><!--more-->  <p>There have been challenges</p>  <ol>   <li>Eclipse didn't have great support for testing      <br />This has been addressed as <a href="https://www.bignerdranch.com/blog/triumph-android-studio-1-2-sneaks-in-full-testing-support/">AndroidStudio is much better at working with Junit projects</a> and AndroidStudio 1.4 now properly supports Dagger2 and Junit.       <br /></li>    <li>There were limited dependency injection frameworks      <br />This has been helped with the release of <a href="http://google.github.io/dagger/">Dagger2</a> which proven to be reliable, flexible and fast dependency injection. There are also alternatives, <a href="http://square.github.io/dagger/">Dagger1</a> or <a href="https://github.com/roboguice/roboguice/wiki">Roboguice</a> are also viable options.       <br />&#160; </li>    <li>Test code either required an emulator or needed to be run on a device.      <br />This made the tests slow and unreliable, either giving false results or crashing which made them useless       <br />Now that <a href="http://tools.android.com/tech-docs/unit-testing-support">Google has released a mock layer</a> and <a href="http://robolectric.org">Roboelectric</a> has provided a reliable mocking framework we can run tests in the desktop JVM and get reliable accurate results.       <br /></li>    <li>There haven't been many frameworks for isolating business logic from UI      <br />In C# and JavaScript there are any number of patterns and frameworks to help isolation, such as <a href="https://msdn.microsoft.com/en-us/library/dd381412(v=vs.108).aspx">ASP.NET MVC</a>, <a href="http://knockoutjs.com">Knockout</a>, <a href="https://angularjs.org">Angular</a> etc. In Android development there have been few frameworks such as <a href="https://github.com/square/mortar">Mortar</a> and <a href="https://github.com/square/flow">Flow</a> </li> </ol>  <p>While things have been getting better I still needed to settle on a framework for code isolation to give me a codebase structure that would lend itself to extensive unit testing. I did look at Mortar however I found it to be a little “all or nothing” meaning that retrofitting it to an existing codebase in an incremental manner was not going to be possible so I decided to look at as many examples as I could and to partition the code using my own lightweight framework. I have tried to reference all the articles I have read but if I have missed any then I apologise, this code is very much a distillation of may other peoples hard work.</p>  <h2>Scoped containers</h2>  <p>The first think needed are scoped IoC containers. There are some objects that we need only one of and we need them across the whole application, there are however other objects that we want a separate instance for each activity and we want them to go away when the activity goes away. </p>  <p><a href="/images/Scoped%20components.png"><img title="Scoped components" style="border-left-width: 0px; border-right-width: 0px; border-bottom-width: 0px; display: inline; border-top-width: 0px" border="0" alt="Scoped components" src="/images/Scoped%20components_thumb.png" width="326" height="199" /></a> </p>  <p>Dagger2 modules are the IoC containers I will be using. The application module contains global singletons that are used throughout the app, for example loggers. If activities are sufficiently simple they might only use an application module and they might not have their own activity module.</p>  <p>For more complex activities (which is most of them) we have an activity module, which will contain the presenters used by the activity. The activity module inherits from a base activity module that has all the data repositories as the repositories are needed by many activities. Don't get confused the base activity module is just a syntactic convenience – the repositories are not shared across activities, each activity has its own presenter and its own repositories, only objects in the application&#160; module are shared.</p>  <p>The Dagger2 code for an application module looks like this.</p>  <pre>@Singleton // Constraints this component to one-per-application or unscoped bindings.
+@Component(
+  modules = ApplicationModule.class
+)
+public interface IApplicationComponent {
+ // do not forget to list ALL classes that can ask to be injected
+ // remove any that do NOT use this component
+ void inject(OpenSourceLicensesActivity activity);
+
+ // fragments without a scoped component just use the application component
+
+ // we only need to put things in here that are exposed to subgraphs
+ Context context();
+ IEventBus provideEventBus();
+}
+
+@Module
+public class ApplicationModule {
+ private final AndroidApplication application;
+
+ public ApplicationModule(AndroidApplication application) {
+  this.application = application;
+ }
+
+ @Provides
+ @Singleton
+ Context provideApplicationContext() {
+  return this.application;
+ }
+
+ @Provides
+ @Singleton
+ ILoggerFactory provideLogger(SlfLoggerFactory loggerFactory) {
+  return loggerFactory;
+ }
+
+ @Provides
+ @Singleton
+ SQLiteOpenHelper provideOpenHelper(RecommenderDatabaseHelper helper) {
+  return helper;
+ }
+
+ @Provides
+ @Singleton
+ IEventBus provideEventBus(RxEventBus eventBus) {
+  return eventBus;
+ }
+
+}</pre>
+
+<p>Whenever Dagger supplies a dependency it will also supply all of its dependencies as so on. For example if the RxEventBus needs an ILoggerFactory Dagger will provide one, as long as the RxEventBus constructor is marked as @Inject. This process is automatic within the module however if any further derived modules, for example an activity module needs access to a ILoggerFactory then we need to make that available in the component interface.</p>
+
+<p>The activity module is then written like this</p>
+
+<pre>@ActivityScope
+@Component(
+  dependencies = IApplicationComponent.class, 
+  modules = BaseActivityModule.class
+)
+public interface IBaseActivityComponent {
+ // things that need an activity scope component but dont have their own presenter
+ void inject(MainPreferencesFragment fragment);
+
+ // we only need to put things in here that are exposed to subgraphs
+ Activity getActivityContext();
+ // repositories should not be shared between different activities
+ // so we do not put it in the application component
+ IRecommendationRepository getRecommendationRepository();
+}
+
+@Module
+public class BaseActivityModule {
+ private final Activity activityContext;
+
+ public BaseActivityModule(Activity activityContext) {
+  this.activityContext = activityContext;
+ }
+
+ @Provides
+ @ActivityScope
+ Activity getActivityContext() {
+  return this.activityContext;
+ }
+
+ @Provides
+ @ActivityScope
+ IRecommendationRepository provideRecommendationRepository(RecommendationRepository repository) {
+  return repository;
+ }
+}
+
+@ActivityScope
+@Component(
+  dependencies = IApplicationComponent.class, 
+  modules = {BaseActivityModule.class, EditRecommendationModule.class}
+)
+public interface IEditRecommendationComponent extends IBaseActivityComponent {
+ // list any activities or fragments that use this component
+ void inject(EditRecommendationActivity activity);
+ void inject(RecommendationEditFragment fragment);
+
+ // used by the tests
+ IEditRecommendationPresenter getFragmentPresenter();
+ IEditRecommendationActivityPresenter getActivityPresenter();
+}
+
+@Module
+public class EditRecommendationModule {
+ /**
+  * this is the presenter used by the edit activity
+  */
+ @Provides
+ @ActivityScope
+ IEditRecommendationActivityPresenter provideActivityPresenter(
+    EditRecommendationActivityPresenter presenter)
+{
+  return presenter;
+}
+
+ /**
+  * this is the presenter used by the edit fragment
+  */
+ @Provides
+ @ActivityScope
+ IEditRecommendationPresenter providePresenter(
+    EditRecommendationPresenter presenter)
+{
+  return presenter;
+}
+}</pre>
+
+<p>The EditRecommendationModule is just one of the modules used the application, other activities have their own module, however they all inherit from the base activity module as they all need access to common things, however as we said above they get their own instance of anything marked @ActivityScope, only the objects marked @Singleton are shared across the application. The inheritance is to avoid having to type out the declarations in the BaseActivityModule in each presenter module.</p>
+
+<p>The BaseActivityComponent needs to declare any objects that are needed by the presenter in its component interface just like the ApplicationComponent. The PresenterComponent also exposes the two presenters, this is so that we can access them from the unit tests.</p>
+
+<p>It might seem odd to have to declare inject() methods in the components for all the classes that can inject using the component. In other IoC frameworks this is not needed however Dagger2 is entirely done at compile time, there is no runtime reflection, and so we need to explicitly indicate to Dagger2 at compile time which classes inject which component so that the correct code can be generated.</p>
+
+<p>The activity scope is just declared like this.</p>
+
+<pre>@Scope
+@Retention(RetentionPolicy.RUNTIME)
+public @interface ActivityScope {
+}</pre>
+
+<p>The only other thing to remember is that we cannot mix and match all the objects in the application component must be @Singleton and all the components in the Activity component must be @ActivityScope</p>
+
+<h2>The presenter pattern</h2>
+
+<p>The presenter pattern I settled on is very simple and lightweight. It also means that more typical activities where UI and business logic and data access code is all mixed up can coexist with more formally laid out Model View Presenter activities.</p>
+
+<p>An activity that is complex would have this arrangement</p>
+
+<p><a href="/images/complex%20activity.png"><img title="complex activity" style="border-left-width: 0px; border-right-width: 0px; border-bottom-width: 0px; display: inline; border-top-width: 0px" border="0" alt="complex activity" src="/images/complex%20activity_thumb.png" width="355" height="168" /></a> </p>
+
+<p>The activity has an instance of the component and uses it to inject itself which will inject the presenter as well as any of the presenter’s dependencies. The activity may optionally create one or more fragments, which will in turn implement their own view interface and inject themselves to get their own presenter. The presenters are all isolated. If the activity presenter needs to perform an action on the fragment it must do so via the activity view interface.</p>
+
+<p>A simple activity that predominately contained UI could have a simpler structure, it can just access application global objects and not use a presenter at all. Simple activities can contain simple or complex fragments like this.</p>
+
+<p><a href="/images/simple%20activity.png"><img title="simple activity" style="border-left-width: 0px; border-right-width: 0px; border-bottom-width: 0px; display: inline; border-top-width: 0px" border="0" alt="simple activity" src="/images/simple%20activity_thumb.png" width="354" height="163" /></a> </p>
+
+<p>To try and encourage uniformity in the pattern the presenters and view interfaces have common bases like this.</p>
+
+<pre>public interface IPresenter<v> {
+ void onCreate();
+ void onDestroy();
+ void bindView(V view);
+ void unbindView();
+}</pre>
+
+<p>The presenter lifecycle is that we call bindView as soon as the presnter is created and unbindView when the activity or fragment is going away, create and destroy enable the presenter to populate the view and release any resources or subscriptions.</p>
+
+<pre>public interface IView {
+ void end();
+ void showError(Throwable throwable);
+ void showMessage(int messageId);
+}</pre>
+
+<p>It seemed like a reasonable presumption that all views (activities or fragments) would be able to end and show messages and errors.</p>
+
+<h2>Activity lifecycle</h2>
+
+<p>Android creates the activity classes for the application as a result of Intents declared in the manifest. To get everything setup the activity needs to get its component and then use it to inject itself which will create the presenter and all its dependencies.</p>
+
+<p>The code usually looks like this</p>
+
+<pre>public class EditRecommendationActivity extends BaseActivity
+ implements
+  IEditRecommendationActivityView
+{
+ private IEditRecommendationComponent component;
+
+ @Inject
+ protected ILoggerFactory logger;
+
+ @Inject
+ protected IEditRecommendationActivityPresenter presenter;
+
+ protected IEditRecommendationComponent getActivityComponent(Activity activity) {
+  if (component == null) {
+   component = DaggerIEditRecommendationComponent.builder()
+     .iApplicationComponent(getApplicationComponent())
+     .baseActivityModule(new BaseActivityModule(activity))
+     .editRecommendationModule(new EditRecommendationModule())
+     .build();
+  }
+  return component;
+ }
+
+ @Override
+ protected void injectDependencies(IApplicationComponent applicationComponent) {
+  // will inject into the base as well as this class
+  getActivityComponent(this).inject(this);
+ }
+
+ @Override
+ protected void onCreate(Bundle savedInstanceState) {
+  injectDependencies(getApplicationComponent());
+  super.onCreate(savedInstanceState);
+  setContentView(R.layout.activity_edit_recommendation);
+  logger.getCurrentApplicationLogger().debug(&quot;EditRecommendation started&quot;);
+  presenter.bindView(this);
+  // unpack any parameters from the Bundle
+  // do any other UI init
+  fab.setOnClickListener(this);
+  presenter.onCreate();
+ }
+
+ @Override
+ public void onDestroy() {
+  logger.getCurrentApplicationLogger().debug(&quot;EditRecommendation.onDestroy()&quot;);
+  presenter.unbindView();
+  presenter.onDestroy();
+  super.onDestroy();
+ }
+}</pre>
+
+<p>Its a bit unfortunate that this code needs to be present in each activity, <a href="http://stackoverflow.com/questions/29312911/can-i-just-inject-super-class-when-use-dagger2-for-dependency-injection">its not possible at the moment to use Dagger2 to inject in the base class</a>, though perhaps this will change in future.</p>
+
+<p>The call to inject() will initialise the ILoggerFactory as well as the presenter, this is because we want the activity to be able to emit logging without having to go through the presenter.</p>
+
+<p>The view also implements the basic IView operations</p>
+
+<pre>@Override
+public void end() {
+ finish();
+}
+
+@Override
+public void showError(Throwable throwable) {
+ Toast.makeText(this, throwable.getMessage(), Toast.LENGTH_LONG).show();
+}
+
+@Override
+public void showMessage(int message) {
+ Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+}</pre>
+
+<p>As well as implementing its own specific set of operations via its own interface like this</p>
+
+<pre>public interface IEditRecommendationActivityView extends IView {
+ RecommendationType getRecommendationType();
+ void setMainTitleTextId(int id);
+}</pre>
+
+<h2>Activity presenter lifecycle</h2>
+
+<p>This is what this activity presenter looks like</p>
+
+<pre>public class EditRecommendationActivityPresenter 
+  implements IEditRecommendationActivityPresenter
+{
+ IEditRecommendationActivityView view;
+
+ @Inject
+ public EditRecommendationActivityPresenter() {
+ }
+
+ @Override
+ public void onCreate() {
+  setMainTitleForRecommendationType();
+ }
+
+ @Override
+ public void onDestroy() {
+ }
+
+ @Override
+ public void bindView(IEditRecommendationActivityView view) {
+  this.view = view;
+ }
+
+ @Override
+ public void unbindView() {
+  this.view = null;
+ }</pre>
+
+<p>In this example the activity is quite simple, as many Android applications much of the work is delegated to a fragment.</p>
+
+<h2>Fragment lifecycle</h2>
+
+<p>The fragment is created in the activity like this</p>
+
+<pre>RecommendationEditFragment editFragment = new RecommendationEditFragment();
+editFragment.setArguments(recommendationType, recommendation, false);
+getSupportFragmentManager().beginTransaction()
+  .add(R.id.fragment_container, editFragment, TAG_EDIT_FRAGMENT)
+  .commit();</pre>
+
+<p>The lifecycle code of a fragment is similar to that of an activity.</p>
+
+<pre>public class RecommendationEditFragment extends BaseFragment
+  implements IEditRecommendationView
+{
+ private IEditRecommendationComponent component;
+
+ @Inject
+ protected IEditRecommendationPresenter presenter;
+
+ private IEditRecommendationComponent getComponent() {
+  if (component == null) {
+   component = DaggerIEditRecommendationComponent.builder()
+     .iApplicationComponent(getApplicationComponent(getActivity()))
+     .baseActivityModule(new BaseActivityModule(getActivity()))
+     .editRecommendationModule(new EditRecommendationModule())
+     .build();
+  }
+  return component;
+ }
+
+ @Override
+ public void onCreate(Bundle savedInstanceState) {
+  super.onCreate(savedInstanceState);
+  getComponent().inject(this);
+
+  final Bundle args = getArguments();
+  recommendationType = args.getParcelable(RECOMMENDATION_TYPE);
+  recommendation = args.getParcelable(RECOMMENDATION);
+
+  presenter.bindView(this);
+ }
+
+ @Override
+ public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+  View view = inflater.inflate(R.layout.fragment_recommendation_edit, container, false);
+  ButterKnife.bind(this, view);
+  presenter.onCreate();
+  return view;
+ }
+
+ @Override
+ public void onResume() {
+  super.onResume();
+  if (!isInjected()) {
+   getComponent().inject(this);
+  }
+ }
+
+ @Override
+ public void onDestroy() {
+  presenter.onDestroy();
+  super.onDestroy();
+ }</pre>
+
+<p>The fragment uses the same component interface as the activity however it will receive its own set of objects and is completely isolated from the activity. If we wanted to share the components between the activity and the fragment then we could implement an interface in the activity to return the component and call that from the getComponent() method.</p>
+
+<p>The fragment also implements is own specific interface so that the presenter can manipulate the UI.</p>
+
+<pre>public interface IEditRecommendationView extends IView {
+ Recommendation getRecommendation();
+ void copyToUi(Recommendation recommendation);
+ Recommendation getRecommendationFromUi();
+ RecommendationType getRecommendationType();
+ void hideBrowseButton();
+}</pre>
+
+<h2>Fragment presenter lifecycle.</h2>
+
+<p>The lifecycle of the presenter is similar to that of the activity presenter.</p>
+
+<pre>public class EditRecommendationPresenter 
+  extends 
+    BasePresenter<ieditrecommendationview>
+  implements
+    IEditRecommendationPresenter {
+
+ private ILoggerFactory logger;
+ private IRecommendationRepository repository;
+ private Context context;
+ private IEventBus eventBus;
+ private boolean isFromShareReceiver;
+
+ @Inject
+ public EditRecommendationPresenter(
+     ILoggerFactory logger, 
+     IRecommendationRepository repository, 
+     Context context, 
+     IEventBus eventBus)
+ {
+  this.logger = logger;
+  this.repository = repository;
+  this.context = context;
+  this.eventBus = eventBus;
+ }
+
+ @Override
+ public void onCreate() {
+  if (isFromShareReceiver) {
+   view.hideBrowseButton();
+  }
+  Recommendation recommendation = view.getRecommendation();
+  view.copyToUi(recommendation);
+ }
+
+ @Override
+ public void onDestroy() {
+  // stop any subscriptions
+  repository.close();
+ }</pre>
+
+<h2>View implementation</h2>
+
+<p>The intention is that the view implementation should only deal with the UI and should not contain any business logic. We do not intent to write tests against the view logic.</p>
+
+<pre>@Override
+public void hideBrowseButton() {
+ btnBrowse.setVisibility(View.GONE);
+}
+
+@Override
+public void copyToUi(Recommendation recommendation) {
+ txtName.setText(recommendation.getName());
+ txtBy.setText(recommendation.getBy());
+ txtCategory.setText(recommendation.getCategory());
+ txtNotes.setText(recommendation.getNotes());
+ txtUri.setText(recommendation.getUri());
+}
+
+@Override
+public Recommendation getRecommendationFromUi() {
+ Recommendation recommendation = new Recommendation();
+ recommendation.setName(txtName.getText().toString());
+ recommendation.setBy(txtBy.getText().toString());
+ recommendation.setCategory(txtCategory.getText().toString());
+ recommendation.setNotes(txtNotes.getText().toString());
+ recommendation.setUri(txtUri.getText().toString());
+ return recommendation;
+}</pre>
+
+<p>This enables writing unit tests against the presenter contained business logic (which is completely isolated by injected interfaces)</p>
+
+<p>If you want to see <a href="https://bitbucket.org/derekwilson/recommender-android/overview">the complete source code</a>, or grab the code and step through it then head over to bitbucket.</p>

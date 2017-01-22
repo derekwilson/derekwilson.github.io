@@ -1,0 +1,37 @@
+---
+layout: post
+title: "Code Review: Constructing a StringBuilder with a capacity"
+date: 2010-09-20 12:09:00 +1200
+published: true
+tags: ["Code Review", "Development"]
+categories: ["Code Review", "Development"]
+alias: ["/derekblog/post/2010/09/20/Code-Review-Constructing-a-StringBuilder-with-a-capacity.aspx", "/derekblog/post/2010/09/20/code-review-constructing-a-stringbuilder-with-a-capacity.aspx"]
+---
+<p>Its the small things that seem to be the most generally applicable when writing code and one of those little things is the construction of a StringBuilder.</p><!--more-->
+<p>I guess most developers assume that concatenating strings is not very efficient, because they are immutable it means a lot of copying and memory allocation behind the scenes. One of the advantages that &ldquo;modern&rdquo; programming languages such as Java and the .NET family proclaimed over their predecessors was a StringBuilder. This made string concatenation much more efficient, so I guess like a lot of other developers I made a mental note to replace this</p>
+<pre class="csharp">string str = "The items are called: ";
+foreach Item thisItem in allItems
+{
+  str += thisItem.Name + " ";
+}
+return str;</pre>
+<p>with this</p>
+<pre class="csharp">StringBuilder str = new StringBuilder();
+str.Append("The items are called: ");
+foreach Item thisItem in allItems
+{
+  str.Append(thisItem.Name);
+  str.Append(" ");
+}
+return str.ToString();</pre>
+<p>Well it turns out that if we do that its actually not really any more efficient. The <a href="http://blogs.msdn.com/b/irenak/archive/2005/11/28/497420.aspx">StringBuilder usually has a small initial size</a> and behind the scenes it is doing pretty much the same thing as concatenation, it needs to reallocate memory each time it grows. A better replacement is this</p>
+<pre class="csharp">StringBuilder str = new StringBuilder(1000);
+str.Append("The items are called: ");
+foreach Item thisItem in allItems
+{
+  str.Append(thisItem.Name);
+  str.Append(" ");
+}
+return str.ToString();</pre>
+<p>The thing is even if I don&rsquo;t know the best initial allocation for the StringBuilder I have a guess because a guessed value will be better than leaving it as zero.</p>
+<p>I do know that there is some debate about the most efficient method of concatenating strings and <a href="http://www.codeproject.com/KB/cs/StringBuilder_vs_String.aspx">this article</a> suggests that String.Join is more efficient. I am not suggesting using any one method in preference to any other what I am suggesting is that when StringBuilder is used it should be given an initial capacity.</p>

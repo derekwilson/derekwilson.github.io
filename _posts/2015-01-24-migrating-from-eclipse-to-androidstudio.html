@@ -1,0 +1,110 @@
+---
+layout: post
+title: "Migrating from Eclipse to AndroidStudio"
+date: 2015-01-24 21:29:00 +1300
+published: true
+tags: ["Android", "Development", "MeasureMe"]
+categories: ["Android", "Development", "MeasureMe"]
+alias: ["/derekblog/post/2015/01/24/Migrating-from-Eclipse-to-AndroidStudio.aspx", "/derekblog/post/2015/01/24/migrating-from-eclipse-to-androidstudio.aspx"]
+---
+<p>Last year I <a href="http://derekwilson.net/derekblog/post/2014/05/01/IoC-in-native-Android-apps.aspx">produced my first native android application</a>. Its called <a href="https://play.google.com/store/apps/details?id=net.derekwilson.measureme">MeasureMe</a> and its done OK on GooglePlay, over 100 downloads and a review of over 4 stars.</p><!--more-->  <p>It was developed using <a href="http://developer.android.com/tools/sdk/eclipse-adt.html">Eclipse</a> and <a href="http://derekwilson.net/derekblog/post/2014/10/20/Running-JUnit-unit-tests-from-Ant.aspx">Ant</a>, these were the recommended tools at the time and I used them to build release and debug variants and to run unit tests. Towards the end of the year <a href="http://developer.android.com/sdk/index.html">Android Studio</a> 1.0 was officially released and around the same time Android 5.0 was released, this prompted me to migrate to the new development toolset of AndroidStudio and Gradle.</p>  <p>When I fired up AndroidStudio it would import my eclipse project and that did get me 80% of the way to being migrated but as always the remaining 20% needed some fiddling.</p>  <h2>Build Variants</h2>  <p>It took some time to work out how to make the application work slightly differently when build for release and debug builds using <a href="http://derekwilson.net/derekblog/post/2014/08/04/Build-configurations-in-native-Android-apps-using-Ant.aspx">custom Ant tasks</a>. In android studio the same effect is much easier, in the Gradle script for the app I set the sourceSets like this</p>  <pre>sourceSets {
+ debug.setRoot('build-types/debug')
+ release.setRoot('build-types/release')
+}</pre>
+
+<p>Then I created this folder structure</p>
+
+<p>&#160;<a href="/images/build%20types.png"><img title="build types" style="border-left-width: 0px; border-right-width: 0px; border-bottom-width: 0px; display: inline; border-top-width: 0px" border="0" alt="build types" src="/images/build%20types_thumb.png" width="200" height="292" /></a> </p>
+
+<p>In the assets folder I created a logback.xml config file, one for the debug build and one for the release build and simelally in the java/net/derekwilson/measureme I created a class like this</p>
+
+<pre>package net.derekwilson.measureme;
+
+public class MeasureMeBuildConfig {
+ /* Whether or not to include logging statements in the application. */
+ public final static boolean PRODUCTION = false;
+}</pre>
+
+<p>In AndroidStudio the files in the project treeview are changed depending upon the build variant selected, debug in this case</p>
+
+<p><a href="/images/build%20types2.png"><img title="build types2" style="border-left-width: 0px; border-right-width: 0px; border-bottom-width: 0px; display: inline; border-top-width: 0px" border="0" alt="build types2" src="/images/build%20types2_thumb.png" width="202" height="288" /></a> </p>
+
+<h2>Unit Tests</h2>
+
+<p>Getting the unit tests to run was a bit more fiddly and I am indebted to this post on <a href="http://blog.blundell-apps.com/android-gradle-app-with-robolectric-junit-tests/">getting the unit tests running from the command line</a> and this post on getting them <a href="http://blog.blundell-apps.com/how-to-run-robolectric-junit-tests-in-android-studio/">running from AndroidStudio</a>. After that it was pretty easy to run them from either the command line or AndroidStudio and there is none of the refresh problems that affected Eclipse.</p>
+
+<p></p>
+
+<p></p>
+
+<h2>Signing the App</h2>
+
+<p>Signing and copying the app had been complex and once again I had used a combination of Ant and shell scripts. It was just as complex using Gradle. This is because I needed to enter a password to sign the release apk but I did not want to put the password into the Gradle script as this is an open source project.</p>
+
+<p>It turns out that I can use the Console when I build from the command line but I needed a <a href="https://coderwall.com/p/zrdsmq/signing-configs-with-gradle-android">slightly different mechanism from within AndroidStudio</a>. I made some slight modifications and ended up with this Gradle script.</p>
+
+<pre>import groovy.swing.SwingBuilder
+apply plugin: 'com.android.application'
+
+android {
+ compileSdkVersion 21
+ buildToolsVersion &quot;21.1.2&quot;
+
+ defaultConfig {
+  applicationId &quot;net.derekwilson.measureme&quot;
+  minSdkVersion 7
+  targetSdkVersion 21
+ }
+
+ signingConfigs {
+  release {
+   storeFile file(&quot;../../AndroidSupport/deploy/derek.keystore&quot;)
+   storePassword &quot;not real password&quot;
+   keyAlias &quot;measureme&quot;
+   keyPassword &quot;not real password&quot;
+  }
+ }
+
+ gradle.taskGraph.whenReady { taskGraph -&gt;
+  if (taskGraph.hasTask(':app:assembleRelease')) {
+   def password = &quot;&quot;
+
+   if (System.console() == null) {
+    new SwingBuilder().edt {
+     dialog(modal: true,
+     title: &quot;Enter signing password&quot;,
+     alwaysOnTop: true,
+     resizable: false,
+     locationRelativeTo: null,
+     pack: true,
+     show: true
+     )
+    {
+     vbox {
+      label(text: &quot;Enter signing password: &quot;)
+      input = passwordField()
+      button(defaultButton: true,
+        text: 'OK',
+        actionPerformed: {
+          password = new String(input.password)
+          dispose();
+        })
+      }
+     }
+    }
+   } else {
+    password = System.console().readPassword(&quot;\nEnter password: &quot;)
+    password = new String(password)
+   }
+
+   if (password.size() &lt;= 0) {
+    throw new InvalidUserDataException(&quot;Empty password&quot;)
+   }
+
+   // set signing config key passwords
+   android.signingConfigs.release.storePassword = password
+   android.signingConfigs.release.keyPassword = password
+  }
+ }</pre>
+
+<p>The migration did not take that long and I have found AndroidStudio to be great improvement over Eclipse.</p>

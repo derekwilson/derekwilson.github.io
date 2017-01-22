@@ -1,0 +1,10 @@
+---
+layout: post
+title: "New version of PodcastUtilities available"
+date: 2013-12-18 15:46:00 +1300
+published: true
+tags: ["PodcastUtilities", "Development"]
+categories: ["PodcastUtilities", "Development"]
+alias: ["/derekblog/post/2013/12/18/New-version-of-PodcastUtilities-available.aspx", "/derekblog/post/2013/12/18/new-version-of-podcastutilities-available.aspx"]
+---
+<p>Although we are now working on other projects we are still maintaining PodcastUtilities, we added MTP support this year.</p><!--more-->  <p>I have fixed an issue in PodcastUtilities. The issue was that if an error was thrown when trying to find the available free space on the destination drive then the file copier would stop and not copy any files. The meant that if SyncPodcasts was used with relative, UNC for an MTP path then it would fail. The fix is to carry on copying after generating a warning that we cannot honour the free space to leave on the destination device configuration.</p>  <p>The new version (v2.1.0.3) is <a href="https://bitbucket.org/derekwilson/podcastutilities/wiki/Home" target="_blank">now in BitBucket</a> and also available as a <a href="https://bitbucket.org/derekwilson/podcastutilities/downloads" target="_blank">binary download</a> if you just want to run PodcastUtilities. We have also hooked up the BitBucket repo to a <a href="http://teamcity.codebetter.com/viewType.html?buildTypeId=bt1062" target="_blank">TeamCity build</a>. I am amazed at the free support for open source projects. Thank you to both <a href="https://www.atlassian.com" target="_blank">Atlassian</a> and <a href="http://codebetter.com/codebetter-ci/" target="_blank">CodeBetter</a></p>

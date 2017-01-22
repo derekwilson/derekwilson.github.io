@@ -1,0 +1,115 @@
+---
+layout: post
+title: "Displaying the appinfo version number in a Pebble app"
+date: 2016-10-21 20:44:00 +1300
+published: true
+tags: ["Pebble", "Development"]
+categories: ["Pebble", "Development"]
+alias: ["/derekblog/post/2016/10/21/Displaying-the-appinfo-version-number-in-a-Pebble-app.aspx", "/derekblog/post/2016/10/21/displaying-the-appinfo-version-number-in-a-pebble-app.aspx"]
+---
+<p>This year I have started <a href="http://derekwilson.net/derekblog/post/2016/04/09/Setting-up-for-Pebble-development-on-Ubuntu.aspx">writing apps for my Pebble</a>. One of the first things that I usually do is put in some kind of “About…” screen so I can easily tell what version of the code I am using.&#160; The about screen for <a href="https://apps.getpebble.com/en_US/application/56904b60e74aedc6b600000b?dev_settings=true&amp;query=cricket&amp;section=watchapps">wrist-spin</a> looks like this</p><!--more-->  <p><a href="/images/pebble_screenshot_2016-10-22_16-37-11.png"><img title="pebble_screenshot_2016-10-22_16-37-11" style="border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px; display: inline" border="0" alt="pebble_screenshot_2016-10-22_16-37-11" src="/images/pebble_screenshot_2016-10-22_16-37-11_thumb.png" width="148" height="172" /></a> </p>  <p>As often happens on a new platform its the simplest things that trip me up. The version number (versionLabel) used in the Pebble app that is published is stored in an appinfo.json file like this</p>  <pre>{
+  &quot;uuid&quot;: &quot;00000000-0000-0000-0000-000000000000&quot;,
+  &quot;shortName&quot;: &quot;wrist-spin&quot;,
+  &quot;longName&quot;: &quot;Wrist Spin&quot;,
+  &quot;companyName&quot;: &quot;Derek Wilson&quot;,
+  &quot;versionCode&quot;: 13,
+  &quot;versionLabel&quot;: &quot;1.4&quot;,
+  &quot;sdkVersion&quot;: &quot;3&quot;,
+  &quot;targetPlatforms&quot;: [&quot;aplite&quot;, &quot;basalt&quot;, &quot;chalk&quot;],
+  &quot;watchapp&quot;: {
+    &quot;watchface&quot;: false
+  },</pre>
+
+<p>The first mechanism I tried from a <a href="http://stackoverflow.com/questions/21931690/how-to-get-the-version-of-a-pebble-app-on-the-watch">question on stackoverflow</a> was to modify the build script (wscript) like this</p>
+
+<pre>def build(ctx):
+    ctx.load('pebble_sdk')
+
+    def generate_appinfo(task):
+        src = task.inputs[0].abspath()
+        tgt = task.outputs[0].abspath()
+
+        json_data=open(src)
+        data = json.load(json_data)
+
+        f = open(tgt,'w')
+        f.write('#ifndef appinfo_h\n')
+        f.write('#define appinfo_h\n')
+        f.write('#define VERSION_LABEL &quot;' + data[&quot;versionLabel&quot;] + '&quot;\n')
+        f.write('#endif\n')
+        f.close()
+
+    ctx(
+        rule   = generate_appinfo,
+        source = 'appinfo.json',
+        target = 'appinfo.h',
+    )
+
+    build_worker = os.path.exists('worker_src')
+    binaries = []
+
+    for p in ctx.env.TARGET_PLATFORMS:
+        ctx.set_env(ctx.all_envs[p])
+        ctx.set_group(ctx.env.PLATFORM_NAME)
+        app_elf='{}/pebble-app.elf'.format(ctx.env.BUILD_DIR)
+        ctx.pbl_program(source=ctx.path.ant_glob('src/**/*.c','generated/**/*.c'),
+        target=app_elf)
+
+        if build_worker:
+            worker_elf='{}/pebble-worker.elf'.format(ctx.env.BUILD_DIR)
+            binaries.append({'platform': p, 'app_elf': app_elf, 'worker_elf': worker_elf})
+            ctx.pbl_worker(source=ctx.path.ant_glob('worker_src/**/*.c'),
+            target=worker_elf)
+        else:
+            binaries.append({'platform': p, 'app_elf': app_elf})
+
+    ctx.set_group('bundle')
+    ctx.pbl_bundle(binaries=binaries, js=ctx.path.ant_glob('src/js/**/*.js'))</pre>
+
+<p>To produce a file called appinfo.h which I can then include like this</p>
+
+<pre>#include <pebble.h>
+
+#include &quot;globals.h&quot;
+
+static char versionBuffer[10];
+
+#include &quot;appinfo.h&quot;
+
+void init_version() {
+    snprintf(versionBuffer,sizeof(versionBuffer),&quot;%s&quot;,VERSION_LABEL);
+}
+
+char* get_version() {
+    return versionBuffer;
+}</pre>
+
+<p>It does work, sort of. If you clean the project then the generated file is deleted and sometimes the script attempted to compile the code before the header has been generated. Often running the build twice seemed to get it to work, but not always.</p>
+
+<p>So I tried a different mechanism suggested on the <a href="http://stackoverflow.com/questions/21931690/how-to-get-the-version-of-a-pebble-app-on-the-watch">pebble dev forums</a>.</p>
+
+<pre>#include <pebble.h>
+
+#include &quot;globals.h&quot;
+
+static char versionBuffer[10];
+
+/* 
+ * using the hacky method described here
+ * https://forums.getpebble.com/discussion/10405/how-can-i-get-my-app-version-in-c-code
+ */ 
+#include &quot;pebble_process_info.h&quot;
+extern const PebbleProcessInfo __pbl_app_info;
+void init_version() {
+    snprintf(versionBuffer,sizeof(versionBuffer),&quot;%d.%d%s&quot;,
+        __pbl_app_info.process_version.major, 
+        __pbl_app_info.process_version.minor,
+        &quot;&quot; 
+    );
+}
+
+char* get_version() {
+    return versionBuffer;
+}</pre>
+
+<p>This looks a bit more hacky but seems to work just fine.</p>

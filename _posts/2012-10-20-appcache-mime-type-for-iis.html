@@ -1,0 +1,19 @@
+---
+layout: post
+title: "appcache MIME type for IIS"
+date: 2012-10-20 16:31:00 +1300
+published: true
+tags: ["Development", "Web"]
+categories: ["Development", "Web"]
+alias: ["/derekblog/post/2012/10/20/appcache-MIME-type-for-IIS.aspx", "/derekblog/post/2012/10/20/appcache-mime-type-for-iis.aspx"]
+---
+<p>This month I have a rant, I am not a big fan of rants in blog posts as they never really seem to achieve much and really just seem to be be a bit self promoting. However I’ve not had one before and last month I came across a topic that is worthy.</p><!--more-->  <p>I’ve started a pet project to write a browser based HTML5 app. In the past we have produced a version of a Windows Mobile app that ran in a browser it was interesting but not really a great experience. Its advantage was nothing needed to be installed and it worked on most devices however it did required an internet connection.</p>  <p>I’ve always thought that an app the can handle online and offline operation would be useful and interesting to produce, I need to get better at using Javascript and at last HTML5 seems to have progressed to the point that its useable. So I started putting together some proof of concept code, the part of HTML5 that makes offline apps possible is <a href="http://www.w3schools.com/html/html5_app_cache.asp" target="_blank">appcache</a>. Its a file that you include in your web site and reference from HTML its main purpose is to specify to the browser which parts of your app can be cached and which cannot, a part being a URL.</p>  <p>Part of the magic depends on the appcache file being returned with the correct MIME type, as it <a href="http://www.w3schools.com/html/html5_app_cache.asp" target="_blank">says on w3schools</a></p>  <blockquote>A manifest file needs to be served with the correct MIME-type, which is &quot;text/cache-manifest&quot;. Must be configured on the web server.</blockquote>  <p>My host (godaddy) is windows IIS7 based, and given the background reading I’d done that the recommended file extension was changed from manifest to appcache to avoid a clash with a Microsoft used extension <a href="http://stackoverflow.com/questions/6523034/html5-appcache-manifest-file-extension" target="_blank">almost two years ago</a> I thought that all would be well. Wrong. The MIME type is still not set by default in IIS.</p>  <p>Here is my rant.We download megabytes of data every “patch Tuesday” and two years later IIS still has not had its MIME types updated.</p>  <p>Luckily I came across <a href="http://petelepage.com/blog/2011/06/godaddy-and-appcache-manifest-files/" target="_blank">this life saving post</a> and added this to my web.config and offline apps work.</p>  <pre class="csharp">  &lt;system.web&gt;
+    &lt;httpHandlers&gt;
+      &lt;add verb=&quot;GET,HEAD&quot; path=&quot;*.appcache&quot; type=&quot;System.Web.StaticFileHandler&quot; /&gt;
+    &lt;/httpHandlers&gt;
+  &lt;/system.web&gt;
+  &lt;system.webServer&gt;
+    &lt;staticContent&gt;
+      &lt;mimeMap fileExtension=&quot;.appcache&quot; mimeType=&quot;text/cache-manifest&quot; /&gt;
+    &lt;/staticContent&gt;
+  &lt;/system.webServer&gt;</pre>

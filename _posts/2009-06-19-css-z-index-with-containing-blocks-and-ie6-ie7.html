@@ -1,0 +1,66 @@
+---
+layout: post
+title: "CSS z-index with containing blocks and IE6 / IE7"
+date: 2009-06-19 09:06:00 +1200
+published: true
+tags: ["CSS", "Development", "Web"]
+categories: ["CSS", "Development", "Web"]
+alias: ["/derekblog/post/2009/06/19/CSS-z-index-with-containing-blocks-and-IE6-IE7.aspx", "/derekblog/post/2009/06/19/css-z-index-with-containing-blocks-and-ie6-ie7.aspx"]
+---
+<p>In my <a href="/2009/05/27/css-positionabsolute-what-does-it-mean.html">previous post</a> I was exploring the effect containing blocks have on absolutely positioned elements. I did say that containing blocks have an effect on z-index as well. The effect is that elements with a higher z-index but within a containing block are rendered behind an element with a smaller z-index.</p><!--more-->
+<p>It turns out that the effect is probably a bug and that it only happens in older versions of IE, that is IE6 and IE7, IE8 renders correctly. I know its a complete pain to develop for old versions of any browser, I still have that scars from developing for Netscape 4 however a professional developer cannot pick and choose which browsers to support and like it or not my clients demand that I can produce sites that render in IE6 and 7.</p>
+<!--more-->
+<p>This is how the problem shows up. I reused the HTML from the previous post. This time I have a red div that has a z-index of 2 and a green div with a z-index of 1. Like this</p>
+<pre class="c#">&lt;html&gt; 
+ &lt;head&gt; 
+  &lt;title&gt;Positioning&lt;/title&gt; 
+  &lt;style type="text/css"&gt; 
+    .container
+    {
+    	background-color: Blue;
+    	position: relative;
+    	padding: 5px;
+    	margin: 0px;
+    }
+    .contained_p
+    {
+    	background-color: Red;
+    	position: absolute;
+    	top: 10px;
+    	left: 10px;
+    	margin: 0px;
+    	z-index: 2;
+    }
+    .free_p
+    {
+    	background-color: Green;
+    	position: absolute;
+    	top: 355px;
+    	left: 10px;
+    	margin: 0px;
+    	z-index: 1;
+    }
+  &lt;/style&gt; 
+ &lt;/head&gt; 
+ &lt;body&gt; 
+  &lt;p class="free_p"&gt;should be&lt;br /&gt;behind&lt;/p&gt;
+  &lt;p&gt;paragraph 1&lt;/p&gt; 
+  &lt;p&gt;paragraph 2&lt;/p&gt; 
+  &lt;p&gt;paragraph 3&lt;/p&gt; 
+  &lt;p&gt;paragraph 4&lt;/p&gt; 
+  &lt;p&gt;paragraph 5&lt;/p&gt; 
+  &lt;p&gt;paragraph 6&lt;/p&gt; 
+  &lt;p&gt;paragraph 7&lt;/p&gt; 
+  &lt;p&gt;paragraph 8&lt;/p&gt; 
+  &lt;p&gt;paragraph 9&lt;/p&gt; 
+  &lt;div class="container"&gt;Container 
+   &lt;p class="contained_p"&gt;should be&lt;br /&gt;on top&lt;/p&gt; 
+  &lt;/div&gt; 
+ &lt;/body&gt; 
+&lt;/html&gt;</pre>
+<p>The red div should be on top as it has the highest z-index however in IE6 and IE7 it looks like this</p>
+<p><a href="/images/wordpress/CSSzindexwithcontainingblocksandIE6IE7_E3B7/zie7.png"><img style="display: inline; border-width: 0px;" title="z-ie7" src="/images/wordpress/CSSzindexwithcontainingblocksandIE6IE7_E3B7/zie7_thumb.png" alt="z-ie7" width="206" height="361" border="0" /></a></p>
+<p>it appears that the z-index value comparison is only valid for elements that are in the same containing block in IE6 and IE7</p>
+<p>In IE8, Firefox and Opera it renders correctly like this</p>
+<p><a href="/images/wordpress/CSSzindexwithcontainingblocksandIE6IE7_E3B7/zie8.png"><img style="display: inline; border-width: 0px;" title="z-ie8" src="/images/wordpress/CSSzindexwithcontainingblocksandIE6IE7_E3B7/zie8_thumb.png" alt="z-ie8" width="304" height="345" border="0" /></a></p>
+<p>Its pretty easy to see the effect when the HTML has been stripped back, however in the middle of a complex page that has some weird positioning or z-index problem then this can be very difficult to track down.</p>

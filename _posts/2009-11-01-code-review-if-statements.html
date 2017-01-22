@@ -1,0 +1,26 @@
+---
+layout: post
+title: "Code Review: if statements"
+date: 2009-11-01 06:11:00 +1300
+published: true
+tags: ["Code Review", "Development"]
+categories: ["Code Review", "Development"]
+alias: ["/derekblog/post/2009/11/01/Code-Review-if-statements.aspx", "/derekblog/post/2009/11/01/code-review-if-statements.aspx"]
+---
+<p>As part of my role as a developer I attend code reviews. On more than one occasion I&rsquo;ve been struck by small details that have made a big difference.</p><!--more-->
+<p>A colleague once pointed out that I was giving myself an opportunity to get code wrong by missing out the braces in an if statement. In most C style languages, (C++, C#, Javascript etc) this is legal</p>
+<pre class="csharp">if (someCondition)
+    performSomeAction();</pre>
+<p>However he asserted it was unwise to rely on indentation to indicate that the performSomeAction method will be called, its all to easy to add another indented statement or a semicolon to completely change the meaning. Consider these</p>
+<pre class="csharp">if (someCondition);
+    performSomeAction();</pre>
+<p>and</p>
+<pre class="csharp">if (someCondition)
+    performAnotherAction();
+    performSomeAction();</pre>
+<p>He said that its only a few extra characters to change the code to this</p>
+<pre class="csharp">if (someCondition)
+{
+    performSomeAction();
+}</pre>
+<p>As a result I do try to always resist the shortcut of missing the braces out, I know that unit testing and advances in compilers can help but there are enough ways of getting bugs into code why look for another?</p>
