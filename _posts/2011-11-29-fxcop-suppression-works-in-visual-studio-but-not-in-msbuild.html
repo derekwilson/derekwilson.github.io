@@ -7,7 +7,8 @@ tags: ["Development", "General"]
 categories: ["Development", "General"]
 alias: ["/derekblog/post/2011/11/29/FxCop-suppression-works-in-visual-studio-but-not-in-MSBUILD.aspx", "/derekblog/post/2011/11/29/fxcop-suppression-works-in-visual-studio-but-not-in-msbuild.aspx"]
 ---
-<p>I had a very odd problem to solve recently, I needed to specify a SupressMessage attribute on some code however when I did decorate the code with SupressMessage FxCop on the build server still complained about the error. I had used FxCop locally to check the code before checking in and also used the FxCop command &ldquo;Copy as SuppressMessage&rdquo; to make sure I didn&rsquo;t type it wrong.</p><!--more-->
+<p>I had a very odd problem to solve recently, I needed to specify a SupressMessage attribute on some code however when I did decorate the code with SupressMessage FxCop on the build server still complained about the error. I had used FxCop locally to check the code before checking in and also used the FxCop command &ldquo;Copy as SuppressMessage&rdquo; to make sure I didn&rsquo;t type it wrong.</p>
+<!--more-->
 <!--more-->
 <p>Luckily this problem only seemed to afflict some projects in the solution so I could compare the projects that worked with my current project. It turned out that all the projects that worked specified CODE_ANALYSIS on the Build Tab.</p>
 <p>&nbsp;<a href="/images/wordpress/FxCopsuppressionworksinvisualstudiobutno_C493/buildtabclip.png"><img style="display: inline; border: 0px;" title="buildtabclip" src="/images/wordpress/FxCopsuppressionworksinvisualstudiobutno_C493/buildtabclip_thumb.png" alt="buildtabclip" width="305" height="276" border="0" /></a></p>

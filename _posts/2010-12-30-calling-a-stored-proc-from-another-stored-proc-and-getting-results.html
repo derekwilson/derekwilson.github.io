@@ -7,7 +7,8 @@ tags: ["Development", "SQL"]
 categories: ["Development", "SQL"]
 alias: ["/derekblog/post/2010/12/30/calling-a-stored-proc-from-another-stored-proc-and-getting-results.aspx"]
 ---
-<p>I am not a SQL DBA but like a lot of developers I do get to work in relational databases. Also I guess like a lot of developers I find SQL to be the most alien of the languages I work in.</p><!--more-->
+<p>I am not a SQL DBA but like a lot of developers I do get to work in relational databases. Also I guess like a lot of developers I find SQL to be the most alien of the languages I work in.</p>
+<!--more-->
 <p>Recently I needed to refactor some code that had an impact on a database, in common with the <a href="http://en.wikipedia.org/wiki/Don't_repeat_yourself">DRY techniques</a> I wanted to remove duplicated calculations. I&rsquo;ve simplified this example to make it easier to read.</p>
 <p>Data needs to be returned from a SQL Server database to the web site <a href="http://en.wikipedia.org/wiki/Data_access_layer">DAL</a>, the code in the DAL used ExecuteScalar to get results back from the stored procedure. We need to calculate the profit for a given product and net price combination as well as being able to calculate the total cost</p>
 <p>The profit for each product is held on a table like this</p>

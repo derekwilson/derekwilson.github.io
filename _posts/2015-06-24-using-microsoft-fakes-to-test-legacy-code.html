@@ -7,7 +7,8 @@ tags: ["Code Generation", "Development"]
 categories: ["Code Generation", "Development"]
 alias: ["/derekblog/post/2015/06/24/Using-Microsoft-Fakes-to-test-legacy-code.aspx", "/derekblog/post/2015/06/24/using-microsoft-fakes-to-test-legacy-code.aspx"]
 ---
-<p>Recently I needed to do some maintenance work on some old code that was not written with unit testing in mind and had not been structured to enable testing, for example there was no inversion of control.</p><!--more-->  <p>Ideally I would have restructured the code to isolate it from external dependencies however this would have required a large QA resource cost to perform regression testing on the restructured code, and there were no existing unit tests to help. Another option is to just add more code without any tests. I was unhappy writing untested code but there was not enough recourse available to restructure the code so I took the opportunity to explore using Microsoft Fakes to isolate and test legacy code.</p>  <p>The structure of the code was like this</p>  <pre>public SoapServiceClient DataService
+<p>Recently I needed to do some maintenance work on some old code that was not written with unit testing in mind and had not been structured to enable testing, for example there was no inversion of control.</p>
+<!--more-->  <p>Ideally I would have restructured the code to isolate it from external dependencies however this would have required a large QA resource cost to perform regression testing on the restructured code, and there were no existing unit tests to help. Another option is to just add more code without any tests. I was unhappy writing untested code but there was not enough recourse available to restructure the code so I took the opportunity to explore using Microsoft Fakes to isolate and test legacy code.</p>  <p>The structure of the code was like this</p>  <pre>public SoapServiceClient DataService
 {
  get
  {

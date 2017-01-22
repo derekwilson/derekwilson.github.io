@@ -7,7 +7,8 @@ tags: ["Development", "General", "PodcastUtilities"]
 categories: ["Development", "General", "PodcastUtilities"]
 alias: ["/derekblog/post/2015/12/22/New-version-of-PodcastUtilities.aspx", "/derekblog/post/2015/12/22/new-version-of-podcastutilities.aspx"]
 ---
-<p>This month I have done a maintenance release of PodcastUtilities. I was seeing this error from a number of sites, including the BBC, The Guardian and NZ Tech Podcast.</p><!--more-->  <pre>GetFeedEpisodes: warning, unable to add an episode for Tech Weekly, 
+<p>This month I have done a maintenance release of PodcastUtilities. I was seeing this error from a number of sites, including the BBC, The Guardian and NZ Tech Podcast.</p>
+<!--more-->  <pre>GetFeedEpisodes: warning, unable to add an episode for Tech Weekly, 
 Thu, 03 Dec 2015 15:35:14 UTC is not a valid RFC 822 string representation of a date and time.</pre>
 
 <p>I was surprised by the error as it looked OK to me. I ended up adding another unit test with this string in it and when I debugged it I was surprised to discover that the error is correct, the date is not valid. According to <a href="https://www.ietf.org/rfc/rfc0822.txt">RFC 822</a> the only legal suffixes for universal time are GMT, UT or Z (see page 26), UTC is not valid. I didn't really know what to do in the end I decided to be pragmatic and permit the invalid date format as it was obvious that it was supposed to be UT. It is a bit alarming that big internet providers don't appear to be able to support the simplest standards, and somewhat alarmingly some weeks they were find and on others it was invalid.</p>

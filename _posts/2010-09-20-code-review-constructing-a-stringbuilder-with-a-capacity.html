@@ -7,7 +7,8 @@ tags: ["Code Review", "Development"]
 categories: ["Code Review", "Development"]
 alias: ["/derekblog/post/2010/09/20/Code-Review-Constructing-a-StringBuilder-with-a-capacity.aspx", "/derekblog/post/2010/09/20/code-review-constructing-a-stringbuilder-with-a-capacity.aspx"]
 ---
-<p>Its the small things that seem to be the most generally applicable when writing code and one of those little things is the construction of a StringBuilder.</p><!--more-->
+<p>Its the small things that seem to be the most generally applicable when writing code and one of those little things is the construction of a StringBuilder.</p>
+<!--more-->
 <p>I guess most developers assume that concatenating strings is not very efficient, because they are immutable it means a lot of copying and memory allocation behind the scenes. One of the advantages that &ldquo;modern&rdquo; programming languages such as Java and the .NET family proclaimed over their predecessors was a StringBuilder. This made string concatenation much more efficient, so I guess like a lot of other developers I made a mental note to replace this</p>
 <pre class="csharp">string str = "The items are called: ";
 foreach Item thisItem in allItems

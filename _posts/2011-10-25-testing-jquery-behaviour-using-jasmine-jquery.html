@@ -7,7 +7,8 @@ tags: ["Development", "JavaScript", "Web"]
 categories: ["Development", "JavaScript", "Web"]
 alias: ["/derekblog/post/2011/10/25/Testing-jQuery-behaviour-using-jasmine-jquery.aspx", "/derekblog/post/2011/10/25/testing-jquery-behaviour-using-jasmine-jquery.aspx"]
 ---
-<p>Recently I was working on a web page and I needed to add the ability to have certain LABEL element be highlighted with an icon and to have an alternative prompt. As often happens in web development the elements to be highlighted were delivered to the page using a JavaScript array planted from the server side and although I could have changed this mechanism it would be less intrusive if I could work within the existing framework.</p><!--more-->
+<p>Recently I was working on a web page and I needed to add the ability to have certain LABEL element be highlighted with an icon and to have an alternative prompt. As often happens in web development the elements to be highlighted were delivered to the page using a JavaScript array planted from the server side and although I could have changed this mechanism it would be less intrusive if I could work within the existing framework.</p>
+<!--more-->
 <p>The behaviour that was required was that each LABEL to be highlighted would have the its FOR attribute value listed in a global array. Each LABEL needs to be wrapped in a SPAN with a specific CLASS (this was due to the CSS delivered by a design agency) and then the highlight prompt displayed.</p>
 <p>In reality I would write the behaviour tests first however as I want to contrast different methods of testing I will list the code first.</p>
 <pre class="c#">function HandleOneLabel(label,labelForId) {

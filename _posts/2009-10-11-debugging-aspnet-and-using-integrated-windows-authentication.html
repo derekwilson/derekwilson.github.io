@@ -7,7 +7,8 @@ tags: ["Development", "Web"]
 categories: ["Development", "Web"]
 alias: ["/derekblog/post/2009/10/11/Debugging-ASPNET-and-using-Integrated-Windows-Authentication.aspx", "/derekblog/post/2009/10/11/debugging-aspnet-and-using-integrated-windows-authentication.aspx"]
 ---
-<p><a href="/2009/09/26/using-integrated-windows-authentication-in-iis.html">Last post</a> I was looking at using integrated windows authentication in IIS. When I am working on a web site like this on my dev machine I often turn integrated windows authentication off and Basic Authentication on. This enables me to access the web site using different credentials that I can just type into the browser.</p><!--more-->
+<p><a href="/2009/09/26/using-integrated-windows-authentication-in-iis.html">Last post</a> I was looking at using integrated windows authentication in IIS. When I am working on a web site like this on my dev machine I often turn integrated windows authentication off and Basic Authentication on. This enables me to access the web site using different credentials that I can just type into the browser.</p>
+<!--more-->
 <p><a href="/images/wordpress/Deb.NETandusingIntegratedWindowsAuthenti_E7CE/iis2.png"><img style="display: inline; border: 0px;" title="iis2" src="/images/wordpress/Deb.NETandusingIntegratedWindowsAuthenti_E7CE/iis2_thumb.png" alt="iis2" width="257" height="299" border="0" /></a></p>
 <p>Please note that I only do this on my dev machine and would not recommend doing this in any public / production environment.</p>
 <p>However there can be problems with the Visual Studio debugger. I noticed that sometimes I would try to set breakpoints but they would not be hit in the debugger. When I set breakpoints there was obviously something wrong as they appeared like this</p>

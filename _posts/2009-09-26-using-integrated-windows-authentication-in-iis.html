@@ -7,7 +7,8 @@ tags: ["How Do I", "Web"]
 categories: ["How Do I", "Web"]
 alias: ["/derekblog/post/2009/09/26/Using-Integrated-Windows-Authentication-in-IIS.aspx", "/derekblog/post/2009/09/26/using-integrated-windows-authentication-in-iis.aspx"]
 ---
-<p>Many public facing web sites need to have special &ldquo;admin&rdquo; modes, or even completely different personalities for internal staff. One possible method of achieving this is to use the Integrated Windows Authentication in IIS which can be setup from the Directory Security tab of the IIS MMC snap in as shown here</p><!--more-->
+<p>Many public facing web sites need to have special &ldquo;admin&rdquo; modes, or even completely different personalities for internal staff. One possible method of achieving this is to use the Integrated Windows Authentication in IIS which can be setup from the Directory Security tab of the IIS MMC snap in as shown here</p>
+<!--more-->
 <p><a href="/images/wordpress/UsingIntegratedWindowsAuthenticationinII_DECF/iis.png"><img style="display: inline; border: 0px;" title="iis" src="/images/wordpress/UsingIntegratedWindowsAuthenticationinII_DECF/iis_thumb.png" alt="iis" width="268" height="311" border="0" /></a></p>
 <p>If the anonymous access option is checked then anyone can access the site if not then the user&rsquo;s windows credentials will be sent by the browser. This happens automatically when using IE. If you use Firefox then you will be prompted for your credentials each time, <a href="http://markmonica.com/2007/11/20/firefox-and-integrated-windows-authentication/">though you can white-list domain hosts to have your credentials send automatically</a>.</p>
 <p>Recently I came across an interesting problem with this configuration, the site I was trying to access would not recognise my Windows identity. I was using IE and it turned out that the fact that it usually automatically worked meant that I&rsquo;d never really understood how it is configured in IE.</p>

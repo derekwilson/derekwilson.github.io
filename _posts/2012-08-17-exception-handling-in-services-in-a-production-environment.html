@@ -7,7 +7,8 @@ tags: ["Development", "General"]
 categories: ["Development", "General"]
 alias: ["/derekblog/post/2012/08/17/Exception-handling-in-services-in-a-production-environment.aspx", "/derekblog/post/2012/08/17/exception-handling-in-services-in-a-production-environment.aspx"]
 ---
-<p>I have written about using Enterprise Library to log exceptions in a production environment, specifically <a href="http://derekwilson.net/derekblog/post/2010/08/25/Enterprise-Library-exception-handling-in-a-production-environment.aspx" target="_blank">how to cope when the loggers will not write</a> to files or event logs.</p><!--more-->
+<p>I have written about using Enterprise Library to log exceptions in a production environment, specifically <a href="http://derekwilson.net/derekblog/post/2010/08/25/Enterprise-Library-exception-handling-in-a-production-environment.aspx" target="_blank">how to cope when the loggers will not write</a> to files or event logs.</p>
+<!--more-->
 <p>Recently I came across a problem where the whole logging framework was failing to initialise in a production environment. What we got was the usual generic error message and nothing useful in the event logs and obviously the logging framework did not receive anything.</p>
 <p><a href="/images/service.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border-width: 0px;" title="service" src="/images/service_thumb.png" alt="service" width="359" height="136" border="0" /></a></p>
 <p>In this instance the problem was that the config file (which was being rewritten between deployment environments) was malformed. However in principle the logging framework could fail to start for any number of reasons.</p>

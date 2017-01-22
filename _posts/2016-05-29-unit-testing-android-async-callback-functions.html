@@ -7,7 +7,8 @@ tags: ["Android", "Development"]
 categories: ["Android", "Development"]
 alias: ["/derekblog/post/2016/05/29/Unit-Testing-Android-async-callback-functions.aspx", "/derekblog/post/2016/05/29/unit-testing-android-async-callback-functions.aspx"]
 ---
-<p>Android code will typically make use of async callback functions to do work that could take a long time, such as making network calls, or interacting with the file store or local databases. In fact the Android OS will <a href="https://developer.android.com/training/basics/network-ops/connecting.html">throw an exception</a> if you attempt to make a network call from the UI thread, which means that a common pattern of writing code is call a synchronous method and pass a callback function that will get called asynchronously when the long running operation is complete.</p><!--more-->  <p>For example this is the kind of code that gets written</p>  <pre>private void unpackFromUrlAsync(Intent intent) {
+<p>Android code will typically make use of async callback functions to do work that could take a long time, such as making network calls, or interacting with the file store or local databases. In fact the Android OS will <a href="https://developer.android.com/training/basics/network-ops/connecting.html">throw an exception</a> if you attempt to make a network call from the UI thread, which means that a common pattern of writing code is call a synchronous method and pass a callback function that will get called asynchronously when the long running operation is complete.</p>
+<!--more-->  <p>For example this is the kind of code that gets written</p>  <pre>private void unpackFromUrlAsync(Intent intent) {
  view.showProgress(R.string.progress_unpacking_intent);
  subscription = unpackerFromUrl.
     getRecommendationFromUrl(

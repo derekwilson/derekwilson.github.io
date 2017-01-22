@@ -7,7 +7,8 @@ tags: ["Code Review", "Development", "How Do I"]
 categories: ["Code Review", "Development", "How Do I"]
 alias: ["/derekblog/post/2010/10/18/Code-Review-Copying-the-text-from-a-Message-Box.aspx", "/derekblog/post/2010/10/18/code-review-copying-the-text-from-a-message-box.aspx"]
 ---
-<p>Strictly speaking this snippet isn&rsquo;t even code however it did come up in a code review and I&rsquo;ve made use of it often. Lots of times when an error message appears I need to be able to get the text from an error message dialog, either I want to find the text in source code or to use it to search the internet.</p><!--more-->
+<p>Strictly speaking this snippet isn&rsquo;t even code however it did come up in a code review and I&rsquo;ve made use of it often. Lots of times when an error message appears I need to be able to get the text from an error message dialog, either I want to find the text in source code or to use it to search the internet.</p>
+<!--more-->
 <p>It turns out that as long as the developer has used the standard Message Box, either using Windows unmanaged API or the .NET managed MessageBox wrappers then you can use CTRL C while the message box has focus and the text from the dialog will be placed on the clipboard.</p>
 <p>Taking a completely random example of starting up Google Earth without an internet connection available the following message is displayed</p>
 <p><a href="/images/wordpress/CodeReviewCopyingthetextfromaMessageBox_12FB8/image.png"><img style="display: inline; border-width: 0px;" title="image" src="/images/wordpress/CodeReviewCopyingthetextfromaMessageBox_12FB8/image_thumb.png" alt="image" width="415" height="144" border="0" /></a></p>

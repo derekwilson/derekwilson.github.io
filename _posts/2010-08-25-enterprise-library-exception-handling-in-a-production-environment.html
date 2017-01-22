@@ -7,7 +7,8 @@ tags: ["Development", "Enterprise Library"]
 categories: ["Development", "Enterprise Library"]
 alias: ["/derekblog/post/2010/08/25/Enterprise-Library-exception-handling-in-a-production-environment.aspx", "/derekblog/post/2010/08/25/enterprise-library-exception-handling-in-a-production-environment.aspx"]
 ---
-<p>I have blogged before about liking Enterprise Library, <a href="/2009/04/30/aspnet-exception-logging-in-a-hosted-environment.html">particularly about its exception handling mechanism</a>. Given that the whole purpose of the exception handling mechanism is to provide much needed information about defects in software I have recently been faced with a problem where the exception handling mechanism itself failed.</p><!--more-->
+<p>I have blogged before about liking Enterprise Library, <a href="/2009/04/30/aspnet-exception-logging-in-a-hosted-environment.html">particularly about its exception handling mechanism</a>. Given that the whole purpose of the exception handling mechanism is to provide much needed information about defects in software I have recently been faced with a problem where the exception handling mechanism itself failed.</p>
+<!--more-->
 <p>I had a piece of software that was deployed to a production server. It had been tested fully on a staging environment and was then deployed. It failed, in that it apparently did nothing when a request was sent. We log exceptions into the database but that was empty, I configured an exception handler that writes to the Event Log, once again nothing. Hmm it looked as though I was a victim of <a href="http://en.wikipedia.org/wiki/Systemantics">Systemantics</a>, specifically the Fail Safe Theorem:</p>
 <blockquote>
 <p>The Fail-Safe Theorem: When a Fail-Safe system fails, it fails by failing to fail safe.</p>

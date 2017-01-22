@@ -7,7 +7,8 @@ tags: ["Code Review", "Development"]
 categories: ["Code Review", "Development"]
 alias: ["/derekblog/post/2012/12/25/Refactoring-code-using-default-parameters.aspx", "/derekblog/post/2012/12/25/refactoring-code-using-default-parameters.aspx"]
 ---
-<p>Recently I have come across code that had been refactored using default parameters in C#. The refactoring had taken place in a DLL and it caused an interesting problem in the calling client code. When I looked at the code at first I could not understand how the refactoring had broken the client code so I experimented with this code to reproduce the problem.</p><!--more-->
+<p>Recently I have come across code that had been refactored using default parameters in C#. The refactoring had taken place in a DLL and it caused an interesting problem in the calling client code. When I looked at the code at first I could not understand how the refactoring had broken the client code so I experimented with this code to reproduce the problem.</p>
+<!--more-->
 <p>The original code looked something like this.</p>
 <pre class="csharp">namespace Library
 {
