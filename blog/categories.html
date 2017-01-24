@@ -25,7 +25,7 @@ title: Categories
                     {% for post in pages_list %}
                     {% if post.title != null %}
                         {% if group == null or group == post.group %}
-                        <li><a href="/blog{{ post.url }}"><strong>{{ post.title }}</strong><span class="entry-date"></a><time datetime="{{ post.date | date_to_xmlschema }}" itemprop="datePublished"> - {{ post.date | date: "%B %d, %Y" }}</time></li>
+                        <li><a href="{{ post.url }}"><strong>{{ post.title }}</strong><span class="entry-date"></a><time datetime="{{ post.date | date_to_xmlschema }}" itemprop="datePublished"> - {{ post.date | date: "%B %d, %Y" }}</time></li>
                         {% endif %}
                     {% endif %}
                     {% endfor %}
