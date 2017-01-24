@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Archives
+title: Archive
 ---
 <section>		
 		<ul class="postList archive">
@@ -15,10 +15,10 @@ title: Archives
 			
 			{% if forloop.first %}				
 					<!-- year -->
-					<li class="box"><h1 id="{{ post.date | date: '%Y' }}">{{ post.date | date: '%Y' }}</h1>			
+					<li class="box"><h3 id="{{ post.date | date: '%Y' }}">{{ post.date | date: '%Y' }}</h3>			
 						<ul>
 							<!-- month -->
-							<li><h2 id="{{ post.date | date: '%Y-%B' }}">{{ post.date | date: '%B' }}</h2>				
+							<li><h4 id="{{ post.date | date: '%Y-%B' }}">{{ post.date | date: '%B' }}</h4>				
 								<ul>			
 			{% else %}
 				<!-- all other posts -->								
@@ -30,17 +30,17 @@ title: Archives
 					</li>
 					<!-- /year -->
 					<!-- year -->
-					<li class="box"><h1 id="{{ post.date | date: '%Y' }}">{{ post.date | date: '%Y' }}</h1>		
+					<li class="box"><h3 id="{{ post.date | date: '%Y' }}">{{ post.date | date: '%Y' }}</h3>		
 						<ul>
 							<!-- month -->
-							<li><h2 id="{{ post.date | date: '%Y-%B' }}">{{ post.date | date: '%B' }}</h2>						
+							<li><h4 id="{{ post.date | date: '%Y-%B' }}">{{ post.date | date: '%B' }}</h4>						
 								<ul>		
 					{% elsif month != nmonth %}
 								</ul>
 							</li>						
 							<!-- /month -->	
 							<!-- month -->
-							<li><h2 id="{{ post.date | date: '%Y-%B' }}">{{ post.date | date: '%B' }}</h2>						
+							<li><h4 id="{{ post.date | date: '%Y-%B' }}">{{ post.date | date: '%B' }}</h4>						
 								<ul>												
 					{% endif %}					
 		   {% endif %}	

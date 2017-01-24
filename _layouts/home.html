@@ -2,29 +2,39 @@
 layout: default
 ---
 
-<div class="home">
+<div class="post-col-wrapper">
+  <div class="post-col post-col-1">
 
-  <h1 class="page-heading">Posts</h1>
-  
-  {{ content }}
+    <div class="home">
 
-{% comment %}	
-  {% include widgets/timeline.html %}
-{% endcomment %}	
+      <h1 class="page-heading">Posts</h1>
+      
+      {{ content }}
 
-  <ul class="post-list">
-    {% for post in site.posts %}
-      <li>
-        <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
+      <ul class="post-list">
+        {% for post in site.posts %}
+          <li>
+            <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
 
-        <h2>
-          <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
-        </h2>
+            <h2>
+              <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
+            </h2>
 
-        {{ post.excerpt }}
+            {{ post.excerpt }}
 
-      </li>
-    {% endfor %}
-  </ul>
+          </li>
+        {% endfor %}
+      </ul>
 
+    </div>
+
+  </div>
+
+  <div class="post-col post-col-2">
+
+    {% include widgets/categorylist.html %}
+
+    {% include widgets/timeline.html %}
+
+  </div>
 </div>

@@ -1,0 +1,18 @@
+<section>
+	<nav>
+		<h1>Categories</h1>
+        <ul class="tag-box inline">
+            {% assign tags_list = site.categories %}  
+            {% if tags_list.first[0] == null %}
+                {% for tag in tags_list %} 
+                <li><a href="categories#{{ tag }}">{{ tag | capitalize }}</a> <span>({{ site.tags[tag].size }})</span></li>
+                {% endfor %}
+            {% else %}
+                {% for tag in tags_list %} 
+                <li><a href="categories#{{ tag[0] }}">{{ tag[0] | capitalize }}</a> <span>({{ tag[1].size }})</span></li>
+                {% endfor %}
+            {% endif %}
+            {% assign tags_list = nil %}
+        </ul>
+	</nav>
+</section>

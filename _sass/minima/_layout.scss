@@ -218,6 +218,44 @@
 /**
  * Posts
  */
+.post-col-wrapper {
+  margin-left: -$spacing-unit / 2;
+  @extend %clearfix;
+}
+
+.post-col {
+  float: left;
+  margin-bottom: $spacing-unit / 2;
+  padding-left: $spacing-unit / 2;
+}
+
+.post-col-1 {
+  width: -webkit-calc(75% - (#{$spacing-unit} / 2));
+  width:         calc(75% - (#{$spacing-unit} / 2));
+}
+
+.post-col-2 {
+  width: -webkit-calc(25% - (#{$spacing-unit} / 2));
+  width:         calc(25% - (#{$spacing-unit} / 2));
+}
+
+@include media-query($on-laptop) {
+  .post-col-1,
+  .post-col-2 {
+    width: -webkit-calc(100% - (#{$spacing-unit} / 2));
+    width:         calc(100% - (#{$spacing-unit} / 2));
+  }
+}
+
+@include media-query($on-palm) {
+  .post-col {
+    float: none;
+    width: -webkit-calc(100% - (#{$spacing-unit} / 2));
+    width:         calc(100% - (#{$spacing-unit} / 2));
+  }
+}
+
+
 .post-header {
   margin-bottom: $spacing-unit;
 }
