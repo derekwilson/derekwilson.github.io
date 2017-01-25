@@ -8,6 +8,10 @@
 
   // Positioning context for the mobile navigation icon
   position: relative;
+
+  @include media-query($on-palm) {
+    background: #000 url(/HTML/header00narrow.png) repeat-x;
+  }
 }
 
 .site-title {
@@ -63,7 +67,7 @@
     position: absolute;
     top: 9px;
     right: $spacing-unit / 2;
-    background-color: $background-color;
+    background-color: $grey-color-dark;
     border: 1px solid $grey-color-light;
     border-radius: 5px;
     text-align: right;
@@ -78,7 +82,7 @@
       text-align: center;
 
       > svg path {
-        fill: $grey-color-dark;
+        fill: $header-text-color;
       }
     }
 
@@ -258,6 +262,14 @@
 
 .post-header {
   margin-bottom: $spacing-unit;
+  border-bottom: 2px solid $grey-color-light;
+}
+
+.post-category-label {
+  background-color: $grey-color-light;
+  &:visited {
+    color: $brand-color;
+  }
 }
 
 .post-title {
