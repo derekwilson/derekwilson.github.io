@@ -7,8 +7,7 @@ tags: ["Development"]
 categories: ["Development"]
 alias: ["/derekblog/post/2012/03/01/Options-for-implementing-ReadOnly-and-ReadWrite-properties.aspx", "/derekblog/post/2012/03/01/options-for-implementing-readonly-and-readwrite-properties.aspx"]
 ---
-<p>This is a real problem, I did come up with a solution however it was not straightforward which probably means that I might have missed something, is there a better way of doing this?</p>
-<!--more-->
+<p>This is a real problem, I did come up with a solution however it was not straightforward which probably means that I might have missed something, is there a better way of doing this?</p>
 <h3>The problem</h3>
 <p>In PodcastUtilities we have a configuration file. This is the representation of the podcasts we want to download. The Downloader and the Sync need read access to the configuration however the GUI needs to be able to read and write. This is not an unusual pattern and I was keen to make the ReadWrite access object a superset of the ReadOnly object as there is business logic in the ReadOnly object that I did not want to duplicate.</p>
 <h3>A simplistic approach</h3>

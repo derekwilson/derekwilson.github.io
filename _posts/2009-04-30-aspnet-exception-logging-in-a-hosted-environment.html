@@ -7,8 +7,7 @@ tags: ["Development", "Enterprise Library", "Web"]
 categories: ["Development", "Enterprise Library", "Web"]
 alias: ["/derekblog/post/2009/04/30/ASPNET-exception-logging-in-a-hosted-environment.aspx", "/derekblog/post/2009/04/30/aspnet-exception-logging-in-a-hosted-environment.aspx"]
 ---
-<p>Fixing problems with web sites can be tricky. On the desktop, if I can replicate the problem then attach a debugger and find the problem, When I am writing a web application this is what I do, I run IIS locally and debug locally and all is fine. However after the site is deployed things become more tricky.</p>
-<!--more-->
+<p>Fixing problems with web sites can be tricky. On the desktop, if I can replicate the problem then attach a debugger and find the problem, When I am writing a web application this is what I do, I run IIS locally and debug locally and all is fine. However after the site is deployed things become more tricky.</p>
 <p>In many hosted environments I often find myself restricted.</p>
 <ol>
 <li>I cannot attach a debugger to the running IIS or W3WP process</li>
@@ -23,7 +22,7 @@ alias: ["/derekblog/post/2009/04/30/ASPNET-exception-logging-in-a-hosted-environ
 <li>Write exceptions to a text file. I can write to local data areas in the hosted environment. This is provided to local data stores and logging / temp areas</li>
 <li>Add in extra information that will help in a web environment. The standard exception logging in enterprise library is not targeted at a web environment, I have added in many things from the ASP.NET HTTP request object that will help with diagnosing a problem. Much of the code for adding in extra information was inspired and written by Liam Corner, thanks Liam.</li>
 </ol>
-<p>I address the two parts of this mechanism separately. In a <a href="/2008/12/01/rolling-flat-file-trace-listener-with-purging-for-enterprise-library.html">previous post</a> I have looked at the flat file logging with rollover and purging I have written for enterprise library.</p>
+<p>I address the two parts of this mechanism separately. In a <a href="/blog/2008/12/01/rolling-flat-file-trace-listener-with-purging-for-enterprise-library.html">previous post</a> I have looked at the flat file logging with rollover and purging I have written for enterprise library.</p>
 <p>To add in the extra information I have the logged event I have extended the Enterprise Library TextFormatter to add in extra information from the current HTTP context like this.</p>
 <pre class="c#">[ConfigurationElementType(typeof(CustomFormatterData))]
 public class HttpTextFormatter : TextFormatter

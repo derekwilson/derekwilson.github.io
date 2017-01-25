@@ -8,15 +8,7 @@ categories: ["Android", "Code Review", "Development", "General"]
 alias: ["/derekblog/post/2016/11/14/Slipping-standards.aspx", "/derekblog/post/2016/11/14/slipping-standards.aspx"]
 ---
 <p>I really try not to rant in this blog, it does no good really.</p>
-
-
-
-
-<!--more-->
-
-
-<!--more-->
-<p>Last year I wrote about a decision I had to make about <a href="http://derekwilson.net/derekblog/post/2015/12/22/New-version-of-PodcastUtilities.aspx">extending PodcastUtilities to support dates that did not follow the defined standard</a>. It makes me sad when we cannot follow standards.</p>
+<p>Last year I wrote about a decision I had to make about <a href="/blog/2015/12/22/new-version-of-podcastutilities.html">extending PodcastUtilities to support dates that did not follow the defined standard</a>. It makes me sad when we cannot follow standards.</p>
 <p>I was surprised at work when a colleague queries my pull request in which I did not escape a single quote char in an android resource file. The XML file looked like this</p>
 <pre>&lt;string name="display_message"&gt;Your client's files&lt;/string&gt;</pre>
 <p>Now I know that the <a href="https://www.w3.org/TR/REC-xml/#NT-CharData">XML standard does not need to have single quotes escaped</a> in the text content of elements. A more <a href="http://www.xmlnews.org/docs/xml-basics.html#text">plain English version is here</a>.</p>

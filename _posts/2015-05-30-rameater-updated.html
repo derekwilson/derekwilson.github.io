@@ -7,8 +7,7 @@ tags: ["Android", "Development", "RamEater"]
 categories: ["Android", "Development", "RamEater"]
 alias: ["/derekblog/post/2015/05/30/RamEater-updated.aspx", "/derekblog/post/2015/05/30/rameater-updated.aspx"]
 ---
-<p>Last month the <a href="http://derekwilson.net/derekblog/post/2015/04/20/RamEater-released.aspx">first version of RamEater was released</a>.</p>
-<!--more-->  <p>I’ve done a bit of polishing of the code. The main change has been to support older Android 2 devices. The problem is that activityManager.getLargeMemoryClass is only available in Android 3 and later.</p>  <pre>private void eatAllMemory() {
+<p>Last month the <a href="/blog/2015/04/20/rameater-released.html">first version of RamEater was released</a>.</p>  <p>I’ve done a bit of polishing of the code. The main change has been to support older Android 2 devices. The problem is that activityManager.getLargeMemoryClass is only available in Android 3 and later.</p>  <pre>private void eatAllMemory() {
  //Get amount of memory this app is allowed to use (in MBs)
  int availMem = activityManager.getLargeMemoryClass();
  eatMemory(availMem);

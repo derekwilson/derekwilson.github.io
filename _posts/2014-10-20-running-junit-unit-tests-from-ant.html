@@ -7,9 +7,8 @@ tags: ["Android", "Development", "MeasureMe"]
 categories: ["Android", "Development", "MeasureMe"]
 alias: ["/derekblog/post/2014/10/20/Running-JUnit-unit-tests-from-Ant.aspx", "/derekblog/post/2014/10/20/running-junit-unit-tests-from-ant.aspx"]
 ---
-<p>Having written <a href="http://derekwilson.net/derekblog/post/2014/09/19/Unit-Testing-in-native-Android-apps.aspx">unit tests for the Java business logic classes</a>, the next piece of the puzzle is to be able to run the tests from a command line build so that they can then be run on a build server or continuous integration server. Remember that these tests are pure logic tests and have no UI, also that they make use of <a href="http://robolectric.org">RoboElectric</a> to enable the tests to be run in a desktop JRE and do not require an emulator or device to be launched.</p>
-<!--more-->
-<p>My development environment is Eclipse/Ant and I had already <a href="http://derekwilson.net/derekblog/post/2014/08/04/Build-configurations-in-native-Android-apps-using-Ant.aspx">setup an Ant script to build release and debug configurations</a> from the command line. I needed to extend the custom_rules.xml so that it would run the unit tests before building the release.</p>
+<p>Having written <a href="/blog/2014/09/19/unit-testing-in-native-android-apps.html">unit tests for the Java business logic classes</a>, the next piece of the puzzle is to be able to run the tests from a command line build so that they can then be run on a build server or continuous integration server. Remember that these tests are pure logic tests and have no UI, also that they make use of <a href="http://robolectric.org">RoboElectric</a> to enable the tests to be run in a desktop JRE and do not require an emulator or device to be launched.</p>
+<p>My development environment is Eclipse/Ant and I had already <a href="/blog/2014/08/04/build-configurations-in-native-android-apps-using-ant.html">setup an Ant script to build release and debug configurations</a> from the command line. I needed to extend the custom_rules.xml so that it would run the unit tests before building the release.</p>
 <p>I added a CI target to do this</p>
 <pre>&lt;!-- CI build --&gt;
 &lt;target name="ci" depends="clean, prod, run_tests"&gt;

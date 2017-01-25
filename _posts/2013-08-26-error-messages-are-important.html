@@ -7,8 +7,7 @@ tags: ["Code Review", "Development"]
 categories: ["Code Review", "Development"]
 alias: ["/derekblog/post/2013/08/26/Error-messages-are-important.aspx", "/derekblog/post/2013/08/26/error-messages-are-important.aspx"]
 ---
-<p>I’ve been doing some maintenance work on some old code. And I think that most of my effort has gone into making the error messages better. If a piece if software is successful then it means its going to be used in a live environment. It also means its going to break at some point and at that point its going to be a lot easier for everyone if the error message it produces makes sense.</p>
-<!--more-->  <p>For example just the other day I came across this piece of code that loads a piece of XML</p>  <pre>new XDocument(xml).Validate(_schema, (sender, e) =&gt; {
+<p>I’ve been doing some maintenance work on some old code. And I think that most of my effort has gone into making the error messages better. If a piece if software is successful then it means its going to be used in a live environment. It also means its going to break at some point and at that point its going to be a lot easier for everyone if the error message it produces makes sense.</p>  <p>For example just the other day I came across this piece of code that loads a piece of XML</p>  <pre>new XDocument(xml).Validate(_schema, (sender, e) =&gt; {
  throw new DomainException(&quot;XML configuration is invalid.&quot;);
 });</pre>
 

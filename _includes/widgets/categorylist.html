@@ -2,7 +2,7 @@
 	<nav>
 		<h1>Categories</h1>
         <ul class="tag-box inline">
-            {% assign tags_list = site.categories %}  
+            {% assign tags_list = site.categories | sort {|left, right| left[0] <=> right[0]} %}
             {% if tags_list.first[0] == null %}
                 {% for tag in tags_list %} 
                 <li><a href="categories#{{ tag }}">{{ tag | capitalize }}</a> <span>({{ site.tags[tag].size }})</span></li>

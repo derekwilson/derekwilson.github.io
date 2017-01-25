@@ -7,8 +7,7 @@ tags: ["Android", "Development", "Mobile", "Web"]
 categories: ["Android", "Development", "Mobile", "Web"]
 alias: ["/derekblog/post/2013/02/24/TextByNumbers.aspx", "/derekblog/post/2013/02/24/textbynumbers.aspx"]
 ---
-<p>I&rsquo;ve been taking a break from <a href="https://bitbucket.org/derekwilson/podcastutilities" target="_blank">PodcastUtilities</a> to start work on a new project TextByNumbers. TextByNumbers is designed to enable people putting together letters / emails / SMS messages from snippets that the user can easily produce. Its should be useable on phones with or without a data connection.</p>
-<!--more-->
+<p>I&rsquo;ve been taking a break from <a href="https://bitbucket.org/derekwilson/podcastutilities" target="_blank">PodcastUtilities</a> to start work on a new project TextByNumbers. TextByNumbers is designed to enable people putting together letters / emails / SMS messages from snippets that the user can easily produce. Its should be useable on phones with or without a data connection.</p>
 <p>I did think of writing a native app, I guess it would be an android app as I have an adroid phone but then I thought that I could do something cross platform if I used <a href="http://www.w3.org/html/wg/drafts/html/master/single-page.html" target="_blank">HTML5</a>. I selected <a href="http://jquerymobile.com/" target="_blank">JQuery Mobile</a> and <a href="http://knockoutjs.com/" target="_blank">Knockoutjs</a> for my architecture. So I have come up with the <a href="http://apptest.derekwilson.net/tbn/index.html" target="_blank">first cut version of the app</a>. The basic functionality has been done and the app does work and has a couple of users already</p>
 <p><a href="/images/tbn1.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border-width: 0px;" title="tbn1" src="/images/tbn1_thumb.png" alt="tbn1" width="299" height="252" border="0" /></a></p>
 <h3>Key features</h3>
@@ -42,7 +41,7 @@ alias: ["/derekblog/post/2013/02/24/TextByNumbers.aspx", "/derekblog/post/2013/0
 ]</pre>
 <h3>Main things I learnt</h3>
 <ol>
-<li><a href="http://derekwilson.net/derekblog/post/2012/10/20/appcache-MIME-type-for-IIS.aspx" target="_blank">appcache is not a configured MIME type by default in IIS7</a> &ndash; sigh</li>
+<li><a href="/blog/2012/10/20/appcache-mime-type-for-iis.html" target="_blank">appcache is not a configured MIME type by default in IIS7</a> &ndash; sigh</li>
 <li>Chrome is by far and away the easiest browser to debug in &ndash; it has direct support for appcache files</li>
 <li>The appcache must be updated to force the browser to reload all the content from the server &ndash; only after the new appcache is downloaded will the new content be fetched, this meant when a new version is deployed you will have to press F5 twice in the browser</li>
 <li>In general phone based browsers are a bit more flaky than desktop, for instance some times I have to manually empty the cache to get the app updated, sometime my local storage will go away etc.</li>

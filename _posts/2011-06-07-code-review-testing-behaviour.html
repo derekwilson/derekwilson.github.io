@@ -7,8 +7,7 @@ tags: ["Code Review", "Development"]
 categories: ["Code Review", "Development"]
 alias: ["/derekblog/post/2011/06/07/Code-Review-Testing-Behaviour.aspx", "/derekblog/post/2011/06/07/code-review-testing-behaviour.aspx"]
 ---
-<p>During a code review of unit tests someone said something that I found very interesting. We had been looking at the structure of <a href="http://dannorth.net/introducing-bdd/">BDD</a> (GivenThat and When) style tests and he said that he wanted tests to be written in such a way that if he wanted to refractor code but not change the overall intent of code then the tests should not break &ndash; but of course they always did.</p>
-<!--more-->
+<p>During a code review of unit tests someone said something that I found very interesting. We had been looking at the structure of <a href="http://dannorth.net/introducing-bdd/">BDD</a> (GivenThat and When) style tests and he said that he wanted tests to be written in such a way that if he wanted to refractor code but not change the overall intent of code then the tests should not break &ndash; but of course they always did.</p>
 <p>It made me think that when I have seen poor tests we end up with fragile tests that effectively just give us twice as much code to maintain. I do not think this should be used as an excuse to not write tests rather I think we should think about what we are trying to achieve.</p>
 <p>Tests, especially BDD tests, should test the behaviour not the implementation. As an artificial example if we had a method that discovered if a given list of numbers contain any two numbers that are adjacent. That is when it is called with 4,7,9,6 it will return true, if called with 4,7,9 it will return false.</p>
 <p>An obvious method of implementing this behaviour would be to sort the numbers and then look for adjacent numbers.</p>

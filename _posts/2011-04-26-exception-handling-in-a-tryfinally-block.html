@@ -7,8 +7,7 @@ tags: ["Development", "General"]
 categories: ["Development", "General"]
 alias: ["/derekblog/post/2011/04/26/Exception-Handling-in-a-tryfinally-block.aspx", "/derekblog/post/2011/04/26/exception-handling-in-a-tryfinally-block.aspx"]
 ---
-<p>However I recently came across a problem I put into a system. I did not notice the problem until I was going through the exception logs and discovered that they were not as useful as they could have been.</p>
-<!--more-->
+<p>However I recently came across a problem I put into a system. I did not notice the problem until I was going through the exception logs and discovered that they were not as useful as they could have been.</p>
 <p>I had written some code that was a client to a WCF service and if there was a problem with the service then the intention was to log the error for the main program to carry on &ndash; in other words the WCF service implemented something that was nice to have rather than must have. However it was important that we record the correct error.</p>
 <p>The code in question looked a bit like this</p>
 <pre class="csharp">public DataObject GetData(InputObject param)

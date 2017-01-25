@@ -7,8 +7,7 @@ tags: ["CSS", "Development", "Web"]
 categories: ["CSS", "Development", "Web"]
 alias: ["/derekblog/post/2009/06/19/CSS-z-index-with-containing-blocks-and-IE6-IE7.aspx", "/derekblog/post/2009/06/19/css-z-index-with-containing-blocks-and-ie6-ie7.aspx"]
 ---
-<p>In my <a href="/2009/05/27/css-positionabsolute-what-does-it-mean.html">previous post</a> I was exploring the effect containing blocks have on absolutely positioned elements. I did say that containing blocks have an effect on z-index as well. The effect is that elements with a higher z-index but within a containing block are rendered behind an element with a smaller z-index.</p>
-<!--more-->
+<p>In my <a href="/blog/2009/05/27/css-positionabsolute-what-does-it-mean.html">previous post</a> I was exploring the effect containing blocks have on absolutely positioned elements. I did say that containing blocks have an effect on z-index as well. The effect is that elements with a higher z-index but within a containing block are rendered behind an element with a smaller z-index.</p>
 <p>It turns out that the effect is probably a bug and that it only happens in older versions of IE, that is IE6 and IE7, IE8 renders correctly. I know its a complete pain to develop for old versions of any browser, I still have that scars from developing for Netscape 4 however a professional developer cannot pick and choose which browsers to support and like it or not my clients demand that I can produce sites that render in IE6 and 7.</p>
 <!--more-->
 <p>This is how the problem shows up. I reused the HTML from the previous post. This time I have a red div that has a z-index of 2 and a green div with a z-index of 1. Like this</p>

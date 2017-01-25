@@ -1,6 +1,5 @@
 ---
 layout: post
-title:  "Test Page"
 date:   2017-01-01 00:00:00 +1300
 categories: test
 ---
