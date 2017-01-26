@@ -27,6 +27,8 @@ bitbucket_username:  derekwilson
 repository: "derekwilson/derekwilson.github.io"
 
 # Build settings
+# the one true tz
+timezone: UTC
 markdown: kramdown
 theme: minima
 gems:
