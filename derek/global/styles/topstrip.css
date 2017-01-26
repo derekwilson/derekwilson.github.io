@@ -1,0 +1,60 @@
+.clsTopStrip
+{
+    FONT-WEIGHT: bold;
+    FONT-FAMILY: Arial;
+}
+
+.clsTopStrip2
+{
+    FONT-WEIGHT: bold;
+    FONT-FAMILY: Arial;
+    TEXT-DECORATION: none;
+    COLOR: black;
+}
+
+.clsTopStrip2:visited
+{
+    FONT-WEIGHT: bold;
+    FONT-FAMILY: Arial;
+    TEXT-DECORATION: none;
+    COLOR: black;
+}
+
+.clsRed
+{
+    COLOR: red;
+}
+
+.clsPopup
+{
+    BORDER: 1px none black;
+    PADDING-LEFT: 3px;
+    PADDING-RIGHT: 3px;
+    PADDING-TOP: 3px;
+    PADDING-BOTTOM: 5px;
+    VISIBILITY: hidden;
+    POSITION: absolute;
+    BACKGROUND-COLOR: #E5E9FF;
+	WIDTH: 600px;
+	Z-INDEX: 99;
+}
+
+.clsPopupTitleText
+{
+    FONT-WEIGHT: bold;
+    FONT-FAMILY: Arial;
+    COLOR: white;
+	TEXT-ALIGN: center;
+}
+
+.clsPopupText
+{
+    FONT-FAMILY: Arial;
+    COLOR: black;
+}
+
+ilayer.clsPopupHolder 
+{
+  position:relative;
+}
+

@@ -1,0 +1,55 @@
+.debug
+{
+	color: red;
+}
+
+.Strong
+{
+	font-weight: bold;
+}
+
+.HeadingTitle
+{
+	font-size : x-large;
+	font-family : Arial;
+	font-weight: bold;
+}
+
+.Heading1
+{
+	font-size : large;
+	font-family : Arial;
+	font-weight: bold;
+}
+
+.Heading2
+{
+	font-size : large;
+	font-weight: bold;
+}
+
+.Heading3
+{
+	font-style: italic;
+	font-weight: bold;
+}
+
+A.totoplink
+{
+	font-size:x-small;
+	font-style:normal;
+    FONT-WEIGHT: bold;
+    FONT-FAMILY: Arial;
+    TEXT-DECORATION: underline
+}
+
+.BodyList
+{
+	line-height: 0em;
+}
+
+.CellSpacer
+{
+	margin-left: 2em;
+	margin-right: 2em;
+}

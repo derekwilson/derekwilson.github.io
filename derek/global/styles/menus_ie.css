@@ -1,0 +1,15 @@
+DIV.clsMenu A, TD.clsMenuBarItem A, TD.GlobalMenuBarItem, TD.GlobalMenuBarItem A, TD.clsMenuBarHome A, TD.clsMenuBarSep A 
+{
+    FONT-SIZE: 8pt;
+}
+
+DIV.clsMenu
+{
+    BORDER: 1px solid white;
+}
+
+.clsLeftPanelText
+{
+    FONT-SIZE: x-small;
+}
+

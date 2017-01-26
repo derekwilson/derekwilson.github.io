@@ -1,0 +1,29 @@
+.clsLeftPanelTitleText
+{
+	margin-top: 0.5em;
+	margin-left: 0.5em;
+    FONT-FAMILY: Arial;
+	font-weight: bold;
+}
+
+.clsLeftPanelText
+{
+	margin-left: 0.5em;
+	margin-right: 0.5em;
+    FONT-FAMILY: Arial;
+}
+
+.clsRightPanelTitleText
+{
+	margin-top: 0.5em;
+	margin-left: 0.5em;
+    FONT-FAMILY: Arial;
+	font-weight: bold;
+}
+
+.clsRightPanelText
+{
+	margin-left: 0.5em;
+	margin-right: 0.5em;
+    FONT-FAMILY: Arial;
+}

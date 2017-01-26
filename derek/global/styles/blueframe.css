@@ -1,0 +1,45 @@
+ilayer.clsMenuHolder 
+{
+	layer-background-color: #336699;
+}
+
+TD.PanelSeparator, DIV.clsMenu, TR.clsMenuItem, TD.MenuBar, TABLE.clsMenuBar, DIV.clsMenuHolder
+{
+	background-color : #336699;
+}
+
+TR.clsMenuItemHighlight, TD.clsMenuBarHome
+{
+    BACKGROUND-COLOR: #003366;
+}
+
+A.totoplink
+{
+    COLOR: #003366;
+}
+
+DIV.clsMenu A, TD.clsMenuBarItem A, TD.clsMenuBarHome A, TD.clsMenuBarSep A
+{
+    COLOR: white;
+}
+
+TD.clsMenuBarItem A:hover, TD.clsMenuBarHome A:hover
+{
+    COLOR: moccasin
+}
+			
+TD.clsLeftPanel
+{
+    BACKGROUND-COLOR: #E5E9FF;
+}
+
+TD.clsLeftPanel2
+{
+    BACKGROUND-COLOR: #99CCFF;
+}
+
+.clsLeftPanelText
+{
+    COLOR: black;
+}
+
