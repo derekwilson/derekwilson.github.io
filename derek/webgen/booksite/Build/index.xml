@@ -1,0 +1,6240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<index xmlns:html="http://www.w3.org/TR/REC-html40" xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:s="uuid:BDC6E3F0-6DA3-11d1-A2A3-00AA00C14882" xmlns:dt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882" xmlns:rs="urn:schemas-microsoft-com:rowset" xmlns:z="#RowsetSchema" xmlns:derek="http://derekwilson.net/books">
+	<book>
+		<id>1</id>
+		<title>The Hitch-hikers Guide to the Galaxy</title>
+		<author>Douglas Adams</author>
+		<publisher>Pan</publisher>
+		<notes>SF Comedy</notes>
+	</book>
+	<book>
+		<id>1</id>
+		<title>The Restaurant at the end of the Universe</title>
+		<author>Douglas Adams</author>
+		<publisher>Pan</publisher>
+		<notes>SF Comedy HHGG 2</notes>
+	</book>
+	<book>
+		<id>1</id>
+		<title>Life, the Universe and Everything</title>
+		<author>Douglas Adams</author>
+		<publisher>Pan</publisher>
+		<notes>SF Comedy HHGG 3</notes>
+	</book>
+	<book>
+		<id>1</id>
+		<title>The Meaning of Liff</title>
+		<author>Douglas Adams</author>
+		<publisher>Pan</publisher>
+		<notes>For some reason the definition for Toronto has stayed with me for years, and still makes me smile whenever I use tomato ketchup.</notes>
+	</book>
+	<book>
+		<id>1</id>
+		<title>So long, and thanks for all the fish</title>
+		<author>Douglas Adams</author>
+		<publisher>Pan</publisher>
+		<notes>SF Comedy HHGG 4</notes>
+	</book>
+	<book>
+		<id>1</id>
+		<title>Dirk Gently's Holistic Detective Agency</title>
+		<author>Douglas Adams</author>
+		<publisher>Pan</publisher>
+		<notes>SF Comedy</notes>
+	</book>
+	<book>
+		<id>1</id>
+		<title>The Long Dark Tea-time of the Soul</title>
+		<author>Douglas Adams</author>
+		<publisher>Pan</publisher>
+		<notes>Dirk Gently II</notes>
+	</book>
+	<book>
+		<id>1</id>
+		<title>The Salmon of Doubt</title>
+		<author>Douglas Adams</author>
+		<publisher>Pan</publisher>
+		<notes>The incomplete Dirk Gently is best not read, but Douglas' articles are excellent. His enthusiasm will be missed.</notes>
+	</book>
+	<book>
+		<id>2</id>
+		<title>Watership Down</title>
+		<author>Richard Adams</author>
+		<publisher>Penguin</publisher>
+		<notes>Bunny Rabbit Politics</notes>
+	</book>
+	<book>
+		<id>247</id>
+		<title>Dilbert Future</title>
+		<author>Scott Adams</author>
+		<publisher>Boxtree</publisher>
+		<notes>You've read it before but its still sadly accurate</notes>
+	</book>
+	<book>
+		<id>3</id>
+		<title>Equator</title>
+		<author>Brian Aldiss</author>
+		<publisher>New English Library</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>3</id>
+		<title>The Airs of Earth</title>
+		<author>Brian Aldiss</author>
+		<publisher>New English Library</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>3</id>
+		<title>Greybeard</title>
+		<author>Brian Aldiss</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>3</id>
+		<title>The Eighty-minute Hour</title>
+		<author>Brian Aldiss</author>
+		<publisher>Pan</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>4</id>
+		<title>Spectrum 3</title>
+		<author>Kingsley Amis</author>
+		<publisher>Pan</publisher>
+		<notes>Also Robert  Conquest</notes>
+	</book>
+	<book>
+		<id>5</id>
+		<title>Question and Answer</title>
+		<author>Poul Anderson</author>
+		<publisher>Ace</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>5</id>
+		<title>War of the Wing Men</title>
+		<author>Poul Anderson</author>
+		<publisher>Sphere</publisher>
+		<notes>Van Rijn stuff</notes>
+	</book>
+	<book>
+		<id>5</id>
+		<title>Guardians of Time</title>
+		<author>Poul Anderson</author>
+		<publisher>Pan</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>5</id>
+		<title>Orbit Unlimited</title>
+		<author>Poul Anderson</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>5</id>
+		<title>After Doomsday</title>
+		<author>Poul Anderson</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>5</id>
+		<title>Shield</title>
+		<author>Poul Anderson</author>
+		<publisher>Universal</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>5</id>
+		<title>The Trouble Twisters</title>
+		<author>Poul Anderson</author>
+		<publisher>Gollancz</publisher>
+		<notes>Van Rijn stuff</notes>
+	</book>
+	<book>
+		<id>5</id>
+		<title>The Star Fox</title>
+		<author>Poul Anderson</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>5</id>
+		<title>Trader to the Stars</title>
+		<author>Poul Anderson</author>
+		<publisher>Panther</publisher>
+		<notes>Van Rijn stuff</notes>
+	</book>
+	<book>
+		<id>5</id>
+		<title>Time and Stars</title>
+		<author>Poul Anderson</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>5</id>
+		<title>World Without Stars</title>
+		<author>Poul Anderson</author>
+		<publisher>Ace</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>5</id>
+		<title>The Horn of Time</title>
+		<author>Poul Anderson</author>
+		<publisher>Corgi</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>5</id>
+		<title>Satans's World</title>
+		<author>Poul Anderson</author>
+		<publisher>Berkley Medallion</publisher>
+		<notes>Van Rijn stuff</notes>
+	</book>
+	<book>
+		<id>5</id>
+		<title>Tau Zero</title>
+		<author>Poul Anderson</author>
+		<publisher>Gollancz</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>5</id>
+		<title>The Byworlder</title>
+		<author>Poul Anderson</author>
+		<publisher>Coronet</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>5</id>
+		<title>The Queen of Air and Darkness</title>
+		<author>Poul Anderson</author>
+		<publisher>New English Library</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>5</id>
+		<title>Fire Time</title>
+		<author>Poul Anderson</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>5</id>
+		<title>Mirkheim</title>
+		<author>Poul Anderson</author>
+		<publisher>Berkley Medallion</publisher>
+		<notes>Van Rijn stuff</notes>
+	</book>
+	<book>
+		<id>5</id>
+		<title>The Earth Book of Stormgate Vol III</title>
+		<author>Poul Anderson</author>
+		<publisher>New English Library</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>5</id>
+		<title>The Earth Book of Stormgate Vol I</title>
+		<author>Poul Anderson</author>
+		<publisher>New English Library</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>6</id>
+		<title>A Woman in Berlin</title>
+		<author> Anonymous</author>
+		<publisher>Secker &amp; Warburg</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>6</id>
+		<title>Lila Says</title>
+		<author> Anonymous</author>
+		<publisher>Fourth Estate</publisher>
+		<notes>A different anonymous</notes>
+	</book>
+	<book>
+		<id>7</id>
+		<title>Tom Swift and his Sonic Boom Trap</title>
+		<author>Victor Appleton</author>
+		<publisher>Collins</publisher>
+		<notes>Kids book</notes>
+	</book>
+	<book>
+		<id>8</id>
+		<title>Who's Who in Science Fiction</title>
+		<author>Brian Ash</author>
+		<publisher>Sphere</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>9</id>
+		<title>I, Robot</title>
+		<author>Isaac Asimov</author>
+		<publisher>Panther</publisher>
+		<notes>The seminal robot book</notes>
+	</book>
+	<book>
+		<id>9</id>
+		<title>Foundation</title>
+		<author>Isaac Asimov</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>9</id>
+		<title>Space Ranger</title>
+		<author>Isaac Asimov</author>
+		<publisher>New English Library</publisher>
+		<notes>UITAJB</notes>
+	</book>
+	<book>
+		<id>9</id>
+		<title>Foundation and Empire</title>
+		<author>Isaac Asimov</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>9</id>
+		<title>Pirates of the Asteroids</title>
+		<author>Isaac Asimov</author>
+		<publisher>New English Library</publisher>
+		<notes>UITAJB</notes>
+	</book>
+	<book>
+		<id>9</id>
+		<title>Second Foundation</title>
+		<author>Isaac Asimov</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>9</id>
+		<title>The Caves of Steel</title>
+		<author>Isaac Asimov</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>9</id>
+		<title>Oceans of Venus</title>
+		<author>Isaac Asimov</author>
+		<publisher>New English Library</publisher>
+		<notes>UITAJB</notes>
+	</book>
+	<book>
+		<id>9</id>
+		<title>The Martian Way</title>
+		<author>Isaac Asimov</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>9</id>
+		<title>The Stars Like Dust</title>
+		<author>Isaac Asimov</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>9</id>
+		<title>The Currents of Space</title>
+		<author>Isaac Asimov</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>9</id>
+		<title>The End of Eternity</title>
+		<author>Isaac Asimov</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>9</id>
+		<title>The Big Sun of Mercury</title>
+		<author>Isaac Asimov</author>
+		<publisher>New English Library</publisher>
+		<notes>UITAJB</notes>
+	</book>
+	<book>
+		<id>9</id>
+		<title>The Moons of Jupiter</title>
+		<author>Isaac Asimov</author>
+		<publisher>New English Library</publisher>
+		<notes>UITAJB</notes>
+	</book>
+	<book>
+		<id>9</id>
+		<title>Earth is Room Enough</title>
+		<author>Isaac Asimov</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>9</id>
+		<title>The Naked Sun</title>
+		<author>Isaac Asimov</author>
+		<publisher>Panther</publisher>
+		<notes>The Caves of steel part 2</notes>
+	</book>
+	<book>
+		<id>9</id>
+		<title>Pebble in the Sky</title>
+		<author>Isaac Asimov</author>
+		<publisher>Sphere</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>9</id>
+		<title>The Rest of the Robots</title>
+		<author>Isaac Asimov</author>
+		<publisher>Panther</publisher>
+		<notes>Other half of I Robot</notes>
+	</book>
+	<book>
+		<id>9</id>
+		<title>Fantastic Voyage</title>
+		<author>Isaac Asimov</author>
+		<publisher>Corgi</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>9</id>
+		<title>Through a Glass, Clearly</title>
+		<author>Isaac Asimov</author>
+		<publisher>New English Library</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>9</id>
+		<title>Asimov's Mysteries</title>
+		<author>Isaac Asimov</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>9</id>
+		<title>Nightfall ONE</title>
+		<author>Isaac Asimov</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>9</id>
+		<title>Nightfall TWO</title>
+		<author>Isaac Asimov</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>9</id>
+		<title>The Stars in their Courses</title>
+		<author>Isaac Asimov</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>9</id>
+		<title>The Early Asimov Vol I</title>
+		<author>Isaac Asimov</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>9</id>
+		<title>The Gods Themselves</title>
+		<author>Isaac Asimov</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>9</id>
+		<title>The Early Asimov Vol III</title>
+		<author>Isaac Asimov</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>9</id>
+		<title>The Left Hand of the Electron</title>
+		<author>Isaac Asimov</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>9</id>
+		<title>The Early Asimov Vol II</title>
+		<author>Isaac Asimov</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>9</id>
+		<title>The Tragedy of the Moon</title>
+		<author>Isaac Asimov</author>
+		<publisher>Coronet</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>9</id>
+		<title>Time Untamed</title>
+		<author>Isaac Asimov</author>
+		<publisher>Five Star</publisher>
+		<notes>Asimov actually wrote first story, no editor</notes>
+	</book>
+	<book>
+		<id>9</id>
+		<title>The Best of ... 1954-1972</title>
+		<author>Isaac Asimov</author>
+		<publisher>Sphere</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>9</id>
+		<title>The Best of ... 1939-1949</title>
+		<author>Isaac Asimov</author>
+		<publisher>Sphere</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>9</id>
+		<title>Before the Golden Age 2</title>
+		<author>Isaac Asimov</author>
+		<publisher>Orbit</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>9</id>
+		<title>Buy Jupiter</title>
+		<author>Isaac Asimov</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>9</id>
+		<title>The Bicentennial Man</title>
+		<author>Isaac Asimov</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>9</id>
+		<title>Foundation's Edge</title>
+		<author>Isaac Asimov</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>296</id>
+		<title>Pride and Prejudice</title>
+		<author>Jane Austen</author>
+		<publisher>Penguin</publisher>
+		<notes>Difficult to rate what is almost a reference book. Time has enhanced its historical insight but diluted its flow and pace.</notes>
+	</book>
+	<book>
+		<id>262</id>
+		<title>Time for Bed</title>
+		<author>David Baddiel</author>
+		<publisher>Warner</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>262</id>
+		<title>Whatever Love Means</title>
+		<author>David Baddiel</author>
+		<publisher>Abacus</publisher>
+		<notes>Took a long time to get going but tightened up as it went along</notes>
+	</book>
+	<book>
+		<id>10</id>
+		<title>Space 1999: 3 The Space Guardians</title>
+		<author>Brian Ball</author>
+		<publisher>Orbit</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>275</id>
+		<title>The Girls' Guide to Hunting and Fishing</title>
+		<author>Melissa Bank</author>
+		<publisher>Penguin</publisher>
+		<notes>A quirky book for me to like but I loved its subtle shades</notes>
+	</book>
+	<book>
+		<id>11</id>
+		<title>The Wasp Factory</title>
+		<author>Iain Banks</author>
+		<publisher>Futura</publisher>
+		<notes>Yes its all very good, but its not the only Banks book.</notes>
+	</book>
+	<book>
+		<id>11</id>
+		<title>Walking on Glass</title>
+		<author>Iain Banks</author>
+		<publisher>Abacus</publisher>
+		<notes>Bizare but very good</notes>
+	</book>
+	<book>
+		<id>11</id>
+		<title>The Bridge</title>
+		<author>Iain Banks</author>
+		<publisher>Pan</publisher>
+		<notes>Bizare and not as good</notes>
+	</book>
+	<book>
+		<id>11</id>
+		<title>Consider Phlebas</title>
+		<author>Iain Banks</author>
+		<publisher>Orbit</publisher>
+		<notes>The CultureI: Wow, very new wave chaos SciFi</notes>
+	</book>
+	<book>
+		<id>11</id>
+		<title>Espedair Street</title>
+		<author>Iain Banks</author>
+		<publisher>Abacus</publisher>
+		<notes>An excellent feelgood book</notes>
+	</book>
+	<book>
+		<id>11</id>
+		<title>The Player of Games</title>
+		<author>Iain Banks</author>
+		<publisher>Orbit</publisher>
+		<notes>The Culture II: Somehow not as new wave, a bit more routine than I.</notes>
+	</book>
+	<book>
+		<id>11</id>
+		<title>Canal Dreams</title>
+		<author>Iain Banks</author>
+		<publisher>Abacus</publisher>
+		<notes>Wake up</notes>
+	</book>
+	<book>
+		<id>11</id>
+		<title>Use of Weapons</title>
+		<author>Iain Banks</author>
+		<publisher>Orbit</publisher>
+		<notes>Culture III: A most macarbe horror SciFi book</notes>
+	</book>
+	<book>
+		<id>11</id>
+		<title>The State of the Art</title>
+		<author>Iain Banks</author>
+		<publisher>Orbit</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>11</id>
+		<title>The Crow Road</title>
+		<author>Iain Banks</author>
+		<publisher>Abacus</publisher>
+		<notes>Funny, real and down to earth.</notes>
+	</book>
+	<book>
+		<id>11</id>
+		<title>Complicity</title>
+		<author>Iain Banks</author>
+		<publisher>Abacus</publisher>
+		<notes>One of his most thought provoking contemporary works</notes>
+	</book>
+	<book>
+		<id>11</id>
+		<title>Against a Dark Background</title>
+		<author>Iain Banks</author>
+		<publisher>Orbit</publisher>
+		<notes>I still like this strand, but not much new actually happens</notes>
+	</book>
+	<book>
+		<id>11</id>
+		<title>Feersum Endjinn</title>
+		<author>Iain Banks</author>
+		<publisher>Orbit</publisher>
+		<notes>Another bizzare one, and pretty good as well. Phonetic wording means it can be difficult to read</notes>
+	</book>
+	<book>
+		<id>11</id>
+		<title>Whit</title>
+		<author>Iain Banks</author>
+		<publisher>Little Brown</publisher>
+		<notes>The seduction in the attic scene is very funny</notes>
+	</book>
+	<book>
+		<id>11</id>
+		<title>Excession</title>
+		<author>Iain Banks</author>
+		<publisher>Orbit</publisher>
+		<notes>More grand scale Culture, this still works pretty well.</notes>
+	</book>
+	<book>
+		<id>11</id>
+		<title>A Song of Stone</title>
+		<author>Iain Banks</author>
+		<publisher>Abacus</publisher>
+		<notes>Its somehow not quite bizzare or real enough to work</notes>
+	</book>
+	<book>
+		<id>11</id>
+		<title>Inversions</title>
+		<author>Iain Banks</author>
+		<publisher>Orbit</publisher>
+		<notes>Small scale SciFi seems to be a problem though. All the parts are very nice but it doesn't really add up.</notes>
+	</book>
+	<book>
+		<id>11</id>
+		<title>The Business</title>
+		<author>Iain Banks</author>
+		<publisher>Abacus</publisher>
+		<notes>Lare scale contemporary,t lively and fun. I liked this.</notes>
+	</book>
+	<book>
+		<id>11</id>
+		<title>Look to Windward</title>
+		<author>Iain Banks</author>
+		<publisher>Orbit</publisher>
+		<notes>Routine</notes>
+	</book>
+	<book>
+		<id>11</id>
+		<title>Dead Air</title>
+		<author>Iain Banks</author>
+		<publisher>Abacus</publisher>
+		<notes>Lots of good parts, that don't quite fit.</notes>
+	</book>
+	<book>
+		<id>11</id>
+		<title>The Algebraist</title>
+		<author>Iain Banks</author>
+		<publisher>Orbit</publisher>
+		<notes>Its probably a bit too long but all in all great grand scale cultureish</notes>
+	</book>
+	<book>
+		<id>12</id>
+		<title>Figure It Out</title>
+		<author>D. St. P. Barnard</author>
+		<publisher>Pan</publisher>
+		<notes>Puzzle book</notes>
+	</book>
+	<book>
+		<id>270</id>
+		<title>Girlfriend 44</title>
+		<author>Mark Barrowcliffe</author>
+		<publisher>Headline</publisher>
+		<notes>Shocking. An ending that Holywood could never live with but the rest of the work all to often has to.</notes>
+	</book>
+	<book>
+		<id>270</id>
+		<title>Infidelity for first-time fathers</title>
+		<author>Mark Barrowcliffe</author>
+		<publisher>Headline</publisher>
+		<notes>Blindingly funny at times</notes>
+	</book>
+	<book>
+		<id>270</id>
+		<title>Luckey Dog</title>
+		<author>Mark Barrowcliffe</author>
+		<publisher>Headline</publisher>
+		<notes>I liked this book a lot more than I really like dogs</notes>
+	</book>
+	<book>
+		<id>13</id>
+		<title>The Newtonian Casino</title>
+		<author>Thomas A. Bass</author>
+		<publisher>Penguin</publisher>
+		<notes>Fantastically detailed but strangely uncompelling</notes>
+	</book>
+	<book>
+		<id>260</id>
+		<title>The Diving-Bell and the Butterfly</title>
+		<author>Jean-Dominique Bauby</author>
+		<publisher>Fourth Estate</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>14</id>
+		<title>Frankenstein is alive and well</title>
+		<author>Alida Baxter</author>
+		<publisher>Arrow</publisher>
+		<notes>Comedy</notes>
+	</book>
+	<book>
+		<id>276</id>
+		<title>Time</title>
+		<author>Stephen Baxter</author>
+		<publisher>Harper Collins</publisher>
+		<notes>Bough this because Patrick kept going on about the author. There is a good 200 pages here unfortunatly the book is longer</notes>
+	</book>
+	<book>
+		<id>15</id>
+		<title>Inoculate</title>
+		<author>Neil Bayne</author>
+		<publisher>Leisure</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>16</id>
+		<title>Blood Music</title>
+		<author>Greg Bear</author>
+		<publisher>Legend</publisher>
+		<notes>Brilliant start but tapers off a bit</notes>
+	</book>
+	<book>
+		<id>16</id>
+		<title>Eternity</title>
+		<author>Greg Bear</author>
+		<publisher>Gollancz</publisher>
+		<notes>Sequel to Eon</notes>
+	</book>
+	<book>
+		<id>17</id>
+		<title>Bored of the Rings</title>
+		<author>Henry N. Beard</author>
+		<publisher>Signet</publisher>
+		<notes>Parody on Lord of the Rings</notes>
+	</book>
+	<book>
+		<id>239</id>
+		<title>Rain Men</title>
+		<author>Marcus Berkmann</author>
+		<publisher>Abacus</publisher>
+		<notes>Cricket as it really is, sort of Fever Pitch for cricket</notes>
+	</book>
+	<book>
+		<id>18</id>
+		<title>Threshold of the Stars</title>
+		<author>Paul Berna</author>
+		<publisher>Knight</publisher>
+		<notes>Childerns book translated from Franch</notes>
+	</book>
+	<book>
+		<id>19</id>
+		<title>First Armarda Ghost Book</title>
+		<author>Christine Bernard</author>
+		<publisher>Armada</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>232</id>
+		<title>Headcrash</title>
+		<author>Bruce Bethke</author>
+		<publisher>Orbit</publisher>
+		<notes>Very 90's Silicon Vally</notes>
+	</book>
+	<book>
+		<id>263</id>
+		<title>Not Out</title>
+		<author>Dickie Bird</author>
+		<publisher>Orion</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>20</id>
+		<title>Startrek 1</title>
+		<author>James Blish</author>
+		<publisher>Corgi</publisher>
+		<notes>TV scripts</notes>
+	</book>
+	<book>
+		<id>20</id>
+		<title>Welcome to Mars</title>
+		<author>James Blish</author>
+		<publisher>Sphere</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>20</id>
+		<title>Startrek 2</title>
+		<author>James Blish</author>
+		<publisher>Corgi</publisher>
+		<notes>TV scripts</notes>
+	</book>
+	<book>
+		<id>20</id>
+		<title>Startrek 3</title>
+		<author>James Blish</author>
+		<publisher>Corgi</publisher>
+		<notes>TV scripts</notes>
+	</book>
+	<book>
+		<id>20</id>
+		<title>Startrek: Spock Must Die!</title>
+		<author>James Blish</author>
+		<publisher>Corgi</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>20</id>
+		<title>Startrek 4</title>
+		<author>James Blish</author>
+		<publisher>Corgi</publisher>
+		<notes>TV scripts</notes>
+	</book>
+	<book>
+		<id>20</id>
+		<title>Startrek 7</title>
+		<author>James Blish</author>
+		<publisher>Corgi</publisher>
+		<notes>TV scripts</notes>
+	</book>
+	<book>
+		<id>20</id>
+		<title>Startrek 5</title>
+		<author>James Blish</author>
+		<publisher>Corgi</publisher>
+		<notes>TV scripts</notes>
+	</book>
+	<book>
+		<id>20</id>
+		<title>Startrek 6</title>
+		<author>James Blish</author>
+		<publisher>Corgi</publisher>
+		<notes>TV scripts</notes>
+	</book>
+	<book>
+		<id>20</id>
+		<title>Startrek 8</title>
+		<author>James Blish</author>
+		<publisher>Corgi</publisher>
+		<notes>TV scripts</notes>
+	</book>
+	<book>
+		<id>20</id>
+		<title>Startrek 9</title>
+		<author>James Blish</author>
+		<publisher>Corgi</publisher>
+		<notes>TV scripts</notes>
+	</book>
+	<book>
+		<id>20</id>
+		<title>Startrek 10</title>
+		<author>James Blish</author>
+		<publisher>Corgi</publisher>
+		<notes>TV scripts</notes>
+	</book>
+	<book>
+		<id>229</id>
+		<title>Outside History</title>
+		<author>Eavan Borland</author>
+		<publisher>Carcanet</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>21</id>
+		<title>Star Watchman</title>
+		<author>Ben Bova</author>
+		<publisher>Sphere</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>21</id>
+		<title>THX 1138</title>
+		<author>Ben Bova</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>21</id>
+		<title>Millennium</title>
+		<author>Ben Bova</author>
+		<publisher>Orbit</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>21</id>
+		<title>Colony</title>
+		<author>Ben Bova</author>
+		<publisher>Magnum</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>22</id>
+		<title>Closing the Distance</title>
+		<author>Kelvin Bowers</author>
+		<publisher>Andy Ridler</publisher>
+		<notes>Running - from Chris Baxter</notes>
+	</book>
+	<book>
+		<id>23</id>
+		<title>The Big Jump</title>
+		<author>Leigh Brackett</author>
+		<publisher>Ace</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>24</id>
+		<title>The History Man</title>
+		<author>Malcolm Bradbury</author>
+		<publisher>Arrow</publisher>
+		<notes>Rude university political comedy</notes>
+	</book>
+	<book>
+		<id>25</id>
+		<title>Dandelion Wine</title>
+		<author>Ray Bradbury</author>
+		<publisher>Corgi</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>25</id>
+		<title>The Silver Locusts</title>
+		<author>Ray Bradbury</author>
+		<publisher>Corgi</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>25</id>
+		<title>Fahrenheit 451</title>
+		<author>Ray Bradbury</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>25</id>
+		<title>Something Wicked This Way Comes</title>
+		<author>Ray Bradbury</author>
+		<publisher>Corgi</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>242</id>
+		<title>K-Pax</title>
+		<author>Gene Brewer</author>
+		<publisher>Bloomsbury</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>256</id>
+		<title>Sundiver</title>
+		<author>David Brin</author>
+		<publisher>Orbit</publisher>
+		<notes>Uplift 1</notes>
+	</book>
+	<book>
+		<id>256</id>
+		<title>Startide Rising</title>
+		<author>David Brin</author>
+		<publisher>Orbit</publisher>
+		<notes>Uplift 2</notes>
+	</book>
+	<book>
+		<id>256</id>
+		<title>The Uplift War</title>
+		<author>David Brin</author>
+		<publisher>Orbit</publisher>
+		<notes>Uplift 3</notes>
+	</book>
+	<book>
+		<id>256</id>
+		<title>Kil'n People</title>
+		<author>David Brin</author>
+		<publisher>Orbit</publisher>
+		<notes>A nice idea but we just take far too long getting anywhere, a plot would have helped</notes>
+	</book>
+	<book>
+		<id>299</id>
+		<title>Angels and Demons</title>
+		<author>Dan Brown</author>
+		<publisher>Corgi</publisher>
+		<notes>This is pretty much the same as the Da Vonci Code. I've a theory that the first Dan Brown anyone reads is the best and then its dimishing returns</notes>
+	</book>
+	<book>
+		<id>299</id>
+		<title>The Da Vinci Code</title>
+		<author>Dan Brown</author>
+		<publisher>Corgi</publisher>
+		<notes>American centric, information laden but pretty readable for all that. BTW: nobody in Europe calls roundabouts "a rotary"</notes>
+	</book>
+	<book>
+		<id>26</id>
+		<title>The stone that never came down</title>
+		<author>John Brunner</author>
+		<publisher>New English Library</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>26</id>
+		<title>Web of Everywhere</title>
+		<author>John Brunner</author>
+		<publisher>New English Library</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>27</id>
+		<title>New Writings in SF 22</title>
+		<author>Kenneth Bulmer</author>
+		<publisher>Corgi</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>28</id>
+		<title>The Kingdom of the Wicked</title>
+		<author>Anthony Burgess</author>
+		<publisher>Abacus</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>29</id>
+		<title>The Pan Book of Crosswords 7</title>
+		<author>L.W. Burgess</author>
+		<publisher>Pan</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>271</id>
+		<title>Sex and the City</title>
+		<author>Candace Bushnell</author>
+		<publisher>Abacus</publisher>
+		<notes>A bit relentless and depressing at times. Interesting slice and dice on life</notes>
+	</book>
+	<book>
+		<id>271</id>
+		<title>4 Blondes</title>
+		<author>Candace Bushnell</author>
+		<publisher>Abacus</publisher>
+		<notes>Hard to rate as the first blonde was pretty good but the others rather declined</notes>
+	</book>
+	<book>
+		<id>307</id>
+		<title>Scar Night</title>
+		<author>Alan Campbell</author>
+		<publisher>Pan</publisher>
+		<notes>Present from Santa</notes>
+	</book>
+	<book>
+		<id>30</id>
+		<title>The Thing from Outer Space</title>
+		<author>John W. Campbell</author>
+		<publisher>Tandem</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>30</id>
+		<title>The Best of ...</title>
+		<author>John W. Campbell</author>
+		<publisher>Sphere</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>301</id>
+		<title>The Magicians' Guild</title>
+		<author>Trudi Canavan</author>
+		<publisher>Orbit</publisher>
+		<notes>Black Magician 1: A bit slow to get going but has some interesting alternate viewpoints on the school for wizards genre</notes>
+	</book>
+	<book>
+		<id>301</id>
+		<title>The Novice</title>
+		<author>Trudi Canavan</author>
+		<publisher>Orbit</publisher>
+		<notes>Black Magician 2: The books start to get better as they go along. Enjoyable light read</notes>
+	</book>
+	<book>
+		<id>301</id>
+		<title>The High Lord</title>
+		<author>Trudi Canavan</author>
+		<publisher>Orbit</publisher>
+		<notes>Well worth persevering with, a well told story</notes>
+	</book>
+	<book>
+		<id>31</id>
+		<title>No Place Like Earth</title>
+		<author>John Carnell</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>32</id>
+		<title>The Daily Telegraph 14th Crossword Puzzle Book</title>
+		<author>Alan Cash</author>
+		<publisher>Penguin</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>33</id>
+		<title>The New Avengers: House of Cards</title>
+		<author>Peter Cave</author>
+		<publisher>Futura</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>34</id>
+		<title>Great Ghosts of the World</title>
+		<author>Aidan Chambers</author>
+		<publisher>Piccolo</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>35</id>
+		<title>The King in Yellow</title>
+		<author>Robert W. Chambers</author>
+		<publisher>Ace</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>36</id>
+		<title>Downbelow Station</title>
+		<author>C. J. Cherryh</author>
+		<publisher>Methuen</publisher>
+		<notes>Donated by Chris Baxter</notes>
+	</book>
+	<book>
+		<id>36</id>
+		<title>The Pride of Chanur</title>
+		<author>C. J. Cherryh</author>
+		<publisher>Daw</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>36</id>
+		<title>Merchanter's Luck</title>
+		<author>C. J. Cherryh</author>
+		<publisher>Methuen</publisher>
+		<notes>Downbelow Station II</notes>
+	</book>
+	<book>
+		<id>36</id>
+		<title>Cyteen</title>
+		<author>C. J. Cherryh</author>
+		<publisher>New English Library</publisher>
+		<notes>Downbelow Station III</notes>
+	</book>
+	<book>
+		<id>37</id>
+		<title>The Year of the Comet</title>
+		<author>John Christopher</author>
+		<publisher>Sphere</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>37</id>
+		<title>The Death of Grass</title>
+		<author>John Christopher</author>
+		<publisher>Penguin</publisher>
+		<notes>Filmed as "No Blade of Grass"</notes>
+	</book>
+	<book>
+		<id>37</id>
+		<title>The World in Winter</title>
+		<author>John Christopher</author>
+		<publisher>Sphere</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>37</id>
+		<title>A Wrinkle in the Skin</title>
+		<author>John Christopher</author>
+		<publisher>Sphere</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>37</id>
+		<title>The Guardians</title>
+		<author>John Christopher</author>
+		<publisher>Heinemann</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>37</id>
+		<title>The Prince in Waiting Trilogy</title>
+		<author>John Christopher</author>
+		<publisher>Puffin</publisher>
+		<notes>Beyond the Burning Lands, The Sword of the Spirits</notes>
+	</book>
+	<book>
+		<id>37</id>
+		<title>Wild Jack</title>
+		<author>John Christopher</author>
+		<publisher>Beaver</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>259</id>
+		<title>Net Force: Hidden Agendas</title>
+		<author>Tom Clancy</author>
+		<publisher>Headline</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>38</id>
+		<title>The Sands of Mars</title>
+		<author>Arthur C. Clarke</author>
+		<publisher>Pan</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>38</id>
+		<title>The Lion Comarre and Against the Fall of Night</title>
+		<author>Arthur C. Clarke</author>
+		<publisher>Corgi</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>38</id>
+		<title>Expedition to Earth</title>
+		<author>Arthur C. Clarke</author>
+		<publisher>Corgi</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>38</id>
+		<title>Childhood's End</title>
+		<author>Arthur C. Clarke</author>
+		<publisher>Pan</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>38</id>
+		<title>Earthlight</title>
+		<author>Arthur C. Clarke</author>
+		<publisher>Pan</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>38</id>
+		<title>The City and the Stars</title>
+		<author>Arthur C. Clarke</author>
+		<publisher>Corgi</publisher>
+		<notes>Loger version of Against the Fall of Night</notes>
+	</book>
+	<book>
+		<id>38</id>
+		<title>The Deep Range</title>
+		<author>Arthur C. Clarke</author>
+		<publisher>Pan</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>38</id>
+		<title>Tales from the White Hart</title>
+		<author>Arthur C. Clarke</author>
+		<publisher>Sidgwick &amp; Jackson</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>38</id>
+		<title>The Other Side of the Sky</title>
+		<author>Arthur C. Clarke</author>
+		<publisher>Corgi</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>38</id>
+		<title>Tales of Ten Worlds</title>
+		<author>Arthur C. Clarke</author>
+		<publisher>Pan</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>38</id>
+		<title>2001: A Space Odyssey</title>
+		<author>Arthur C. Clarke</author>
+		<publisher>Arrow</publisher>
+		<notes>2 pages missing, buy another copy</notes>
+	</book>
+	<book>
+		<id>38</id>
+		<title>Report on Planet Three and other speculations</title>
+		<author>Arthur C. Clarke</author>
+		<publisher>Corgi</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>38</id>
+		<title>Rendezvous with Rama</title>
+		<author>Arthur C. Clarke</author>
+		<publisher>Gollancz</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>38</id>
+		<title>Imperial Earth</title>
+		<author>Arthur C. Clarke</author>
+		<publisher>Pan</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>38</id>
+		<title>The Foundations of Paradise</title>
+		<author>Arthur C. Clarke</author>
+		<publisher>Pan</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>38</id>
+		<title>2010: Odyssey Two</title>
+		<author>Arthur C. Clarke</author>
+		<publisher>Granada</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>38</id>
+		<title>Tales from Planet Earth</title>
+		<author>Arthur C. Clarke</author>
+		<publisher>Legend</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>303</id>
+		<title>Jonathan Strange and Mr Norrell</title>
+		<author>Susanna Clarke</author>
+		<publisher>Bloomsbury</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>39</id>
+		<title>King Rat</title>
+		<author>James Clavell</author>
+		<publisher>Coronet</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>39</id>
+		<title>Tai-Pan</title>
+		<author>James Clavell</author>
+		<publisher>Coronet</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>39</id>
+		<title>Shogun</title>
+		<author>James Clavell</author>
+		<publisher>Coronet</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>39</id>
+		<title>Noble House</title>
+		<author>James Clavell</author>
+		<publisher>Hodder and Stoughton</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>39</id>
+		<title>Gai-Jin</title>
+		<author>James Clavell</author>
+		<publisher>Coronet</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>40</id>
+		<title>Porridge</title>
+		<author>Dick Clement</author>
+		<publisher>BBC</publisher>
+		<notes>&amp; Le Frenais, Ian</notes>
+	</book>
+	<book>
+		<id>40</id>
+		<title>Another Stretch of Porridge</title>
+		<author>Dick Clement</author>
+		<publisher>BBC</publisher>
+		<notes>&amp; Le Frenais, Ian</notes>
+	</book>
+	<book>
+		<id>40</id>
+		<title>A Furthur Stir of Porridge</title>
+		<author>Dick Clement</author>
+		<publisher>BBC</publisher>
+		<notes>&amp; Le Frenais, Ian</notes>
+	</book>
+	<book>
+		<id>40</id>
+		<title>Porridge: The Inside Story</title>
+		<author>Dick Clement</author>
+		<publisher>Pan</publisher>
+		<notes>&amp; Le Frenais, Ian</notes>
+	</book>
+	<book>
+		<id>41</id>
+		<title>The Moon People</title>
+		<author>Stanton A. Coblentz</author>
+		<publisher>Belmont</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>42</id>
+		<title>Gregory's Girl</title>
+		<author>Gerald Cole</author>
+		<publisher>Star</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>43</id>
+		<title>Brontomek!</title>
+		<author>Michael Coney</author>
+		<publisher>Pan</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>44</id>
+		<title>13 Great Stories of Science Fiction</title>
+		<author>Groff Conklin</author>
+		<publisher>Coronet</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>44</id>
+		<title>The Best of Sci-Fi: 17 x Infinity</title>
+		<author>Groff Conklin</author>
+		<publisher>Mayflower-Dell</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>45</id>
+		<title>Coma</title>
+		<author>Robin Cook</author>
+		<publisher>Pan</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>46</id>
+		<title>The Uncertain Midnight</title>
+		<author>Edmund Cooper</author>
+		<publisher>Coronet</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>46</id>
+		<title>Deadly Image</title>
+		<author>Edmund Cooper</author>
+		<publisher>Panther</publisher>
+		<notes>also called "The Uncertain Midnight"</notes>
+	</book>
+	<book>
+		<id>46</id>
+		<title>All Fool's Day</title>
+		<author>Edmund Cooper</author>
+		<publisher>Berkley Medallion</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>46</id>
+		<title>A Far Sunset</title>
+		<author>Edmund Cooper</author>
+		<publisher>Coronet</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>46</id>
+		<title>Five to Twelve</title>
+		<author>Edmund Cooper</author>
+		<publisher>Coronet</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>46</id>
+		<title>The Overman Culture</title>
+		<author>Edmund Cooper</author>
+		<publisher>Coronet</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>46</id>
+		<title>Who Needs Men ?</title>
+		<author>Edmund Cooper</author>
+		<publisher>Coronet</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>46</id>
+		<title>The Cloud Walker</title>
+		<author>Edmund Cooper</author>
+		<publisher>Coronet</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>46</id>
+		<title>The Deathwoms of Kratos</title>
+		<author>Edmund Cooper</author>
+		<publisher>Coronet</publisher>
+		<notes>Expendables I</notes>
+	</book>
+	<book>
+		<id>46</id>
+		<title>The Slaves of Heaven</title>
+		<author>Edmund Cooper</author>
+		<publisher>Coronet</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>46</id>
+		<title>The Tenth Planet</title>
+		<author>Edmund Cooper</author>
+		<publisher>Hodder and Stoughton</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>46</id>
+		<title>The Rings of Tantalus</title>
+		<author>Edmund Cooper</author>
+		<publisher>Coronet</publisher>
+		<notes>Expendables II</notes>
+	</book>
+	<book>
+		<id>46</id>
+		<title>The War Games of Zelos</title>
+		<author>Edmund Cooper</author>
+		<publisher>Coronet</publisher>
+		<notes>Expendables III</notes>
+	</book>
+	<book>
+		<id>46</id>
+		<title>The Venom of Argus</title>
+		<author>Edmund Cooper</author>
+		<publisher>Coronet</publisher>
+		<notes>Expendables IV</notes>
+	</book>
+	<book>
+		<id>46</id>
+		<title>Jupiter Laughs</title>
+		<author>Edmund Cooper</author>
+		<publisher>Coronet</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>47</id>
+		<title>Fakes Frauds and Phonies</title>
+		<author>James Cornell</author>
+		<publisher>SBS</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>252</id>
+		<title>Generation X</title>
+		<author>Douglas Coupland</author>
+		<publisher>Abacus</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>252</id>
+		<title>Microserfs</title>
+		<author>Douglas Coupland</author>
+		<publisher>Flamingo</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>252</id>
+		<title>Girlfriend in a Coma</title>
+		<author>Douglas Coupland</author>
+		<publisher>Flamingo</publisher>
+		<notes>Suprisingly good</notes>
+	</book>
+	<book>
+		<id>252</id>
+		<title>Hey Nostradamus!</title>
+		<author>Douglas Coupland</author>
+		<publisher>Harper Collins</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>48</id>
+		<title>Kuldesak</title>
+		<author>Richard Cowper</author>
+		<publisher>Orbit</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>49</id>
+		<title>The Terminal Man</title>
+		<author>Michael Crichton</author>
+		<publisher>Corgi</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>50</id>
+		<title>Tron</title>
+		<author>Brian Daley</author>
+		<publisher>New English Library</publisher>
+		<notes>If only IO Ports looked like the did in Tron</notes>
+	</book>
+	<book>
+		<id>51</id>
+		<title>The Armada Book of Fun</title>
+		<author>Mary Danby</author>
+		<publisher>Armada</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>52</id>
+		<title>Chariots of the Gods</title>
+		<author>Erich von Daniken</author>
+		<publisher>Corgi</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>52</id>
+		<title>Return to the Stars</title>
+		<author>Erich von Daniken</author>
+		<publisher>Corgi</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>52</id>
+		<title>The Gold of the Gods</title>
+		<author>Erich von Daniken</author>
+		<publisher>Corgi</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>52</id>
+		<title>In Search of Ancient Gods</title>
+		<author>Erich von Daniken</author>
+		<publisher>Corgi</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>53</id>
+		<title>Perry Rhodan 12: The Rebels of Tuglan</title>
+		<author>Clark Darlton</author>
+		<publisher>Orbit</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>54</id>
+		<title>Doctor Who and the Tenth Planet</title>
+		<author>Gerry Davis</author>
+		<publisher>Target</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>55</id>
+		<title>Sci Fi 2</title>
+		<author>Richard Davis</author>
+		<publisher>Armada</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>55</id>
+		<title>Sci Fi 1</title>
+		<author>Richard Davis</author>
+		<publisher>Armada</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>55</id>
+		<title>Sci Fi 3</title>
+		<author>Richard Davis</author>
+		<publisher>Armada</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>55</id>
+		<title>Sci Fi 4</title>
+		<author>Richard Davis</author>
+		<publisher>Armada</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>266</id>
+		<title>The Blind Watchmaker</title>
+		<author>Richard Dawkins</author>
+		<publisher>Longman</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>56</id>
+		<title>The Crystal of Power</title>
+		<author>Adriana DeBolt</author>
+		<publisher>Carousel SF</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>57</id>
+		<title>Lateral Thinking</title>
+		<author>Edward DeBono</author>
+		<publisher>Penguin</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>58</id>
+		<title>Police Your Planet</title>
+		<author>Lester Del Rey</author>
+		<publisher>New English Library</publisher>
+		<notes>&amp; van Lhin, Erik</notes>
+	</book>
+	<book>
+		<id>59</id>
+		<title>Private Eye's Bumper Book of Boobs</title>
+		<author>Andre Deutsch</author>
+		<publisher>Private Eye</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>60</id>
+		<title>Martian Time-Slip</title>
+		<author>Philip K Dick</author>
+		<publisher>New English Library</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>60</id>
+		<title>The Zap Gun</title>
+		<author>Philip K Dick</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>60</id>
+		<title>The Crack in Space</title>
+		<author>Philip K Dick</author>
+		<publisher>Methuen</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>60</id>
+		<title>Do Androids Dream of Electric Sheep ?</title>
+		<author>Philip K Dick</author>
+		<publisher>Granada</publisher>
+		<notes>Filmed as "Blade Runner"</notes>
+	</book>
+	<book>
+		<id>60</id>
+		<title>Galactic Pot-Healer</title>
+		<author>Philip K Dick</author>
+		<publisher>Pan</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>305</id>
+		<title>Christmas Books</title>
+		<author>Charles Dickens</author>
+		<publisher>Walter Scott</publisher>
+		<notes>Read the first story - whats not to like</notes>
+	</book>
+	<book>
+		<id>61</id>
+		<title>The Weathermonger</title>
+		<author>Peter Dickinson</author>
+		<publisher>Penguin</publisher>
+		<notes>Changes I</notes>
+	</book>
+	<book>
+		<id>61</id>
+		<title>Heartsease</title>
+		<author>Peter Dickinson</author>
+		<publisher>Penguin</publisher>
+		<notes>Changes II</notes>
+	</book>
+	<book>
+		<id>61</id>
+		<title>The Devil's Children</title>
+		<author>Peter Dickinson</author>
+		<publisher>Penguin</publisher>
+		<notes>Changes III</notes>
+	</book>
+	<book>
+		<id>61</id>
+		<title>The Gift</title>
+		<author>Peter Dickinson</author>
+		<publisher>Penguin</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>62</id>
+		<title>Doctor Who and the Planet of the Daleks</title>
+		<author>Terrance Dicks</author>
+		<publisher>Target</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>63</id>
+		<title>Dorsai!</title>
+		<author>Gordon R. Dickson</author>
+		<publisher>Sphere</publisher>
+		<notes>Dorsai III</notes>
+	</book>
+	<book>
+		<id>63</id>
+		<title>Naked to the Stars</title>
+		<author>Gordon R. Dickson</author>
+		<publisher>Sphere</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>63</id>
+		<title>Necromancer</title>
+		<author>Gordon R. Dickson</author>
+		<publisher>Mayflower</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>63</id>
+		<title>Soldier, Ask Not</title>
+		<author>Gordon R. Dickson</author>
+		<publisher>Sphere</publisher>
+		<notes>Dorsai II</notes>
+	</book>
+	<book>
+		<id>63</id>
+		<title>Tactics of Mistake</title>
+		<author>Gordon R. Dickson</author>
+		<publisher>Sphere</publisher>
+		<notes>Dorsai I</notes>
+	</book>
+	<book>
+		<id>63</id>
+		<title>The Outposter</title>
+		<author>Gordon R. Dickson</author>
+		<publisher>Sphere</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>63</id>
+		<title>The Dragon and the George</title>
+		<author>Gordon R. Dickson</author>
+		<publisher>Ballantine</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>64</id>
+		<title>The Official Rules</title>
+		<author>Paul Dickson</author>
+		<publisher>Arrow</publisher>
+		<notes>Humour</notes>
+	</book>
+	<book>
+		<id>65</id>
+		<title>Lord Foul's Bane</title>
+		<author>Stephen Donaldson</author>
+		<publisher>Fontana</publisher>
+		<notes>read a bit - its crap</notes>
+	</book>
+	<book>
+		<id>66</id>
+		<title>The Black Moon</title>
+		<author>Saul Dunn</author>
+		<publisher>Corgi</publisher>
+		<notes>The Cabal: Volume II</notes>
+	</book>
+	<book>
+		<id>66</id>
+		<title>The Cabal</title>
+		<author>Saul Dunn</author>
+		<publisher>Corgi</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>66</id>
+		<title>The Evangelist</title>
+		<author>Saul Dunn</author>
+		<publisher>Corgi</publisher>
+		<notes>The Cabal III</notes>
+	</book>
+	<book>
+		<id>67</id>
+		<title>My Family and Other Animals</title>
+		<author>Gerald Durrell</author>
+		<publisher>Penguin</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>68</id>
+		<title>Writings and Drawings</title>
+		<author>Bob Dylan</author>
+		<publisher>Granada</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>298</id>
+		<title>Pride and Promiscuity</title>
+		<author>Arielle Eckstut</author>
+		<publisher>Canongate</publisher>
+		<notes>Made me smile, possibly because I had just read Miss Austen</notes>
+	</book>
+	<book>
+		<id>69</id>
+		<title>Queen of Sorcery</title>
+		<author>David Eddings</author>
+		<publisher>Corgi</publisher>
+		<notes>Belgariad II</notes>
+	</book>
+	<book>
+		<id>69</id>
+		<title>Pawn of Prophecy</title>
+		<author>David Eddings</author>
+		<publisher>Corgi</publisher>
+		<notes>Belgariad I</notes>
+	</book>
+	<book>
+		<id>69</id>
+		<title>Magician's Gambit</title>
+		<author>David Eddings</author>
+		<publisher>Corgi</publisher>
+		<notes>Belgariad III</notes>
+	</book>
+	<book>
+		<id>69</id>
+		<title>Enchanters' End Game</title>
+		<author>David Eddings</author>
+		<publisher>Corgi</publisher>
+		<notes>Belgariad V</notes>
+	</book>
+	<book>
+		<id>69</id>
+		<title>Castle of Wizardry</title>
+		<author>David Eddings</author>
+		<publisher>Corgi</publisher>
+		<notes>Belgariad IV</notes>
+	</book>
+	<book>
+		<id>69</id>
+		<title>Guardians of the West</title>
+		<author>David Eddings</author>
+		<publisher>Corgi</publisher>
+		<notes>Malloreon I</notes>
+	</book>
+	<book>
+		<id>69</id>
+		<title>Demon Lord of Karanda</title>
+		<author>David Eddings</author>
+		<publisher>Corgi</publisher>
+		<notes>Malloreon III</notes>
+	</book>
+	<book>
+		<id>69</id>
+		<title>King of the Murgos</title>
+		<author>David Eddings</author>
+		<publisher>Corgi</publisher>
+		<notes>Malloreon II</notes>
+	</book>
+	<book>
+		<id>69</id>
+		<title>Sorceress of Darshiva</title>
+		<author>David Eddings</author>
+		<publisher>Corgi</publisher>
+		<notes>Malloreon IV</notes>
+	</book>
+	<book>
+		<id>69</id>
+		<title>Seeress of Kell</title>
+		<author>David Eddings</author>
+		<publisher>Corgi</publisher>
+		<notes>Malloreon V</notes>
+	</book>
+	<book>
+		<id>69</id>
+		<title>The Elenium</title>
+		<author>David Eddings</author>
+		<publisher>Grafton</publisher>
+		<notes>The Diamond Throne, The Ruby Knight and The Sapphire Rose</notes>
+	</book>
+	<book>
+		<id>70</id>
+		<title>Who Goes There ?</title>
+		<author>Edward Edelson</author>
+		<publisher>New English Library</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>71</id>
+		<title>The Golden Wonder Book of Party Games</title>
+		<author>Joseph Edmundson</author>
+		<publisher>Pan</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>72</id>
+		<title>Dangerous Visions II</title>
+		<author>Harlan Ellison</author>
+		<publisher>Sphere</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>72</id>
+		<title>From the Land of Fear</title>
+		<author>Harlan Ellison</author>
+		<publisher>Belmont</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>72</id>
+		<title>Dangerous Visions I</title>
+		<author>Harlan Ellison</author>
+		<publisher>Sphere</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>72</id>
+		<title>Dangerous Visions III</title>
+		<author>Harlan Ellison</author>
+		<publisher>Sphere</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>72</id>
+		<title>All the Sounds of Fear</title>
+		<author>Harlan Ellison</author>
+		<publisher>Granada</publisher>
+		<notes>first half of "Alone Against Tomorrow"</notes>
+	</book>
+	<book>
+		<id>72</id>
+		<title>The Time of the Eye</title>
+		<author>Harlan Ellison</author>
+		<publisher>Panther</publisher>
+		<notes>second half of "Alone Against Tomorrow"</notes>
+	</book>
+	<book>
+		<id>72</id>
+		<title>Approaching Oblivion</title>
+		<author>Harlan Ellison</author>
+		<publisher>Pan</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>73</id>
+		<title>Stark</title>
+		<author>Ben Elton</author>
+		<publisher>Sphere</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>73</id>
+		<title>Dead Famous</title>
+		<author>Ben Elton</author>
+		<publisher>Black Swan</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>74</id>
+		<title>The Adventures of Ulysses</title>
+		<author>Bernard Evslin</author>
+		<publisher>SBS</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>75</id>
+		<title>Lancashire Ghosts</title>
+		<author>Kathleen Eyre</author>
+		<publisher>Dalesman</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>76</id>
+		<title>Is There Life in Outer Space</title>
+		<author>Peter Fairley</author>
+		<publisher>Look-In</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>77</id>
+		<title>The Stone God Awakens</title>
+		<author>Philip Jose Farmer</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>77</id>
+		<title>The Fabulous Riverboat</title>
+		<author>Philip Jose Farmer</author>
+		<publisher>Panther</publisher>
+		<notes>Riverworld II</notes>
+	</book>
+	<book>
+		<id>77</id>
+		<title>To Your Scattered Bodies Go</title>
+		<author>Philip Jose Farmer</author>
+		<publisher>Panther</publisher>
+		<notes>Riverworld I</notes>
+	</book>
+	<book>
+		<id>77</id>
+		<title>The Dark Design</title>
+		<author>Philip Jose Farmer</author>
+		<publisher>Panther</publisher>
+		<notes>Riverworld III</notes>
+	</book>
+	<book>
+		<id>77</id>
+		<title>The Magic Labyrinth</title>
+		<author>Philip Jose Farmer</author>
+		<publisher>Panther</publisher>
+		<notes>Riverworld IV</notes>
+	</book>
+	<book>
+		<id>78</id>
+		<title>Mortal Gods</title>
+		<author>Jonathan Fast</author>
+		<publisher>Granada</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>253</id>
+		<title>Cause Celeb</title>
+		<author>Helen Feilding</author>
+		<publisher>Picador</publisher>
+		<notes>I loved this book, better than Bridget because it was actually about something as well as being funny.</notes>
+	</book>
+	<book>
+		<id>253</id>
+		<title>Bridget Jones's Diary</title>
+		<author>Helen Feilding</author>
+		<publisher>Picador</publisher>
+		<notes>Bridget is a looser, it makes it hard to feel any sympathy</notes>
+	</book>
+	<book>
+		<id>253</id>
+		<title>Bridget Jones: The Edge of Reason</title>
+		<author>Helen Feilding</author>
+		<publisher>Picador</publisher>
+		<notes>Bridget gets some backbone and the story plays much better</notes>
+	</book>
+	<book>
+		<id>79</id>
+		<title>Real Men Don't Eat Quiche</title>
+		<author>Bruce Feirstein</author>
+		<publisher>Pocket</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>79</id>
+		<title>Nice Guys Sleep Alone</title>
+		<author>Bruce Feirstein</author>
+		<publisher>Fontana</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>80</id>
+		<title>Magician</title>
+		<author>Raymond E. Feist</author>
+		<publisher>Granada</publisher>
+		<notes>Riftwar I</notes>
+	</book>
+	<book>
+		<id>80</id>
+		<title>Silverthorn</title>
+		<author>Raymond E. Feist</author>
+		<publisher>Grafton</publisher>
+		<notes>Riftwar II</notes>
+	</book>
+	<book>
+		<id>80</id>
+		<title>A Darkness at Sethanon</title>
+		<author>Raymond E. Feist</author>
+		<publisher>Grafton</publisher>
+		<notes>Riftwar III</notes>
+	</book>
+	<book>
+		<id>81</id>
+		<title>The Bedside MAD</title>
+		<author>Albert B. Feldstein</author>
+		<publisher>Signet</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>81</id>
+		<title>Fighting MAD</title>
+		<author>Albert B. Feldstein</author>
+		<publisher>Warner</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>81</id>
+		<title>The Voodoo MAD</title>
+		<author>Albert B. Feldstein</author>
+		<publisher>Signet</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>81</id>
+		<title>Don Martin Bounces Back</title>
+		<author>Albert B. Feldstein</author>
+		<publisher>Warner</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>81</id>
+		<title>Hopping MAD</title>
+		<author>Albert B. Feldstein</author>
+		<publisher>Signet</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>81</id>
+		<title>Rip Off MAD</title>
+		<author>Albert B. Feldstein</author>
+		<publisher>Warner</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>81</id>
+		<title>Hooked on MAD</title>
+		<author>Albert B. Feldstein</author>
+		<publisher>Warner</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>81</id>
+		<title>The MAD Book of Word Power</title>
+		<author>Albert B. Feldstein</author>
+		<publisher>Warner</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>81</id>
+		<title>The Sound of MAD</title>
+		<author>Albert B. Feldstein</author>
+		<publisher>Warner</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>82</id>
+		<title>Dirty Harry</title>
+		<author>Harry Julian Fink</author>
+		<publisher>Star</publisher>
+		<notes>&amp; Fink, Rita M. Written by Rock, Phillip</notes>
+	</book>
+	<book>
+		<id>82</id>
+		<title>Magnum Force</title>
+		<author>Harry Julian Fink</author>
+		<publisher>Star</publisher>
+		<notes>&amp; Fink, Rita M. Written by Valley, Mel</notes>
+	</book>
+	<book>
+		<id>83</id>
+		<title>Space Hostages</title>
+		<author>Nicholas Fisk</author>
+		<publisher>Puffin</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>312</id>
+		<title>Casino Royal</title>
+		<author>Ian Fleming</author>
+		<publisher>Penguin</publisher>
+		<notes>Very interesting to see that this is now a book from a different age</notes>
+	</book>
+	<book>
+		<id>84</id>
+		<title>Earthsearch</title>
+		<author>James Follett</author>
+		<publisher>BBC</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>85</id>
+		<title>Hunting the Bismarck</title>
+		<author>C. S. Forester</author>
+		<publisher>Mayflower-Dell</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>86</id>
+		<title>No Comebacks</title>
+		<author>Frederick Forsyth</author>
+		<publisher>Corgi</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>87</id>
+		<title>Dark Star</title>
+		<author>Alan Dean Foster</author>
+		<publisher>Futura</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>87</id>
+		<title>Star Trek: Log One</title>
+		<author>Alan Dean Foster</author>
+		<publisher>Corgi</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>87</id>
+		<title>Star Trek: Log Two</title>
+		<author>Alan Dean Foster</author>
+		<publisher>Corgi</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>87</id>
+		<title>Splinter of the Mind's Eye</title>
+		<author>Alan Dean Foster</author>
+		<publisher>Sphere</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>87</id>
+		<title>Alien</title>
+		<author>Alan Dean Foster</author>
+		<publisher>Futura</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>87</id>
+		<title>Aliens</title>
+		<author>Alan Dean Foster</author>
+		<publisher>Futura</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>87</id>
+		<title>Alien 3</title>
+		<author>Alan Dean Foster</author>
+		<publisher>Warner</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>88</id>
+		<title>Them</title>
+		<author>Robert French</author>
+		<publisher>Manor</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>89</id>
+		<title>Paperweight</title>
+		<author>Stephen Fry</author>
+		<publisher>Mandarin</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>89</id>
+		<title>Hippopotamus</title>
+		<author>Stephen Fry</author>
+		<publisher>Arrow</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>89</id>
+		<title>Making History</title>
+		<author>Stephen Fry</author>
+		<publisher>Arrow</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>89</id>
+		<title>The Stars' Tennis Balls</title>
+		<author>Stephen Fry</author>
+		<publisher>Arrow</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>248</id>
+		<title>Don't Panic</title>
+		<author>Neil Gaiman</author>
+		<publisher>Titan</publisher>
+		<notes>The story of HHGG</notes>
+	</book>
+	<book>
+		<id>248</id>
+		<title>Neverwhere</title>
+		<author>Neil Gaiman</author>
+		<publisher>BBC</publisher>
+		<notes>Don't be put of by the TV series the book is much better</notes>
+	</book>
+	<book>
+		<id>248</id>
+		<title>Smoke and Mirrors</title>
+		<author>Neil Gaiman</author>
+		<publisher>Headline</publisher>
+		<notes>A little bit uneven but when its good its very good, including a great story hidden in the introduction</notes>
+	</book>
+	<book>
+		<id>248</id>
+		<title>Stardust</title>
+		<author>Neil Gaiman</author>
+		<publisher>Headline</publisher>
+		<notes>A sort of farie tale - with attitude</notes>
+	</book>
+	<book>
+		<id>248</id>
+		<title>American Gods</title>
+		<author>Neil Gaiman</author>
+		<publisher>Headline</publisher>
+		<notes>Sort of an American Neverwhere with Gods. Got a bit bogged down in the middle but a truly weird and great book</notes>
+	</book>
+	<book>
+		<id>248</id>
+		<title>Anansi Boys</title>
+		<author>Neil Gaiman</author>
+		<publisher>Headline</publisher>
+		<notes>Well I thought American Gods was good but this is better, interesting predictable and yet not</notes>
+	</book>
+	<book>
+		<id>248</id>
+		<title>Fragile Things</title>
+		<author>Neil Gaiman</author>
+		<publisher>Headline</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>90</id>
+		<title>Systemantics</title>
+		<author>John Gall</author>
+		<publisher>General Systemantics</publisher>
+		<notes>How to win if you are Dilbert</notes>
+	</book>
+	<book>
+		<id>91</id>
+		<title>Project Barrier</title>
+		<author>Daniel F. Galouye</author>
+		<publisher>Hamlyn</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>92</id>
+		<title>The Weirdstone of Brisingamen</title>
+		<author>Alan Garner</author>
+		<publisher>Armada</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>92</id>
+		<title>The Moon of Gomrath</title>
+		<author>Alan Garner</author>
+		<publisher>Puffin</publisher>
+		<notes>The Weirdstone II</notes>
+	</book>
+	<book>
+		<id>92</id>
+		<title>Elidor</title>
+		<author>Alan Garner</author>
+		<publisher>Armada</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>92</id>
+		<title>The Owl Service</title>
+		<author>Alan Garner</author>
+		<publisher>Fontana</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>92</id>
+		<title>Red Shift</title>
+		<author>Alan Garner</author>
+		<publisher>Collins</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>93</id>
+		<title>Time in Eclipse</title>
+		<author>David S. Garnett</author>
+		<publisher>Arrow</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>269</id>
+		<title>My Legendary Girlfriend</title>
+		<author>Mike Gayle</author>
+		<publisher>Hodder and Stoughton</publisher>
+		<notes>A bit twee, slow to start but hits his stride in the second half</notes>
+	</book>
+	<book>
+		<id>269</id>
+		<title>Mr Commitment</title>
+		<author>Mike Gayle</author>
+		<publisher>Hodder and Stoughton</publisher>
+		<notes>Too twee and too stereotypical to work properly, read Girlfriend 44 instead.</notes>
+	</book>
+	<book>
+		<id>269</id>
+		<title>Turning Thirty</title>
+		<author>Mike Gayle</author>
+		<publisher>Hodder and Stoughton</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>94</id>
+		<title>The Wanderground</title>
+		<author>Sally Miller Gearhart</author>
+		<publisher>The Women's Press</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>304</id>
+		<title>White Wolf</title>
+		<author>David Gemmell</author>
+		<publisher>Corgi</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>95</id>
+		<title>Neuromancer</title>
+		<author>William Gibson</author>
+		<publisher>Panther</publisher>
+		<notes>Definative Cyberpunk</notes>
+	</book>
+	<book>
+		<id>95</id>
+		<title>Count Zero</title>
+		<author>William Gibson</author>
+		<publisher>Grafton</publisher>
+		<notes>Neuromancer II</notes>
+	</book>
+	<book>
+		<id>95</id>
+		<title>Burning Chrome</title>
+		<author>William Gibson</author>
+		<publisher>Grafton</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>95</id>
+		<title>Mona Lisa Overdrive</title>
+		<author>William Gibson</author>
+		<publisher>Grafton</publisher>
+		<notes>Neuromancer III</notes>
+	</book>
+	<book>
+		<id>95</id>
+		<title>The Difference Engine</title>
+		<author>William Gibson</author>
+		<publisher>Gollancz</publisher>
+		<notes>&amp; Bruce Sterling</notes>
+	</book>
+	<book>
+		<id>95</id>
+		<title>Virtual Light</title>
+		<author>William Gibson</author>
+		<publisher>Penguin</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>95</id>
+		<title>Idoru</title>
+		<author>William Gibson</author>
+		<publisher>Penguin</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>95</id>
+		<title>All Tomorrow's Parties</title>
+		<author>William Gibson</author>
+		<publisher>Penguin</publisher>
+		<notes>Beutifully screwed together</notes>
+	</book>
+	<book>
+		<id>95</id>
+		<title>Pattern Recognition</title>
+		<author>William Gibson</author>
+		<publisher>Penguin</publisher>
+		<notes>I carried this book all the way round the world, several times and in the end read it. Very accessible and very good, with the amout of jet lag in the book it is somehow apt</notes>
+	</book>
+	<book>
+		<id>292</id>
+		<title>The Man Who Planted Trees</title>
+		<author>Jean Giono</author>
+		<publisher>Harvill Press</publisher>
+		<notes>A present from Paul and Iona. A big smiley book.</notes>
+	</book>
+	<book>
+		<id>96</id>
+		<title>The Fourth Galaxy Reader</title>
+		<author>H. L. Gold</author>
+		<publisher>Permabooks</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>97</id>
+		<title>Solv-a-Crime</title>
+		<author>A. C. Gordon</author>
+		<publisher>SBS</publisher>
+		<notes>Dead Good</notes>
+	</book>
+	<book>
+		<id>98</id>
+		<title>The Giant Under the Snow</title>
+		<author>John Gordon</author>
+		<publisher>Puffin</publisher>
+		<notes>Kids Book</notes>
+	</book>
+	<book>
+		<id>99</id>
+		<title>The Captain's Table</title>
+		<author>Richard Gordon</author>
+		<publisher>Michael Joseph Ltd.</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>99</id>
+		<title>Doctor and Son</title>
+		<author>Richard Gordon</author>
+		<publisher>Michael Joseph Ltd.</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>286</id>
+		<title>Are You Dave Gorman?</title>
+		<author>Dave Gorman</author>
+		<publisher>Ebury Press</publisher>
+		<notes>and Danny Wallace. From Andrew</notes>
+	</book>
+	<book>
+		<id>100</id>
+		<title>Asterix and Cleopatra</title>
+		<author> Goscinny &amp; Uderzo</author>
+		<publisher>Knight</publisher>
+		<notes>Cartoon</notes>
+	</book>
+	<book>
+		<id>101</id>
+		<title>Gadget Man</title>
+		<author>Ron Goulart</author>
+		<publisher>New English Library</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>285</id>
+		<title>Colony</title>
+		<author>Rob Grant</author>
+		<publisher>Penguin</publisher>
+		<notes>A lot better than I thought it would be, clever and funny.</notes>
+	</book>
+	<book>
+		<id>102</id>
+		<title>1990</title>
+		<author>Wilfred Greatorex</author>
+		<publisher>Sphere</publisher>
+		<notes>TV spin off</notes>
+	</book>
+	<book>
+		<id>103</id>
+		<title>The Quiet American</title>
+		<author>Graham Greene</author>
+		<publisher>William Heinemann</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>103</id>
+		<title>The Human Factor</title>
+		<author>Graham Greene</author>
+		<publisher>Penguin</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>104</id>
+		<title>Famous Historical Mysteries</title>
+		<author>Leonard Gribble</author>
+		<publisher>Target</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>254</id>
+		<title>neoAddix</title>
+		<author>Jon Courtenay Grimwood</author>
+		<publisher>New English Library</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>254</id>
+		<title>Lucifer's Dragon</title>
+		<author>Jon Courtenay Grimwood</author>
+		<publisher>Pocket</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>254</id>
+		<title>reMix</title>
+		<author>Jon Courtenay Grimwood</author>
+		<publisher>Earthlight</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>254</id>
+		<title>redRobe</title>
+		<author>Jon Courtenay Grimwood</author>
+		<publisher>Earthlight</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>254</id>
+		<title>Pashazade</title>
+		<author>Jon Courtenay Grimwood</author>
+		<publisher>Earthlight</publisher>
+		<notes>The First Arabesk</notes>
+	</book>
+	<book>
+		<id>254</id>
+		<title>Effendi</title>
+		<author>Jon Courtenay Grimwood</author>
+		<publisher>Pocket</publisher>
+		<notes>The Second Arabesk, I should get tired of these but they really are pretty well done</notes>
+	</book>
+	<book>
+		<id>254</id>
+		<title>Felaheen</title>
+		<author>Jon Courtenay Grimwood</author>
+		<publisher>Pocket</publisher>
+		<notes>The Third Arabesk, It is starting to pale by the third. It’s a bit slow in the middle but worth pushing through</notes>
+	</book>
+	<book>
+		<id>254</id>
+		<title>Stamping Butterflies</title>
+		<author>Jon Courtenay Grimwood</author>
+		<publisher>Gollancz</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>254</id>
+		<title>9Tail Fox</title>
+		<author>Jon Courtenay Grimwood</author>
+		<publisher>Orion</publisher>
+		<notes>A bit less weir than the Arabesque and very very good</notes>
+	</book>
+	<book>
+		<id>302</id>
+		<title>Replay</title>
+		<author>Ken Grimwood</author>
+		<publisher>Orion</publisher>
+		<notes>As recommended by Neale. A real surprise and a wonderfully individual book</notes>
+	</book>
+	<book>
+		<id>105</id>
+		<title>King Solomon's Mines</title>
+		<author>Rider Haggard</author>
+		<publisher>Puffin</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>106</id>
+		<title>The Forever War</title>
+		<author>Joe Haldeman</author>
+		<publisher>Orbit</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>106</id>
+		<title>Study War No More</title>
+		<author>Joe Haldeman</author>
+		<publisher>Futura</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>106</id>
+		<title>All My Sins Remembered</title>
+		<author>Joe Haldeman</author>
+		<publisher>Orbit</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>106</id>
+		<title>Mindbridge</title>
+		<author>Joe Haldeman</author>
+		<publisher>Orbit</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>106</id>
+		<title>Infinite Dreams</title>
+		<author>Joe Haldeman</author>
+		<publisher>Futura</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>106</id>
+		<title>Worlds</title>
+		<author>Joe Haldeman</author>
+		<publisher>Orbit</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>106</id>
+		<title>Worlds Apart</title>
+		<author>Joe Haldeman</author>
+		<publisher>Orbit</publisher>
+		<notes>Worlds II</notes>
+	</book>
+	<book>
+		<id>106</id>
+		<title>Tool of the Trade</title>
+		<author>Joe Haldeman</author>
+		<publisher>Orbit</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>106</id>
+		<title>The Long Habbit of Living</title>
+		<author>Joe Haldeman</author>
+		<publisher>New English Library</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>106</id>
+		<title>The Hemingway Hoax</title>
+		<author>Joe Haldeman</author>
+		<publisher>New English Library</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>106</id>
+		<title>Worlds Enough and Time</title>
+		<author>Joe Haldeman</author>
+		<publisher>New English Library</publisher>
+		<notes>Worlds III</notes>
+	</book>
+	<book>
+		<id>106</id>
+		<title>Forever Peace</title>
+		<author>Joe Haldeman</author>
+		<publisher>Ace</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>106</id>
+		<title>Forever Free</title>
+		<author>Joe Haldeman</author>
+		<publisher>Gollancz</publisher>
+		<notes>Yet another disappointing sequel. I do not know if I am being harsh because the Forever War was so good.</notes>
+	</book>
+	<book>
+		<id>106</id>
+		<title>Camouflage</title>
+		<author>Joe Haldeman</author>
+		<publisher>Ace</publisher>
+		<notes>Complete rounded and short, very good a bit like Replay</notes>
+	</book>
+	<book>
+		<id>107</id>
+		<title>The Quiller Memorandum</title>
+		<author>Adam Hall</author>
+		<publisher>Fontana</publisher>
+		<notes>Spy Thriller Recommended by Woody</notes>
+	</book>
+	<book>
+		<id>245</id>
+		<title>Mindstar Rising</title>
+		<author>Peter F. Hamilton</author>
+		<publisher>Pan</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>245</id>
+		<title>A Quantum Murder</title>
+		<author>Peter F. Hamilton</author>
+		<publisher>Pan</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>245</id>
+		<title>The Nano Flower</title>
+		<author>Peter F. Hamilton</author>
+		<publisher>Pan</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>245</id>
+		<title>The Reality Dysfunction</title>
+		<author>Peter F. Hamilton</author>
+		<publisher>Pan</publisher>
+		<notes>Night's Dawn Trilogy Book 1</notes>
+	</book>
+	<book>
+		<id>245</id>
+		<title>The Neutronium Alchemist</title>
+		<author>Peter F. Hamilton</author>
+		<publisher>Pan</publisher>
+		<notes>Night's Dawn 2, Loads of words,enjoyable words, but doesn't actually advance the story by much</notes>
+	</book>
+	<book>
+		<id>245</id>
+		<title>A Second Chance at Eden</title>
+		<author>Peter F. Hamilton</author>
+		<publisher>Pan</publisher>
+		<notes>Reminiscent of State of the Art</notes>
+	</book>
+	<book>
+		<id>245</id>
+		<title>The Naked God</title>
+		<author>Peter F. Hamilton</author>
+		<publisher>Pan</publisher>
+		<notes>Night's Dawn 3, best idea is to read the Reality Dysfunction and then ask someone to summarise</notes>
+	</book>
+	<book>
+		<id>245</id>
+		<title>Fallen Dragon</title>
+		<author>Peter F. Hamilton</author>
+		<publisher>Pan</publisher>
+		<notes>A very well rounded and complete book, if not quite as kepowy as Reality Dysfunction.</notes>
+	</book>
+	<book>
+		<id>245</id>
+		<title>Misspent Youth</title>
+		<author>Peter F. Hamilton</author>
+		<publisher>Pan</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>245</id>
+		<title>Pandora's Star</title>
+		<author>Peter F. Hamilton</author>
+		<publisher>Pan</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>108</id>
+		<title>Deathworld 1</title>
+		<author>Harry Harrison</author>
+		<publisher>Sphere</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>108</id>
+		<title>The Stainless Steel Rat</title>
+		<author>Harry Harrison</author>
+		<publisher>Orbit</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>108</id>
+		<title>Planet of the Damned</title>
+		<author>Harry Harrison</author>
+		<publisher>Orbit</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>108</id>
+		<title>War with the Robots</title>
+		<author>Harry Harrison</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>108</id>
+		<title>Deathworld 2</title>
+		<author>Harry Harrison</author>
+		<publisher>Sphere</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>108</id>
+		<title>Two Tales and Eight Tomorrows</title>
+		<author>Harry Harrison</author>
+		<publisher>Sphere</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>108</id>
+		<title>Plague from Space</title>
+		<author>Harry Harrison</author>
+		<publisher>Sphere</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>108</id>
+		<title>Bill, The Galactic Hero</title>
+		<author>Harry Harrison</author>
+		<publisher>Avon</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>108</id>
+		<title>Technicolor Time Machine</title>
+		<author>Harry Harrison</author>
+		<publisher>Orbit</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>108</id>
+		<title>Deathworld 3</title>
+		<author>Harry Harrison</author>
+		<publisher>Sphere</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>108</id>
+		<title>Backdrop of Stars</title>
+		<author>Harry Harrison</author>
+		<publisher>New English Library</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>108</id>
+		<title>Captive Universe</title>
+		<author>Harry Harrison</author>
+		<publisher>Faber &amp; Faber</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>108</id>
+		<title>One Step from Earth</title>
+		<author>Harry Harrison</author>
+		<publisher>Arrow</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>108</id>
+		<title>In Our Hands, The Stars</title>
+		<author>Harry Harrison</author>
+		<publisher>SF Book Club</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>108</id>
+		<title>The Stainless Steel Rat's Revenge</title>
+		<author>Harry Harrison</author>
+		<publisher>Sphere</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>108</id>
+		<title>Prime Number</title>
+		<author>Harry Harrison</author>
+		<publisher>Sphere</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>108</id>
+		<title>Spaceship Medic</title>
+		<author>Harry Harrison</author>
+		<publisher>Puffin</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>108</id>
+		<title>The Stainless Steel Rat Saves the World</title>
+		<author>Harry Harrison</author>
+		<publisher>Sphere</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>108</id>
+		<title>The Astounding Analog Reader Book TWo</title>
+		<author>Harry Harrison</author>
+		<publisher>Sphere</publisher>
+		<notes>&amp; Aldiss, Brian</notes>
+	</book>
+	<book>
+		<id>108</id>
+		<title>A Transatlantic Tunnel, Hurrah !</title>
+		<author>Harry Harrison</author>
+		<publisher>New English Library</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>108</id>
+		<title>Stonehenge</title>
+		<author>Harry Harrison</author>
+		<publisher>Sphere</publisher>
+		<notes>&amp; Stover, Leon</notes>
+	</book>
+	<book>
+		<id>108</id>
+		<title>Star Smashers of the Galaxy Rangers</title>
+		<author>Harry Harrison</author>
+		<publisher>Orbit</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>108</id>
+		<title>The Year's Best SF 1972</title>
+		<author>Harry Harrison</author>
+		<publisher>Sphere</publisher>
+		<notes>&amp; Aldiss, Brian</notes>
+	</book>
+	<book>
+		<id>108</id>
+		<title>Skyfall</title>
+		<author>Harry Harrison</author>
+		<publisher>Corgi</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>108</id>
+		<title>Lifeboat</title>
+		<author>Harry Harrison</author>
+		<publisher>Orbit</publisher>
+		<notes>&amp; Dickson, Gordon R.</notes>
+	</book>
+	<book>
+		<id>108</id>
+		<title>The Stainless Steel Rat Wants You</title>
+		<author>Harry Harrison</author>
+		<publisher>Sphere</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>108</id>
+		<title>Homeworld</title>
+		<author>Harry Harrison</author>
+		<publisher>Granada</publisher>
+		<notes>To the Stars I</notes>
+	</book>
+	<book>
+		<id>108</id>
+		<title>Starworld</title>
+		<author>Harry Harrison</author>
+		<publisher>Panther</publisher>
+		<notes>To the Stars III</notes>
+	</book>
+	<book>
+		<id>108</id>
+		<title>Planet of No Return</title>
+		<author>Harry Harrison</author>
+		<publisher>Sphere</publisher>
+		<notes>Planet of the Damned II</notes>
+	</book>
+	<book>
+		<id>108</id>
+		<title>Wheelworld</title>
+		<author>Harry Harrison</author>
+		<publisher>Panther</publisher>
+		<notes>To the Stars II</notes>
+	</book>
+	<book>
+		<id>108</id>
+		<title>Invasion: Earth</title>
+		<author>Harry Harrison</author>
+		<publisher>Sphere</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>108</id>
+		<title>The Stainless Steel Rat for President</title>
+		<author>Harry Harrison</author>
+		<publisher>Sphere</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>108</id>
+		<title>Rebel in Time</title>
+		<author>Harry Harrison</author>
+		<publisher>Granada</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>108</id>
+		<title>A Stainless Steel Rat is Born</title>
+		<author>Harry Harrison</author>
+		<publisher>Sphere</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>108</id>
+		<title>The Stainless Steel Rat Gets Drafted</title>
+		<author>Harry Harrison</author>
+		<publisher>Bantam</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>108</id>
+		<title>Bill... on the planet of the Robot Slaves</title>
+		<author>Harry Harrison</author>
+		<publisher>Gollancz</publisher>
+		<notes>Bill the Galactic Hero II</notes>
+	</book>
+	<book>
+		<id>108</id>
+		<title>The Turing Option</title>
+		<author>Harry Harrison</author>
+		<publisher>ROC</publisher>
+		<notes>&amp; Marvin Minsky</notes>
+	</book>
+	<book>
+		<id>108</id>
+		<title>The Stainless Steel Rat Sings The Blues</title>
+		<author>Harry Harrison</author>
+		<publisher>Bantam</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>108</id>
+		<title>The Stainless Steel Rat Goes to Hell</title>
+		<author>Harry Harrison</author>
+		<publisher>TOR</publisher>
+		<notes>This is getting pretty silly now</notes>
+	</book>
+	<book>
+		<id>264</id>
+		<title>Manchester England</title>
+		<author>David Haslam</author>
+		<publisher>Fourth Estate</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>288</id>
+		<title>Ash Wednesday</title>
+		<author>Ethan Hawke</author>
+		<publisher>Bloomsbury</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>294</id>
+		<title>Playing the Moldovans at Tennis</title>
+		<author>Tony Hawks</author>
+		<publisher>Ebury Press</publisher>
+		<notes>A present from Jo</notes>
+	</book>
+	<book>
+		<id>109</id>
+		<title>Revolt in 2100</title>
+		<author>Robert Heinlein</author>
+		<publisher>New English Library</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>109</id>
+		<title>Waldo + Magic Inc.</title>
+		<author>Robert Heinlein</author>
+		<publisher>Pan</publisher>
+		<notes>2 shortish stories</notes>
+	</book>
+	<book>
+		<id>109</id>
+		<title>The Puppet Masters</title>
+		<author>Robert Heinlein</author>
+		<publisher>Pan</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>109</id>
+		<title>Beyond this Horizon</title>
+		<author>Robert Heinlein</author>
+		<publisher>New English Library</publisher>
+		<notes>Take itself a bit too seriously, a shadow of where Heinlein would end up.</notes>
+	</book>
+	<book>
+		<id>109</id>
+		<title>Rocketship Galileo</title>
+		<author>Robert Heinlein</author>
+		<publisher>New English Library</publisher>
+		<notes>Very childish but quite readable</notes>
+	</book>
+	<book>
+		<id>109</id>
+		<title>Space Cadet</title>
+		<author>Robert Heinlein</author>
+		<publisher>New English Library</publisher>
+		<notes>He is really hitting his stride. Tight action and a pacey plot</notes>
+	</book>
+	<book>
+		<id>109</id>
+		<title>Red Planet</title>
+		<author>Robert Heinlein</author>
+		<publisher>Pan</publisher>
+		<notes>Now we are really cooking. Fast action kids SF, what more is needed.</notes>
+	</book>
+	<book>
+		<id>109</id>
+		<title>The Day After Tomorrow</title>
+		<author>Robert Heinlein</author>
+		<publisher>New English Library</publisher>
+		<notes>More of the same but with a splash of paranoia, not quite what is needed in an SF action and once again we can see where he is going to end up.</notes>
+	</book>
+	<book>
+		<id>109</id>
+		<title>Farmer in the Sky</title>
+		<author>Robert Heinlein</author>
+		<publisher>Pan</publisher>
+		<notes>The 50's really were the golden years. Stick a pin in the list they are all excellently put together.</notes>
+	</book>
+	<book>
+		<id>109</id>
+		<title>Between Planets</title>
+		<author>Robert Heinlein</author>
+		<publisher>New English Library</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>109</id>
+		<title>Space Family Stone</title>
+		<author>Robert Heinlein</author>
+		<publisher>New English Library</publisher>
+		<notes>The Wild West in space, you can almost see the covered wagons</notes>
+	</book>
+	<book>
+		<id>109</id>
+		<title>Assignment in Eternity</title>
+		<author>Robert Heinlein</author>
+		<publisher>New English Library</publisher>
+		<notes>bound with vol 2</notes>
+	</book>
+	<book>
+		<id>109</id>
+		<title>Starman Jones</title>
+		<author>Robert Heinlein</author>
+		<publisher>New English Library</publisher>
+		<notes>Action and moral dilemas!</notes>
+	</book>
+	<book>
+		<id>109</id>
+		<title>Assignment in Eternity Vol 2</title>
+		<author>Robert Heinlein</author>
+		<publisher>New English Library</publisher>
+		<notes>bound with vol 1</notes>
+	</book>
+	<book>
+		<id>109</id>
+		<title>The Man Who Sold the Moon</title>
+		<author>Robert Heinlein</author>
+		<publisher>New English Library</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>109</id>
+		<title>The Green Hills of Earth</title>
+		<author>Robert Heinlein</author>
+		<publisher>Pan</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>109</id>
+		<title>Star Beast</title>
+		<author>Robert Heinlein</author>
+		<publisher>New English Library</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>109</id>
+		<title>Tunnel in the Sky</title>
+		<author>Robert Heinlein</author>
+		<publisher>Ace</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>109</id>
+		<title>The Door into Summer</title>
+		<author>Robert Heinlein</author>
+		<publisher>Pan</publisher>
+		<notes>All this and cats too!</notes>
+	</book>
+	<book>
+		<id>109</id>
+		<title>Time for the Stars</title>
+		<author>Robert Heinlein</author>
+		<publisher>Pan</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>109</id>
+		<title>Double Star</title>
+		<author>Robert Heinlein</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>109</id>
+		<title>Citizen of the Galaxy</title>
+		<author>Robert Heinlein</author>
+		<publisher>Penguin</publisher>
+		<notes>This is my favorite of the classic Heinleins</notes>
+	</book>
+	<book>
+		<id>109</id>
+		<title>Have Space Suit - Will Travel</title>
+		<author>Robert Heinlein</author>
+		<publisher>New English Library</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>109</id>
+		<title>Methuselah's Children</title>
+		<author>Robert Heinlein</author>
+		<publisher>New English Library</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>109</id>
+		<title>The Menace from Earth</title>
+		<author>Robert Heinlein</author>
+		<publisher>Corgi</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>109</id>
+		<title>Starship Troopers</title>
+		<author>Robert Heinlein</author>
+		<publisher>New English Library</publisher>
+		<notes>I guess I shouldn't like this but I do</notes>
+	</book>
+	<book>
+		<id>109</id>
+		<title>Stranger in a Strange Land</title>
+		<author>Robert Heinlein</author>
+		<publisher>New English Library</publisher>
+		<notes>Took 3 goes to read, not really finished but I'm not having another go</notes>
+	</book>
+	<book>
+		<id>109</id>
+		<title>Podkayne of Mars</title>
+		<author>Robert Heinlein</author>
+		<publisher>New English Library</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>109</id>
+		<title>Glory Road</title>
+		<author>Robert Heinlein</author>
+		<publisher>New English Library</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>109</id>
+		<title>Orphans of the Sky</title>
+		<author>Robert Heinlein</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>109</id>
+		<title>Farnham's Freehold</title>
+		<author>Robert Heinlein</author>
+		<publisher>Corgi</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>109</id>
+		<title>The Worlds of ...</title>
+		<author>Robert Heinlein</author>
+		<publisher>New English Library</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>109</id>
+		<title>The Moon is a Harsh Mistress</title>
+		<author>Robert Heinlein</author>
+		<publisher>New English Library</publisher>
+		<notes>To be honest you can stop reading here, it goes pretty quickly downhill from here</notes>
+	</book>
+	<book>
+		<id>109</id>
+		<title>I Will Fear No Evil</title>
+		<author>Robert Heinlein</author>
+		<publisher>New English Library</publisher>
+		<notes>No completely awful</notes>
+	</book>
+	<book>
+		<id>109</id>
+		<title>The Best of ... 1939-1942</title>
+		<author>Robert Heinlein</author>
+		<publisher>Sphere</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>109</id>
+		<title>The Best of ... 1947-1959</title>
+		<author>Robert Heinlein</author>
+		<publisher>Sphere</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>109</id>
+		<title>Time Enough for Love</title>
+		<author>Robert Heinlein</author>
+		<publisher>New English Library</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>109</id>
+		<title>The Number of the Beast</title>
+		<author>Robert Heinlein</author>
+		<publisher>New English Library</publisher>
+		<notes>Completely awful</notes>
+	</book>
+	<book>
+		<id>109</id>
+		<title>Friday</title>
+		<author>Robert Heinlein</author>
+		<publisher>New English Library</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>109</id>
+		<title>Grumbles from the Grave</title>
+		<author>Robert Heinlein</author>
+		<publisher>Orbit</publisher>
+		<notes>Edited by Virginia Heinlein</notes>
+	</book>
+	<book>
+		<id>110</id>
+		<title>The Dragon in the Sea</title>
+		<author>Frank Herbert</author>
+		<publisher>New English Library</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>110</id>
+		<title>Dune</title>
+		<author>Frank Herbert</author>
+		<publisher>New English Library</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>110</id>
+		<title>The Green Brain</title>
+		<author>Frank Herbert</author>
+		<publisher>New English Library</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>110</id>
+		<title>The Eyes of Heisenberg</title>
+		<author>Frank Herbert</author>
+		<publisher>New English Library</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>110</id>
+		<title>The Heaven Makers</title>
+		<author>Frank Herbert</author>
+		<publisher>New English Library</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>110</id>
+		<title>The Santaroga Barrier</title>
+		<author>Frank Herbert</author>
+		<publisher>New English Library</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>110</id>
+		<title>Dune Messiah</title>
+		<author>Frank Herbert</author>
+		<publisher>New English Library</publisher>
+		<notes>Dune II</notes>
+	</book>
+	<book>
+		<id>110</id>
+		<title>Whipping Star</title>
+		<author>Frank Herbert</author>
+		<publisher>New English Library</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>110</id>
+		<title>The Worlds of ...</title>
+		<author>Frank Herbert</author>
+		<publisher>New English Library</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>110</id>
+		<title>The Godmakers</title>
+		<author>Frank Herbert</author>
+		<publisher>New English Library</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>110</id>
+		<title>Hellstrom's Hive</title>
+		<author>Frank Herbert</author>
+		<publisher>Bantam</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>110</id>
+		<title>The Best of 1965-1970 ...</title>
+		<author>Frank Herbert</author>
+		<publisher>Sphere</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>110</id>
+		<title>Children of Dune</title>
+		<author>Frank Herbert</author>
+		<publisher>New English Library</publisher>
+		<notes>Dune III</notes>
+	</book>
+	<book>
+		<id>110</id>
+		<title>The Dosadi Experement</title>
+		<author>Frank Herbert</author>
+		<publisher>Futura</publisher>
+		<notes>Whipping Star II</notes>
+	</book>
+	<book>
+		<id>110</id>
+		<title>Direct Descent</title>
+		<author>Frank Herbert</author>
+		<publisher>New English Library</publisher>
+		<notes>Illustraited</notes>
+	</book>
+	<book>
+		<id>110</id>
+		<title>The Priests of Psi</title>
+		<author>Frank Herbert</author>
+		<publisher>Orbit</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>110</id>
+		<title>God Emperor of Dune</title>
+		<author>Frank Herbert</author>
+		<publisher>New English Library</publisher>
+		<notes>Dune IV</notes>
+	</book>
+	<book>
+		<id>110</id>
+		<title>The White Plague</title>
+		<author>Frank Herbert</author>
+		<publisher>New English Library</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>283</id>
+		<title>River Town</title>
+		<author>Peter Hessler</author>
+		<publisher>John Murray</publisher>
+		<notes>From Sarah, very readable and accessible account of modern China</notes>
+	</book>
+	<book>
+		<id>258</id>
+		<title>Stormy Weather</title>
+		<author>Carl Hiaasen</author>
+		<publisher>Pan</publisher>
+		<notes>Weird porn</notes>
+	</book>
+	<book>
+		<id>111</id>
+		<title>Doctor Who and the Masque of Mandragora</title>
+		<author>Philpi Hinchcliffe</author>
+		<publisher>Target</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>112</id>
+		<title>The Beatles in Help !</title>
+		<author>Al Hine</author>
+		<publisher>Mayflower</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>113</id>
+		<title>Stories not for the Nervious Book One</title>
+		<author>Alfred Hitchcock</author>
+		<publisher>Pan</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>114</id>
+		<title>Inherit the Stars</title>
+		<author>James P. Hogan</author>
+		<publisher>Ballantine</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>114</id>
+		<title>The Genesis Machine</title>
+		<author>James P. Hogan</author>
+		<publisher>Ballantine</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>114</id>
+		<title>The Gentle Giants of Ganymede</title>
+		<author>James P. Hogan</author>
+		<publisher>Ballantine</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>115</id>
+		<title>The Liver Birds</title>
+		<author>Carl Hollins</author>
+		<publisher>BBC</publisher>
+		<notes>and Hughes, Bob</notes>
+	</book>
+	<book>
+		<id>300</id>
+		<title>The Portable Door</title>
+		<author>Tom Holt</author>
+		<publisher>Orbit</publisher>
+		<notes>Very clever and funny.</notes>
+	</book>
+	<book>
+		<id>300</id>
+		<title>In Your Dreams</title>
+		<author>Tom Holt</author>
+		<publisher>Orbit</publisher>
+		<notes>Like the first one but the ending was a bit disapointing</notes>
+	</book>
+	<book>
+		<id>300</id>
+		<title>Earth, Air, Fire and Custard</title>
+		<author>Tom Holt</author>
+		<publisher>Orbit</publisher>
+		<notes>OK we could have probably done without the second one but this rounds the story off nicely</notes>
+	</book>
+	<book>
+		<id>116</id>
+		<title>The Odyssey</title>
+		<author> Homer</author>
+		<publisher>Penguin</publisher>
+		<notes>Trans by Rieu, E. V.</notes>
+	</book>
+	<book>
+		<id>117</id>
+		<title>M*A*S*H</title>
+		<author>Richard Hooker</author>
+		<publisher>Sphere</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>117</id>
+		<title>M*A*S*H Mania</title>
+		<author>Richard Hooker</author>
+		<publisher>Sphere</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>240</id>
+		<title>Fever Pitch</title>
+		<author>Nick Hornby</author>
+		<publisher>Gollancz</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>240</id>
+		<title>High Fidelity</title>
+		<author>Nick Hornby</author>
+		<publisher>Indigo</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>240</id>
+		<title>How to be Good</title>
+		<author>Nick Hornby</author>
+		<publisher>Penguin</publisher>
+		<notes>The jorney is interesting at times but doesn't really go anywhere</notes>
+	</book>
+	<book>
+		<id>118</id>
+		<title>Skallagrigg</title>
+		<author>William Horwood</author>
+		<publisher>Penguin</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>119</id>
+		<title>Almuric</title>
+		<author>Robert E. Howard</author>
+		<publisher>Ace</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>119</id>
+		<title>Conan the Freebooter</title>
+		<author>Robert E. Howard</author>
+		<publisher>Sphere</publisher>
+		<notes>&amp; de Camp, L. Sprague</notes>
+	</book>
+	<book>
+		<id>119</id>
+		<title>Conan of Cimeria</title>
+		<author>Robert E. Howard</author>
+		<publisher>Sphere</publisher>
+		<notes>&amp; de Camp, L. Sprague &amp; Carter, Lin</notes>
+	</book>
+	<book>
+		<id>120</id>
+		<title>A for Andromeda</title>
+		<author>Fred Hoyle</author>
+		<publisher>Corgi</publisher>
+		<notes>&amp; Elliot, John</notes>
+	</book>
+	<book>
+		<id>120</id>
+		<title>Andromeda Breakthrough</title>
+		<author>Fred Hoyle</author>
+		<publisher>Corgi</publisher>
+		<notes>&amp; Elliot, John</notes>
+	</book>
+	<book>
+		<id>121</id>
+		<title>Through the Eye of Time</title>
+		<author>Trevor Hoyle</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>122</id>
+		<title>White Media &amp; Black Britain</title>
+		<author>Charles Husband</author>
+		<publisher>Arrow</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>123</id>
+		<title>Brave New World</title>
+		<author>Aldous Huxley</author>
+		<publisher>Penguin</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>124</id>
+		<title>Starship Traveller</title>
+		<author>Steve Jackson</author>
+		<publisher>Puffin</publisher>
+		<notes>Game book</notes>
+	</book>
+	<book>
+		<id>125</id>
+		<title>Nut-crackers</title>
+		<author>John Jaworski</author>
+		<publisher>Piccolo</publisher>
+		<notes>&amp; Stewart, Ian. Puzzle book</notes>
+	</book>
+	<book>
+		<id>126</id>
+		<title>Rain Stops Play</title>
+		<author>Brian Johnston</author>
+		<publisher>Unwin</publisher>
+		<notes>Humourous cricket book</notes>
+	</book>
+	<book>
+		<id>251</id>
+		<title>Starship Titanic</title>
+		<author>Terry Jones</author>
+		<publisher>Pan</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>257</id>
+		<title>Hyperspace</title>
+		<author>Michio Kaku</author>
+		<publisher>Oxford University</publisher>
+		<notes>What happens when you press the hyperspace button in Asteroids?</notes>
+	</book>
+	<book>
+		<id>127</id>
+		<title>The Counterfeits</title>
+		<author>Leo F. Kelley</author>
+		<publisher>Belmont</publisher>
+		<notes>Pulp</notes>
+	</book>
+	<book>
+		<id>309</id>
+		<title>Relentless</title>
+		<author>Simon Kernick</author>
+		<publisher>Corgi</publisher>
+		<notes>Present from Jo</notes>
+	</book>
+	<book>
+		<id>128</id>
+		<title>Graffiti 2</title>
+		<author>Roger Kilroy</author>
+		<publisher>Corgi</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>129</id>
+		<title>Nights of the Long Knives</title>
+		<author>H. H. Kirst</author>
+		<publisher>Fontana</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>130</id>
+		<title>Quatermass</title>
+		<author>Nigel Kneale</author>
+		<publisher>Arrow</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>131</id>
+		<title>Beyond Tomorrow</title>
+		<author>Damon Knight</author>
+		<publisher>Pan</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>131</id>
+		<title>Orbit One</title>
+		<author>Damon Knight</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>310</id>
+		<title>Into Thin Air</title>
+		<author>Jon Krakauer</author>
+		<publisher>Pan</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>132</id>
+		<title>Transmission Error</title>
+		<author>Michael Kurland</author>
+		<publisher>Pyramid</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>133</id>
+		<title>The Yermakov Transfer</title>
+		<author>Derek Lambert</author>
+		<publisher>Corgi</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>134</id>
+		<title>Battlestar Galactica</title>
+		<author>Glen A. Larson</author>
+		<publisher>Futura</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>135</id>
+		<title>The Spy Who Came in from the Cold</title>
+		<author>John Le Carre</author>
+		<publisher>Pan</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>135</id>
+		<title>Tinker Tailor Soldier Spy</title>
+		<author>John Le Carre</author>
+		<publisher>Pan</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>136</id>
+		<title>Rocannon's World</title>
+		<author>Ursula K. Le Guin</author>
+		<publisher>Star</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>136</id>
+		<title>The Earthsea Trilogy</title>
+		<author>Ursula K. Le Guin</author>
+		<publisher>Penguin</publisher>
+		<notes>Wizard of Earthsea, Tombs of Atuan, Farthest Shore</notes>
+	</book>
+	<book>
+		<id>136</id>
+		<title>The Left Hand of Darkness</title>
+		<author>Ursula K. Le Guin</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>136</id>
+		<title>The Word for World is Forest</title>
+		<author>Ursula K. Le Guin</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>136</id>
+		<title>The Dispossessed</title>
+		<author>Ursula K. Le Guin</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>136</id>
+		<title>The Wind's Twelve Quarters</title>
+		<author>Ursula K. Le Guin</author>
+		<publisher>Gollancz</publisher>
+		<notes>From Keith, living proof that the catalogue has been used at least once. Borderline excellent but it did cheer me up in San Francisco.</notes>
+	</book>
+	<book>
+		<id>136</id>
+		<title>Always Coming Home</title>
+		<author>Ursula K. Le Guin</author>
+		<publisher>Grafton</publisher>
+		<notes>The book equivalent of a concept album</notes>
+	</book>
+	<book>
+		<id>136</id>
+		<title>Tehanu</title>
+		<author>Ursula K. Le Guin</author>
+		<publisher>Puffin</publisher>
+		<notes>Earthsea IV</notes>
+	</book>
+	<book>
+		<id>136</id>
+		<title>Changing Planes</title>
+		<author>Ursula K. Le Guin</author>
+		<publisher>Gollancz</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>137</id>
+		<title>The Sky People</title>
+		<author>Brinsley Le Poer Trench</author>
+		<publisher>Tandem</publisher>
+		<notes>more Von Daniken stuff</notes>
+	</book>
+	<book>
+		<id>138</id>
+		<title>The Birthgrave</title>
+		<author>Tanith Lee</author>
+		<publisher>Orbit</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>138</id>
+		<title>Quest for the White Witch</title>
+		<author>Tanith Lee</author>
+		<publisher>Futura</publisher>
+		<notes>Birthgrave III</notes>
+	</book>
+	<book>
+		<id>138</id>
+		<title>Shadowfire</title>
+		<author>Tanith Lee</author>
+		<publisher>Futura</publisher>
+		<notes>Birthgrave II</notes>
+	</book>
+	<book>
+		<id>255</id>
+		<title>Rogue Trader</title>
+		<author>Nick Leeson</author>
+		<publisher>Warner</publisher>
+		<notes>Freebie from BOL</notes>
+	</book>
+	<book>
+		<id>139</id>
+		<title>Solaris</title>
+		<author>Stanislaw Lem</author>
+		<publisher>Berkley Medallion</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>139</id>
+		<title>The Invincible</title>
+		<author>Stanislaw Lem</author>
+		<publisher>Ace</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>139</id>
+		<title>The Star Diaries</title>
+		<author>Stanislaw Lem</author>
+		<publisher>Orbit</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>139</id>
+		<title>The Futurological Congress</title>
+		<author>Stanislaw Lem</author>
+		<publisher>Orbit</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>139</id>
+		<title>The Cyberiad</title>
+		<author>Stanislaw Lem</author>
+		<publisher>Mandarin</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>140</id>
+		<title>The Summer Before the Dark</title>
+		<author>Doris Lessing</author>
+		<publisher>Penguin</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>313</id>
+		<title>Freakonomics</title>
+		<author>Steven Levitt</author>
+		<publisher>Penguin</publisher>
+		<notes>Present from Zelda</notes>
+	</book>
+	<book>
+		<id>141</id>
+		<title>The Otterbury Incident</title>
+		<author>C. Day Lewis</author>
+		<publisher>Puffin</publisher>
+		<notes>The first book I read</notes>
+	</book>
+	<book>
+		<id>142</id>
+		<title>Out of the Silent Planet</title>
+		<author>C. S. Lewis</author>
+		<publisher>Pan</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>142</id>
+		<title>Voyage to Venus</title>
+		<author>C. S. Lewis</author>
+		<publisher>Pan</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>142</id>
+		<title>That Hideous Strength</title>
+		<author>C. S. Lewis</author>
+		<publisher>Pan</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>142</id>
+		<title>The Lion, the witch and the Wardrobe</title>
+		<author>C. S. Lewis</author>
+		<publisher>Lions</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>268</id>
+		<title>Days</title>
+		<author>James Lovegrove</author>
+		<publisher>Millennium</publisher>
+		<notes>Shop till you drop</notes>
+	</book>
+	<book>
+		<id>143</id>
+		<title>Star Wars</title>
+		<author>George Lucas</author>
+		<publisher>Sphere</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>144</id>
+		<title>Froomb!</title>
+		<author>John Lymington</author>
+		<publisher>Hodder and Stoughton</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>144</id>
+		<title>The Sleep Eaters</title>
+		<author>John Lymington</author>
+		<publisher>MacFadden</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>145</id>
+		<title>Wine of the Dreamers</title>
+		<author>John D. MacDonald</author>
+		<publisher>Fawcett</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>146</id>
+		<title>Wilde Alliance</title>
+		<author>Ian MacKintosh</author>
+		<publisher>Sphere</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>147</id>
+		<title>The Guns of Navarone</title>
+		<author>Alistair MacLean</author>
+		<publisher>Fontana</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>147</id>
+		<title>The Last Frontier</title>
+		<author>Alistair MacLean</author>
+		<publisher>Fontana</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>147</id>
+		<title>Night Without End</title>
+		<author>Alistair MacLean</author>
+		<publisher>Fontana</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>147</id>
+		<title>The Dark Crusader</title>
+		<author>Alistair MacLean</author>
+		<publisher>Fontana</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>147</id>
+		<title>The Satan Bug</title>
+		<author>Alistair MacLean</author>
+		<publisher>Fontana</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>147</id>
+		<title>Ice Station Zebra</title>
+		<author>Alistair MacLean</author>
+		<publisher>Fontana</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>147</id>
+		<title>When Eight Bells Toll</title>
+		<author>Alistair MacLean</author>
+		<publisher>Fontana</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>147</id>
+		<title>Where Eagles Dare</title>
+		<author>Alistair MacLean</author>
+		<publisher>Fontana</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>147</id>
+		<title>Force 10 from Navarone</title>
+		<author>Alistair MacLean</author>
+		<publisher>Fontana</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>147</id>
+		<title>Puppet on a Chain</title>
+		<author>Alistair MacLean</author>
+		<publisher>Fontana</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>147</id>
+		<title>Caravan to Vaccares</title>
+		<author>Alistair MacLean</author>
+		<publisher>Fontana</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>147</id>
+		<title>Bear Island</title>
+		<author>Alistair MacLean</author>
+		<publisher>Fontana</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>147</id>
+		<title>Breakheart Pass</title>
+		<author>Alistair MacLean</author>
+		<publisher>Fontana</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>250</id>
+		<title>The Star Fraction</title>
+		<author>Ken MacLeod</author>
+		<publisher>Legend</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>148</id>
+		<title>The Spread</title>
+		<author>Barry N. Malzberg</author>
+		<publisher>Belmont</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>148</id>
+		<title>Herovit's World</title>
+		<author>Barry N. Malzberg</author>
+		<publisher>Arrow</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>148</id>
+		<title>Guerncia Night</title>
+		<author>Barry N. Malzberg</author>
+		<publisher>New English Library</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>149</id>
+		<title>Wild Cards</title>
+		<author>George R.R. Martin</author>
+		<publisher>Titan</publisher>
+		<notes>Wild Cards I</notes>
+	</book>
+	<book>
+		<id>243</id>
+		<title>The Spirit of Cricket</title>
+		<author>Christopher Martin-Jenkins</author>
+		<publisher>Faber &amp; Faber</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>241</id>
+		<title>Tales of the City</title>
+		<author>Armistead Maupin</author>
+		<publisher>Harper Collins</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>241</id>
+		<title>More Tales of the City</title>
+		<author>Armistead Maupin</author>
+		<publisher>Black Swan</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>241</id>
+		<title>Further Tales of the City</title>
+		<author>Armistead Maupin</author>
+		<publisher>Black Swan</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>241</id>
+		<title>Babycakes</title>
+		<author>Armistead Maupin</author>
+		<publisher>Black Swan</publisher>
+		<notes>Tales of the City 4</notes>
+	</book>
+	<book>
+		<id>241</id>
+		<title>Significant Others</title>
+		<author>Armistead Maupin</author>
+		<publisher>Black Swan</publisher>
+		<notes>Tales of the City 5</notes>
+	</book>
+	<book>
+		<id>241</id>
+		<title>Sure of You</title>
+		<author>Armistead Maupin</author>
+		<publisher>Black Swan</publisher>
+		<notes>Tales of the City 6</notes>
+	</book>
+	<book>
+		<id>150</id>
+		<title>The Many-Coloured Land</title>
+		<author>Julian May</author>
+		<publisher>Pan</publisher>
+		<notes>Saga of the Exiles I</notes>
+	</book>
+	<book>
+		<id>150</id>
+		<title>The Golden Torc</title>
+		<author>Julian May</author>
+		<publisher>Pan</publisher>
+		<notes>Saga of the Exiles II</notes>
+	</book>
+	<book>
+		<id>150</id>
+		<title>The Non Born King</title>
+		<author>Julian May</author>
+		<publisher>Pan</publisher>
+		<notes>Saga of the Exiles III</notes>
+	</book>
+	<book>
+		<id>150</id>
+		<title>The Adversary</title>
+		<author>Julian May</author>
+		<publisher>Pan</publisher>
+		<notes>Saga of the Exiles IV</notes>
+	</book>
+	<book>
+		<id>151</id>
+		<title>Restoree</title>
+		<author>Anne McCaffrey</author>
+		<publisher>Corgi</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>151</id>
+		<title>Dragonflight</title>
+		<author>Anne McCaffrey</author>
+		<publisher>Corgi</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>151</id>
+		<title>The Ship who Sang</title>
+		<author>Anne McCaffrey</author>
+		<publisher>Corgi</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>151</id>
+		<title>Decision at Doona</title>
+		<author>Anne McCaffrey</author>
+		<publisher>Corgi</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>151</id>
+		<title>Dragonquest</title>
+		<author>Anne McCaffrey</author>
+		<publisher>Corgi</publisher>
+		<notes>Dragonflight 2</notes>
+	</book>
+	<book>
+		<id>151</id>
+		<title>The Crystal Singer</title>
+		<author>Anne McCaffrey</author>
+		<publisher>Corgi</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>151</id>
+		<title>Dragonsong</title>
+		<author>Anne McCaffrey</author>
+		<publisher>Corgi</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>151</id>
+		<title>Get off the Unicorn</title>
+		<author>Anne McCaffrey</author>
+		<publisher>Corgi</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>151</id>
+		<title>Dragonsinger: Harper of Pern</title>
+		<author>Anne McCaffrey</author>
+		<publisher>Corgi</publisher>
+		<notes>Dragonsong 2</notes>
+	</book>
+	<book>
+		<id>151</id>
+		<title>The White Dragon</title>
+		<author>Anne McCaffrey</author>
+		<publisher>Corgi</publisher>
+		<notes>Dragonflight 3</notes>
+	</book>
+	<book>
+		<id>151</id>
+		<title>Dinosaur Planet</title>
+		<author>Anne McCaffrey</author>
+		<publisher>Orbit</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>151</id>
+		<title>Dragondrums</title>
+		<author>Anne McCaffrey</author>
+		<publisher>Corgi</publisher>
+		<notes>Dragonsong 3</notes>
+	</book>
+	<book>
+		<id>151</id>
+		<title>Moreta: Dragonlady of Pern</title>
+		<author>Anne McCaffrey</author>
+		<publisher>Corgi</publisher>
+		<notes>Dragonflight 4</notes>
+	</book>
+	<book>
+		<id>151</id>
+		<title>The Survivors</title>
+		<author>Anne McCaffrey</author>
+		<publisher>Orbit</publisher>
+		<notes>Dinosaur Planet II</notes>
+	</book>
+	<book>
+		<id>151</id>
+		<title>Killashandra</title>
+		<author>Anne McCaffrey</author>
+		<publisher>Corgi</publisher>
+		<notes>The Crystal Singer II</notes>
+	</book>
+	<book>
+		<id>151</id>
+		<title>Nerilka's Story &amp; The Coelura</title>
+		<author>Anne McCaffrey</author>
+		<publisher>Corgi</publisher>
+		<notes>Dragonflight 5</notes>
+	</book>
+	<book>
+		<id>151</id>
+		<title>Dragonsdawn</title>
+		<author>Anne McCaffrey</author>
+		<publisher>Corgi</publisher>
+		<notes>Dragonflight 6</notes>
+	</book>
+	<book>
+		<id>151</id>
+		<title>The Renegades of Pern</title>
+		<author>Anne McCaffrey</author>
+		<publisher>Corgi</publisher>
+		<notes>Dragonflight 7</notes>
+	</book>
+	<book>
+		<id>151</id>
+		<title>The Death of Sleep</title>
+		<author>Anne McCaffrey</author>
+		<publisher>Orbit</publisher>
+		<notes>&amp; Jody Lynn Nye, The Planet Pirates II</notes>
+	</book>
+	<book>
+		<id>151</id>
+		<title>Sassinak</title>
+		<author>Anne McCaffrey</author>
+		<publisher>Orbit</publisher>
+		<notes>&amp; Elizabeth Moon, The Planet Pirates I</notes>
+	</book>
+	<book>
+		<id>151</id>
+		<title>Generation Warriors</title>
+		<author>Anne McCaffrey</author>
+		<publisher>Orbit</publisher>
+		<notes>&amp; Elizabeth Moon, Planet Pirates III</notes>
+	</book>
+	<book>
+		<id>151</id>
+		<title>All the Weyrs of Pern</title>
+		<author>Anne McCaffrey</author>
+		<publisher>Corgi</publisher>
+		<notes>Dragonflight 8</notes>
+	</book>
+	<book>
+		<id>151</id>
+		<title>Partner Ship</title>
+		<author>Anne McCaffrey</author>
+		<publisher>Baen</publisher>
+		<notes>&amp; Margaret Ball, Ship who Sang II</notes>
+	</book>
+	<book>
+		<id>151</id>
+		<title>The Ship who Searched</title>
+		<author>Anne McCaffrey</author>
+		<publisher>Baen</publisher>
+		<notes>&amp; Mercedes Lackey, Ship who Sang III</notes>
+	</book>
+	<book>
+		<id>308</id>
+		<title>Romanitas</title>
+		<author>Sophia McDougall</author>
+		<publisher>Orion</publisher>
+		<notes>Present from Jenny. Seems a bit poderous from the cover but actually reads quite well</notes>
+	</book>
+	<book>
+		<id>152</id>
+		<title>The Golden Wreck</title>
+		<author>Alexander McKee</author>
+		<publisher>New English Library</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>153</id>
+		<title>The Blue Sword</title>
+		<author>Robin McKinley</author>
+		<publisher>Futura</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>244</id>
+		<title>Press Send</title>
+		<author>John McLaren</author>
+		<publisher>Simon &amp; Schuster</publisher>
+		<notes>Birthday present from Keith</notes>
+	</book>
+	<book>
+		<id>261</id>
+		<title>To Hold Infinity</title>
+		<author>John Meaney</author>
+		<publisher>Bantam</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>154</id>
+		<title>UFO</title>
+		<author>Robert Miall</author>
+		<publisher>Piccolo</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>287</id>
+		<title>King Rat</title>
+		<author>China Mieville</author>
+		<publisher>Pan</publisher>
+		<notes>Read Neverwhere instead</notes>
+	</book>
+	<book>
+		<id>155</id>
+		<title>A Dustbin of Milligan</title>
+		<author>Spike Milligan</author>
+		<publisher>Tandem</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>155</id>
+		<title>Puckoon</title>
+		<author>Spike Milligan</author>
+		<publisher>Penguin</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>155</id>
+		<title>A Book of Milliganimals</title>
+		<author>Spike Milligan</author>
+		<publisher>Penguin</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>155</id>
+		<title>Adolf Hitler, My Part in his Downfall</title>
+		<author>Spike Milligan</author>
+		<publisher>Penguin</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>155</id>
+		<title>More Goon Show Scripts</title>
+		<author>Spike Milligan</author>
+		<publisher>Sphere</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>156</id>
+		<title>The History of the Runestaff</title>
+		<author>Michael Moorcock</author>
+		<publisher>Grafton</publisher>
+		<notes>The Jewel in the Skull, The Mad God's Amulet, The Sword of the Dawn and The Runestaff (from Patrick)</notes>
+	</book>
+	<book>
+		<id>156</id>
+		<title>The Ice Schooner</title>
+		<author>Michael Moorcock</author>
+		<publisher>Sphere</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>156</id>
+		<title>Phoenix on Obsidian</title>
+		<author>Michael Moorcock</author>
+		<publisher>Mayflower</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>284</id>
+		<title>Altered Carbon</title>
+		<author>Richard Morgan</author>
+		<publisher>Gollancz</publisher>
+		<notes>Best hard SF for a long time</notes>
+	</book>
+	<book>
+		<id>284</id>
+		<title>Broken Angles</title>
+		<author>Richard Morgan</author>
+		<publisher>Gollancz</publisher>
+		<notes>Disappointing sequel</notes>
+	</book>
+	<book>
+		<id>284</id>
+		<title>Market Forces</title>
+		<author>Richard Morgan</author>
+		<publisher>Gollancz</publisher>
+		<notes>Probably his best book so far, a very thought provoking book that still keeps you guessing until the end</notes>
+	</book>
+	<book>
+		<id>284</id>
+		<title>Woken Furies</title>
+		<author>Richard Morgan</author>
+		<publisher>Gollancz</publisher>
+		<notes>Better than broken angles but this strand is getting into dimishing returns</notes>
+	</book>
+	<book>
+		<id>157</id>
+		<title>The Coming of the Robots</title>
+		<author>Sam Moskowitz</author>
+		<publisher>Collier</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>157</id>
+		<title>A Sense of Wonder</title>
+		<author>Sam Moskowitz</author>
+		<publisher>New English Library</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>158</id>
+		<title>The My Word Stories</title>
+		<author>Frank Muir</author>
+		<publisher>Methuen</publisher>
+		<notes>and Norden, Denis</notes>
+	</book>
+	<book>
+		<id>279</id>
+		<title>A Beautiful Mind</title>
+		<author>Sylvia Nasar</author>
+		<publisher>Faber &amp; Faber</publisher>
+		<notes>From Andrew and Liz</notes>
+	</book>
+	<book>
+		<id>159</id>
+		<title>The Dirty Dozen</title>
+		<author>E. M. Nathanson</author>
+		<publisher>Corgi</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>160</id>
+		<title>Red Dwarf</title>
+		<author>Grant Naylor</author>
+		<publisher>Penguin</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>160</id>
+		<title>Red Dwarf: Better than Life</title>
+		<author>Grant Naylor</author>
+		<publisher>Penguin</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>295</id>
+		<title>Starter for Ten</title>
+		<author>David Nicholls</author>
+		<publisher>Hodder and Stoughton</publisher>
+		<notes>Present from Louise, really captures that complete lack of structure in student life</notes>
+	</book>
+	<book>
+		<id>161</id>
+		<title>Exploring the Planets</title>
+		<author>Iain Nicolson</author>
+		<publisher>Hamlyn</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>162</id>
+		<title>The World of Ptavvs</title>
+		<author>Larry Niven</author>
+		<publisher>Orbit</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>162</id>
+		<title>The Flight of the Horse</title>
+		<author>Larry Niven</author>
+		<publisher>Futura</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>162</id>
+		<title>Lucifer's Hammer</title>
+		<author>Larry Niven</author>
+		<publisher>Futura</publisher>
+		<notes>and Purrnelle, Jerry</notes>
+	</book>
+	<book>
+		<id>163</id>
+		<title>The Better World of Reginald Perrin</title>
+		<author>David Nobbs</author>
+		<publisher>Penguin</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>164</id>
+		<title>Logan's Run</title>
+		<author>William F. Nolan</author>
+		<publisher>Corgi</publisher>
+		<notes>and Johnson, George Clayton</notes>
+	</book>
+	<book>
+		<id>164</id>
+		<title>Logan's World</title>
+		<author>William F. Nolan</author>
+		<publisher>Corgi</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>230</id>
+		<title>Vurt</title>
+		<author>Jeff Noon</author>
+		<publisher>Pan</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>230</id>
+		<title>Pollen</title>
+		<author>Jeff Noon</author>
+		<publisher>Ringpull</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>165</id>
+		<title>The Counterfeit Man</title>
+		<author>Alan E. Nourse</author>
+		<publisher>Corgi</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>166</id>
+		<title>Scottish Ghost Stories</title>
+		<author>Elliott O'Donnell</author>
+		<publisher>Jarrold</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>167</id>
+		<title>The Sixth Winter</title>
+		<author>Douglas Orgill</author>
+		<publisher>Futura</publisher>
+		<notes>and Gribbin, John</notes>
+	</book>
+	<book>
+		<id>168</id>
+		<title>The Paper Chase</title>
+		<author>John Jay Osborn</author>
+		<publisher>Coronet</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>169</id>
+		<title>11 Great Horror Stories</title>
+		<author>Betty M. Owen</author>
+		<publisher>SBS</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>170</id>
+		<title>Rite of Passage</title>
+		<author>Alexei Panshin</author>
+		<publisher>Sphere</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>281</id>
+		<title>Man and Boy</title>
+		<author>Tony Parsons</author>
+		<publisher>Harper Collins</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>281</id>
+		<title>One for my Baby</title>
+		<author>Tony Parsons</author>
+		<publisher>Harper Collins</publisher>
+		<notes>An enjoyable trip but at times I wasn't actually sure where we were going. This is the same book as Man and Boy with different character names</notes>
+	</book>
+	<book>
+		<id>281</id>
+		<title>Man and Wife</title>
+		<author>Tony Parsons</author>
+		<publisher>Harper Collins</publisher>
+		<notes>Somehow it just should be better, all the ingrediaent are right but something is stll missing</notes>
+	</book>
+	<book>
+		<id>281</id>
+		<title>The Family Way</title>
+		<author>Tony Parsons</author>
+		<publisher>Harper Collins</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>171</id>
+		<title>1,001 Logical Laws</title>
+		<author>John Peers</author>
+		<publisher>Hamlyn</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>172</id>
+		<title>The Book of Heroic Failures</title>
+		<author>Stephen Pile</author>
+		<publisher>Futura</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>173</id>
+		<title>The Republic</title>
+		<author> Plato</author>
+		<publisher>Penguin</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>173</id>
+		<title>Early Socratic Dialogues</title>
+		<author> Plato</author>
+		<publisher>Penguin</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>174</id>
+		<title>Tales of Mystery &amp; Imagination</title>
+		<author>Edgar Allen Poe</author>
+		<publisher>Galley</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>175</id>
+		<title>Wolfbane</title>
+		<author>Frederik Pohl</author>
+		<publisher>Penguin</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>175</id>
+		<title>The Man who Ate the World</title>
+		<author>Frederik Pohl</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>175</id>
+		<title>JEM The Making of a Utopia</title>
+		<author>Frederik Pohl</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>175</id>
+		<title>Nebula Winners Fourteen</title>
+		<author>Frederik Pohl</author>
+		<publisher>Star</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>280</id>
+		<title>Seeing Things</title>
+		<author>Oliver Postgate</author>
+		<publisher>Pan</publisher>
+		<notes>From Andrew and Liz</notes>
+	</book>
+	<book>
+		<id>176</id>
+		<title>The Colour of Magic</title>
+		<author>Terry Pratchett</author>
+		<publisher>Corgi</publisher>
+		<notes>Discworld I</notes>
+	</book>
+	<book>
+		<id>176</id>
+		<title>The Light Fantastic</title>
+		<author>Terry Pratchett</author>
+		<publisher>Corgi</publisher>
+		<notes>Discworld II</notes>
+	</book>
+	<book>
+		<id>176</id>
+		<title>Mort</title>
+		<author>Terry Pratchett</author>
+		<publisher>Corgi</publisher>
+		<notes>Discworld IV</notes>
+	</book>
+	<book>
+		<id>176</id>
+		<title>Equal Rites</title>
+		<author>Terry Pratchett</author>
+		<publisher>Corgi</publisher>
+		<notes>Discworld III</notes>
+	</book>
+	<book>
+		<id>176</id>
+		<title>Good Omens</title>
+		<author>Terry Pratchett</author>
+		<publisher>Corgi</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>176</id>
+		<title>The Witches Trilogy</title>
+		<author>Terry Pratchett</author>
+		<publisher>Gollancz</publisher>
+		<notes>Equal Rites, Wyrd Sisters, Witches Abroad</notes>
+	</book>
+	<book>
+		<id>177</id>
+		<title>The Tomorrow People: Three in Three</title>
+		<author>Roger Price</author>
+		<publisher>Piccolo</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>177</id>
+		<title>The Tomorrow People: Four into Three</title>
+		<author>Roger Price</author>
+		<publisher>Piccolo</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>178</id>
+		<title>The Wholly Libel</title>
+		<author> Private Eye</author>
+		<publisher>Private Eye</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>282</id>
+		<title>The Shipping News</title>
+		<author>Annie Proulx</author>
+		<publisher>Fourth Estate</publisher>
+		<notes>A suprisingly warm book given its initial cold outlook</notes>
+	</book>
+	<book>
+		<id>274</id>
+		<title>Northern Lights</title>
+		<author>Philip Pullman</author>
+		<publisher>Scholastic Childrens</publisher>
+		<notes>Quirky parallel universe childrens book</notes>
+	</book>
+	<book>
+		<id>274</id>
+		<title>The Subtle Knife</title>
+		<author>Philip Pullman</author>
+		<publisher>Scholastic Childrens</publisher>
+		<notes>Lucifer was one of the good guys and God has been lying to us ever since!</notes>
+	</book>
+	<book>
+		<id>274</id>
+		<title>The Amber Spyglass</title>
+		<author>Philip Pullman</author>
+		<publisher>Scholastic Childrens</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>274</id>
+		<title>Lyra's Oxford</title>
+		<author>Philip Pullman</author>
+		<publisher>David Fickling Books</publisher>
+		<notes>Present from Jenny - it is well written and reasonably tense but it’s a bit of a chapter marooned in nowhere</notes>
+	</book>
+	<book>
+		<id>290</id>
+		<title>The Godfather</title>
+		<author>Mario Puzo</author>
+		<publisher>Arrow</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>179</id>
+		<title>Space 1999: 6 Astral Quest</title>
+		<author>John Rankine</author>
+		<publisher>Orbit</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>179</id>
+		<title>Space 1999: 2 Moon Odyssey</title>
+		<author>John Rankine</author>
+		<publisher>Orbit</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>179</id>
+		<title>Space 1999: 8 Android Planet</title>
+		<author>John Rankine</author>
+		<publisher>Orbit</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>277</id>
+		<title>The Dice Man</title>
+		<author>Luke Rhinehart</author>
+		<publisher>Harper Collins</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>180</id>
+		<title>Believe It or Not: 2nd Series</title>
+		<author> Ripley's</author>
+		<publisher>Pocket</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>180</id>
+		<title>Believe It or Not: 3rd Series</title>
+		<author> Ripley's</author>
+		<publisher>Pocket</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>180</id>
+		<title>Believe It or Not: 4th Series</title>
+		<author> Ripley's</author>
+		<publisher>Pocket</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>180</id>
+		<title>Believe It or Not: 5th Series</title>
+		<author> Ripley's</author>
+		<publisher>Pocket</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>180</id>
+		<title>Believe It or Not: 13th Series</title>
+		<author> Ripley's</author>
+		<publisher>Pocket</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>180</id>
+		<title>Believe It or Not: 14th Series</title>
+		<author> Ripley's</author>
+		<publisher>Pocket</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>181</id>
+		<title>Walker R. N.</title>
+		<author>Terence Robertson</author>
+		<publisher>Pan</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>182</id>
+		<title>Stardance</title>
+		<author>Spider &amp; Jeanne Robinson</author>
+		<publisher>Futura</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>267</id>
+		<title>Harry Potter and the Philosopher's Stone</title>
+		<author>J.K. Rowling</author>
+		<publisher>Bloomsbury</publisher>
+		<notes>Formulaic fun, read A Wizard of Earthsea instead</notes>
+	</book>
+	<book>
+		<id>267</id>
+		<title>Harry Potter and the Chanber of Secrets</title>
+		<author>J.K. Rowling</author>
+		<publisher>Bloomsbury</publisher>
+		<notes>Whitty but a bit predictable</notes>
+	</book>
+	<book>
+		<id>267</id>
+		<title>Harry Potter and the Prisoner of Askaban</title>
+		<author>J.K. Rowling</author>
+		<publisher>Bloomsbury</publisher>
+		<notes>Slightly stronger story, but to be honest these are all the same book, mind you its not a bad book</notes>
+	</book>
+	<book>
+		<id>267</id>
+		<title>Harry Potter and the Goblet of Fire</title>
+		<author>J.K. Rowling</author>
+		<publisher>Bloomsbury</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>267</id>
+		<title>Harry Potter and the Order of the Pheonix</title>
+		<author>J.K. Rowling</author>
+		<publisher>Bloomsbury</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>267</id>
+		<title>Harry Potter and the Half-Blood Prince</title>
+		<author>J.K. Rowling</author>
+		<publisher>Bloomsbury</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>183</id>
+		<title>Software</title>
+		<author>Rudy Rucker</author>
+		<publisher>Avon</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>183</id>
+		<title>Wetware</title>
+		<author>Rudy Rucker</author>
+		<publisher>Avon</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>184</id>
+		<title>If the Caption Fits ...</title>
+		<author>Jonathan Sale</author>
+		<publisher>Elm Tree</publisher>
+		<notes>Punch Caption Competition</notes>
+	</book>
+	<book>
+		<id>185</id>
+		<title>Would you believe this too ?</title>
+		<author>Deidre Sanders</author>
+		<publisher>Coronet</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>186</id>
+		<title>Piranha</title>
+		<author>John Sayles</author>
+		<publisher>New English Library</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>291</id>
+		<title>Schott's Original Miscellany</title>
+		<author>Ben Schott</author>
+		<publisher>Bloomsbury</publisher>
+		<notes>Where else can you find out which American presidents went to Harvard and which Carry On films starred Hettie Jacques? A present from Cliff and Jo</notes>
+	</book>
+	<book>
+		<id>293</id>
+		<title>The Lovely Bones</title>
+		<author>Alice Sebold</author>
+		<publisher>Picador</publisher>
+		<notes>Strangely uplifting for a book in which the protagonist dies in the first chapter.</notes>
+	</book>
+	<book>
+		<id>187</id>
+		<title>1066 and all that</title>
+		<author>W. C. Sellar</author>
+		<publisher>Methuen</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>272</id>
+		<title>Condition Black</title>
+		<author>Gerald Seymour</author>
+		<publisher>Fontana</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>235</id>
+		<title>Tekwar</title>
+		<author>William Shatner</author>
+		<publisher>Ace</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>188</id>
+		<title>Night Walk</title>
+		<author>Bob Shaw</author>
+		<publisher>Corgi</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>188</id>
+		<title>The Two Timers</title>
+		<author>Bob Shaw</author>
+		<publisher>Readers Union</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>188</id>
+		<title>The Palace of Eternity</title>
+		<author>Bob Shaw</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>188</id>
+		<title>The Shadow of Heaven</title>
+		<author>Bob Shaw</author>
+		<publisher>Corgi</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>188</id>
+		<title>One Million Tomorrows</title>
+		<author>Bob Shaw</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>188</id>
+		<title>The Peace Machine</title>
+		<author>Bob Shaw</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>188</id>
+		<title>Other Days, Other Eyes</title>
+		<author>Bob Shaw</author>
+		<publisher>Pan</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>188</id>
+		<title>Orbitsville</title>
+		<author>Bob Shaw</author>
+		<publisher>Readers Union</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>188</id>
+		<title>Cosmic Kaleidoscope</title>
+		<author>Bob Shaw</author>
+		<publisher>Pan</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>188</id>
+		<title>A Wreath of Stars</title>
+		<author>Bob Shaw</author>
+		<publisher>Pan</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>188</id>
+		<title>Medusa's Children</title>
+		<author>Bob Shaw</author>
+		<publisher>Pan</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>188</id>
+		<title>Who Goes Here?</title>
+		<author>Bob Shaw</author>
+		<publisher>Ace</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>188</id>
+		<title>Vertigo</title>
+		<author>Bob Shaw</author>
+		<publisher>Pan</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>188</id>
+		<title>Ship of Strangers</title>
+		<author>Bob Shaw</author>
+		<publisher>Pan</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>188</id>
+		<title>Dagger of the Mind</title>
+		<author>Bob Shaw</author>
+		<publisher>Readers Union</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>188</id>
+		<title>Fire Pattern</title>
+		<author>Bob Shaw</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>188</id>
+		<title>Dark Night in Toyland</title>
+		<author>Bob Shaw</author>
+		<publisher>Orbit</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>234</id>
+		<title>The Rivals</title>
+		<author>Richard Brinsley Sheridan</author>
+		<publisher>New Mermaids</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>189</id>
+		<title>Amazing Scientific Facts</title>
+		<author>Jane Sherman</author>
+		<publisher>Piccolo</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>190</id>
+		<title>Pied Piper</title>
+		<author>Nevil Shute</author>
+		<publisher>Pan</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>191</id>
+		<title>The Warminster Mystery</title>
+		<author>Arthur Shuttlewood</author>
+		<publisher>Tandem</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>192</id>
+		<title>Master of Life and Death</title>
+		<author>Robert Silverberg</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>192</id>
+		<title>Needle in a Timestack</title>
+		<author>Robert Silverberg</author>
+		<publisher>Sphere</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>192</id>
+		<title>Those Who Watch</title>
+		<author>Robert Silverberg</author>
+		<publisher>New English Library</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>192</id>
+		<title>The Masks of Time</title>
+		<author>Robert Silverberg</author>
+		<publisher>Ballantine</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>192</id>
+		<title>Sundance</title>
+		<author>Robert Silverberg</author>
+		<publisher>Corgi</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>192</id>
+		<title>The Face of the Waters</title>
+		<author>Robert Silverberg</author>
+		<publisher>Grafton</publisher>
+		<notes>From Patrick</notes>
+	</book>
+	<book>
+		<id>193</id>
+		<title>All the Traps of Earth</title>
+		<author>Clifford D. Simak</author>
+		<publisher>Four Square</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>193</id>
+		<title>Strangers in the Universe</title>
+		<author>Clifford D. Simak</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>193</id>
+		<title>The Trouble with Tycho</title>
+		<author>Clifford D. Simak</author>
+		<publisher>Ace</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>193</id>
+		<title>Time is the Simplest Thing</title>
+		<author>Clifford D. Simak</author>
+		<publisher>Pan</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>193</id>
+		<title>Way Station</title>
+		<author>Clifford D. Simak</author>
+		<publisher>Manor</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>193</id>
+		<title>Enchanted Pilgrimage</title>
+		<author>Clifford D. Simak</author>
+		<publisher>Methuen</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>193</id>
+		<title>Shakespeare's Planet</title>
+		<author>Clifford D. Simak</author>
+		<publisher>Methuen</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>273</id>
+		<title>Touching the Void</title>
+		<author>Joe Simpson</author>
+		<publisher>Vintage</publisher>
+		<notes>Recommendation from Jo. Read this and you will never complain about having to go upstairs and get something again.</notes>
+	</book>
+	<book>
+		<id>194</id>
+		<title>Keep the Giraffe Burning</title>
+		<author>John Sladek</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>195</id>
+		<title>Out of Space &amp; Time: Volume 1</title>
+		<author>Clark Ashton Smith</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>196</id>
+		<title>The Skylark of Space</title>
+		<author>E. E. 'Doc' Smith</author>
+		<publisher>Panther</publisher>
+		<notes>Skylark I</notes>
+	</book>
+	<book>
+		<id>196</id>
+		<title>Skylark Three</title>
+		<author>E. E. 'Doc' Smith</author>
+		<publisher>Panther</publisher>
+		<notes>Skylark II</notes>
+	</book>
+	<book>
+		<id>196</id>
+		<title>Spacehounds of IPC</title>
+		<author>E. E. 'Doc' Smith</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>196</id>
+		<title>Skylark of Valeron</title>
+		<author>E. E. 'Doc' Smith</author>
+		<publisher>Panther</publisher>
+		<notes>Skylark III</notes>
+	</book>
+	<book>
+		<id>196</id>
+		<title>Galactic Patrol</title>
+		<author>E. E. 'Doc' Smith</author>
+		<publisher>Panther</publisher>
+		<notes>Lensman III</notes>
+	</book>
+	<book>
+		<id>196</id>
+		<title>Triplanetary</title>
+		<author>E. E. 'Doc' Smith</author>
+		<publisher>Panther</publisher>
+		<notes>Lensman I</notes>
+	</book>
+	<book>
+		<id>196</id>
+		<title>First Lensman</title>
+		<author>E. E. 'Doc' Smith</author>
+		<publisher>Panther</publisher>
+		<notes>Lensman II</notes>
+	</book>
+	<book>
+		<id>196</id>
+		<title>Skylark DuQuesne</title>
+		<author>E. E. 'Doc' Smith</author>
+		<publisher>Panther</publisher>
+		<notes>Skylark IV</notes>
+	</book>
+	<book>
+		<id>196</id>
+		<title>The Galaxy Primes</title>
+		<author>E. E. 'Doc' Smith</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>197</id>
+		<title>Falcon 4: Lost in Time</title>
+		<author>Mark Smith</author>
+		<publisher>Sphere</publisher>
+		<notes>&amp; Thomson, Jamie. Game Book</notes>
+	</book>
+	<book>
+		<id>246</id>
+		<title>Only Forward</title>
+		<author>Michael Marshall Smith</author>
+		<publisher>Harper Collins</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>246</id>
+		<title>Spares</title>
+		<author>Michael Marshall Smith</author>
+		<publisher>Harper Collins</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>246</id>
+		<title>One of Us</title>
+		<author>Michael Marshall Smith</author>
+		<publisher>Harper Collins</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>246</id>
+		<title>What You Make It</title>
+		<author>Michael Marshall Smith</author>
+		<publisher>Harper Collins</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>246</id>
+		<title>The Straw Men</title>
+		<author>Michael Marshall Smith</author>
+		<publisher>Harper Collins</publisher>
+		<notes>Cotemporary thriller, and very well done</notes>
+	</book>
+	<book>
+		<id>246</id>
+		<title>The Lonely Dead</title>
+		<author>Michael Marshall Smith</author>
+		<publisher>Harper Collins</publisher>
+		<notes>Straw Men 2</notes>
+	</book>
+	<book>
+		<id>246</id>
+		<title>Blood of Angles</title>
+		<author>Michael Marshall Smith</author>
+		<publisher>Harper Collins</publisher>
+		<notes>Straw Men 3 - OK enough now, ou probably only really need to read the first book</notes>
+	</book>
+	<book>
+		<id>289</id>
+		<title>The Autograph Man</title>
+		<author>Zadie Smith</author>
+		<publisher>Penguin</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>198</id>
+		<title>What is the Name of this Book?</title>
+		<author>Raymond Smullyan</author>
+		<publisher>Penguin</publisher>
+		<notes>Logic Puzzles</notes>
+	</book>
+	<book>
+		<id>199</id>
+		<title>The Silver Sun</title>
+		<author>Nancy Springer</author>
+		<publisher>Corgi</publisher>
+		<notes>Isle Trilogy II</notes>
+	</book>
+	<book>
+		<id>199</id>
+		<title>The White Hart</title>
+		<author>Nancy Springer</author>
+		<publisher>Corgi</publisher>
+		<notes>Isle Trilogy I</notes>
+	</book>
+	<book>
+		<id>233</id>
+		<title>The Big U</title>
+		<author>Neal Stephenson</author>
+		<publisher>Harper Collins</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>233</id>
+		<title>Zodiac</title>
+		<author>Neal Stephenson</author>
+		<publisher>Arrow</publisher>
+		<notes>Takes forever to get going but when it does it is worth it</notes>
+	</book>
+	<book>
+		<id>233</id>
+		<title>Snow Crash</title>
+		<author>Neal Stephenson</author>
+		<publisher>ROC</publisher>
+		<notes>Really captured 80's hacking.</notes>
+	</book>
+	<book>
+		<id>233</id>
+		<title>The Diamond Age</title>
+		<author>Neal Stephenson</author>
+		<publisher>ROC</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>233</id>
+		<title>Cryptonomicon</title>
+		<author>Neal Stephenson</author>
+		<publisher>Arrow</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>231</id>
+		<title>The Cookoo's Egg</title>
+		<author>Clifford Stoll</author>
+		<publisher>Bodley Head</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>200</id>
+		<title>Antigrav</title>
+		<author>Philip Strick</author>
+		<publisher>Arrow</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>201</id>
+		<title>Roadside Picnic</title>
+		<author>Arkady &amp; Boris Strugatsky</author>
+		<publisher>Penguin</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>202</id>
+		<title>Doctor Who and the Zarbi</title>
+		<author>Bill Strutton</author>
+		<publisher>Target</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>237</id>
+		<title>The True Game</title>
+		<author>Sheri S. Tepper</author>
+		<publisher>Corgi</publisher>
+		<notes>Kings Blood Four, Necromancer Nine and Wizard's Eleven, An engaging idea that probably goes on too long</notes>
+	</book>
+	<book>
+		<id>265</id>
+		<title>The Adventures of Dylan</title>
+		<author>Eric Thompson</author>
+		<publisher>Bloomsbury</publisher>
+		<notes>Magic Roundabout Scripts !</notes>
+	</book>
+	<book>
+		<id>306</id>
+		<title>Penguins Stopped Play</title>
+		<author>Harry Thompson</author>
+		<publisher>Headline</publisher>
+		<notes>Present from Zelda</notes>
+	</book>
+	<book>
+		<id>203</id>
+		<title>The Hobbit</title>
+		<author>J.R.R. Tolkien</author>
+		<publisher>Unwin</publisher>
+		<notes>I enjoyed this as a child but it does not bear rereading as an adult.</notes>
+	</book>
+	<book>
+		<id>203</id>
+		<title>The Two Towers</title>
+		<author>J.R.R. Tolkien</author>
+		<publisher>Unwin</publisher>
+		<notes>Lord of the Rings II, the openeing section of this book contains one of my favourite sections.</notes>
+	</book>
+	<book>
+		<id>203</id>
+		<title>The Fellowship of the Ring</title>
+		<author>J.R.R. Tolkien</author>
+		<publisher>Unwin</publisher>
+		<notes>Lord of the Rings I. I read this at school, it took ages but was worth it.</notes>
+	</book>
+	<book>
+		<id>203</id>
+		<title>The Return of the King</title>
+		<author>J.R.R. Tolkien</author>
+		<publisher>Unwin</publisher>
+		<notes>Lord of the Rings III</notes>
+	</book>
+	<book>
+		<id>203</id>
+		<title>The Silmarillion</title>
+		<author>J.R.R. Tolkien</author>
+		<publisher>Unwin</publisher>
+		<notes>This would make the shit list if I could be bothered finishing it</notes>
+	</book>
+	<book>
+		<id>311</id>
+		<title>Salmon Fishing in the Yemen</title>
+		<author>Paul Torday</author>
+		<publisher>Orion</publisher>
+		<notes>Present from Liz</notes>
+	</book>
+	<book>
+		<id>204</id>
+		<title>The Secret Diary of Adrian Mole aged 13 3/4</title>
+		<author>Sue Townsend</author>
+		<publisher>Methuen</publisher>
+		<notes>Amusing start of a dynasty I have no intention of following</notes>
+	</book>
+	<book>
+		<id>205</id>
+		<title>Shibumi</title>
+		<author> Trevanian</author>
+		<publisher>Grafton</publisher>
+		<notes>Steph recommended this, reminded me of Our Man Flint</notes>
+	</book>
+	<book>
+		<id>206</id>
+		<title>The Stellar Legion</title>
+		<author>E.C. Tubb</author>
+		<publisher>Scion</publisher>
+		<notes>Better quality pulp</notes>
+	</book>
+	<book>
+		<id>206</id>
+		<title>The Winds of Gath</title>
+		<author>E.C. Tubb</author>
+		<publisher>Arrow</publisher>
+		<notes>The Dumarest Saga 1</notes>
+	</book>
+	<book>
+		<id>206</id>
+		<title>Derai</title>
+		<author>E.C. Tubb</author>
+		<publisher>Arrow</publisher>
+		<notes>The Dumarest Saga 2</notes>
+	</book>
+	<book>
+		<id>206</id>
+		<title>Toyman</title>
+		<author>E.C. Tubb</author>
+		<publisher>Arrow</publisher>
+		<notes>The Dumarest Saga 3</notes>
+	</book>
+	<book>
+		<id>206</id>
+		<title>Kaylin</title>
+		<author>E.C. Tubb</author>
+		<publisher>Arrow</publisher>
+		<notes>The Dumarest Saga 4</notes>
+	</book>
+	<book>
+		<id>206</id>
+		<title>S.T.A.R. Flight</title>
+		<author>E.C. Tubb</author>
+		<publisher>Five Star</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>206</id>
+		<title>Mayenne</title>
+		<author>E.C. Tubb</author>
+		<publisher>Arrow</publisher>
+		<notes>The Dumarest Saga 9</notes>
+	</book>
+	<book>
+		<id>206</id>
+		<title>Space 1999: 1 Breakaway</title>
+		<author>E.C. Tubb</author>
+		<publisher>Orbit</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>206</id>
+		<title>The Primitive</title>
+		<author>E.C. Tubb</author>
+		<publisher>Orbit</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>206</id>
+		<title>Space 1999: Earthfall</title>
+		<author>E.C. Tubb</author>
+		<publisher>Orbit</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>207</id>
+		<title>The Changeling</title>
+		<author>A.E. Van Vogt</author>
+		<publisher>Manor</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>207</id>
+		<title>Moonbeast</title>
+		<author>A.E. Van Vogt</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>207</id>
+		<title>Mission to the Stars</title>
+		<author>A.E. Van Vogt</author>
+		<publisher>Sphere</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>207</id>
+		<title>Slan</title>
+		<author>A.E. Van Vogt</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>207</id>
+		<title>Monsters</title>
+		<author>A.E. Van Vogt</author>
+		<publisher>Corgi</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>208</id>
+		<title>The Eyes of the Overworld</title>
+		<author>Jack Vance</author>
+		<publisher>Mayflower</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>208</id>
+		<title>City of the Chasch</title>
+		<author>Jack Vance</author>
+		<publisher>Mayflower</publisher>
+		<notes>Planet of Adventure 1</notes>
+	</book>
+	<book>
+		<id>228</id>
+		<title>Weapons of Chaos</title>
+		<author>Robert E. Vardeman</author>
+		<publisher>New English Library</publisher>
+		<notes>Echoes of Chaos, Equasions of Chaos and Colors of Chaos</notes>
+	</book>
+	<book>
+		<id>228</id>
+		<title>The Jade Demons Quartet</title>
+		<author>Robert E. Vardeman</author>
+		<publisher>New English Library</publisher>
+		<notes>The quaking Lands, The Frozen Waves, The Crystal Clouds and The White Fire</notes>
+	</book>
+	<book>
+		<id>209</id>
+		<title>Life in the Twenty-First Century</title>
+		<author>M Vassiliev</author>
+		<publisher>Penguin</publisher>
+		<notes>&amp; Gouschev, S</notes>
+	</book>
+	<book>
+		<id>210</id>
+		<title>Journey to the Centre of the Earth</title>
+		<author>Jules Verne</author>
+		<publisher>Sugar Puffs</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>210</id>
+		<title>20,000 Leagues Under the Sea</title>
+		<author>Jules Verne</author>
+		<publisher>Thames Publishing Co</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>236</id>
+		<title>Across Realtime</title>
+		<author>Vernon Vinge</author>
+		<publisher>Millennium</publisher>
+		<notes>The Peace War and Marooned in Realtime</notes>
+	</book>
+	<book>
+		<id>211</id>
+		<title>The Dolphin Crossing</title>
+		<author>Jill Paton Walsh</author>
+		<publisher>Puffin</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>212</id>
+		<title>Billy Liar</title>
+		<author>Keith Waterhouse</author>
+		<publisher>Penguin</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>213</id>
+		<title>The Jonah Kit</title>
+		<author>Ian Watson</author>
+		<publisher>Readers Union</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>213</id>
+		<title>The Martian Inca</title>
+		<author>Ian Watson</author>
+		<publisher>Ace</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>214</id>
+		<title>National Lampoon's Doon</title>
+		<author>Ellis Weiner</author>
+		<publisher>Grafton</publisher>
+		<notes>Spoof on Dune</notes>
+	</book>
+	<book>
+		<id>215</id>
+		<title>The War of the Worlds</title>
+		<author>H.G. Wells</author>
+		<publisher>Pan</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>215</id>
+		<title>The Time Machine</title>
+		<author>H.G. Wells</author>
+		<publisher>Pan</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>215</id>
+		<title>The History of Mr Polly</title>
+		<author>H.G. Wells</author>
+		<publisher>Longman</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>238</id>
+		<title>Trainspotting</title>
+		<author>Irvine Welsh</author>
+		<publisher>Minerva</publisher>
+		<notes>Frantic, fast paced with a believable ending</notes>
+	</book>
+	<book>
+		<id>238</id>
+		<title>Ecstasy</title>
+		<author>Irvine Welsh</author>
+		<publisher>Jonathan Cape</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>238</id>
+		<title>Filth</title>
+		<author>Irvine Welsh</author>
+		<publisher>Jonathan Cape</publisher>
+		<notes>I was drawn and fascinated as well as repelled by the protagonist</notes>
+	</book>
+	<book>
+		<id>238</id>
+		<title>Porno</title>
+		<author>Irvine Welsh</author>
+		<publisher>Jonathan Cape</publisher>
+		<notes>The book really tightens up but takes far too long to get going.</notes>
+	</book>
+	<book>
+		<id>216</id>
+		<title>The Salamander</title>
+		<author>Morris West</author>
+		<publisher>New English Library</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>217</id>
+		<title>The Killing Thing</title>
+		<author>Kate Wilhelm</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>217</id>
+		<title>Let the Fire Fall</title>
+		<author>Kate Wilhelm</author>
+		<publisher>Panther</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>218</id>
+		<title>Down with Skool!</title>
+		<author>Geoffrey Willans</author>
+		<publisher>Armada</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>219</id>
+		<title>Tailchaser's Song</title>
+		<author>Tad Williams</author>
+		<publisher>Orbit</publisher>
+		<notes>Watership Down for Cats</notes>
+	</book>
+	<book>
+		<id>220</id>
+		<title>The Legion of Space</title>
+		<author>Jack Williamson</author>
+		<publisher>Sphere</publisher>
+		<notes>The Legion of Space 1</notes>
+	</book>
+	<book>
+		<id>221</id>
+		<title>The Prehistoric Zoo</title>
+		<author>Alexander Wilson</author>
+		<publisher>Signland</publisher>
+		<notes>My Uncle</notes>
+	</book>
+	<book>
+		<id>222</id>
+		<title>Schrodinger's Cat II: The Trick Top Hat</title>
+		<author>Robert Anton Wilson</author>
+		<publisher>Sphere</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>297</id>
+		<title>One for Sorrow Two for Joy</title>
+		<author>Clive Woodall</author>
+		<publisher>Ziji</publisher>
+		<notes>Childish, thin, predictable and unconvincing. Do not believe the cover when it refers to Lord of the rings et al.</notes>
+	</book>
+	<book>
+		<id>223</id>
+		<title>Yorkshire Yammer</title>
+		<author>Peter Wright</author>
+		<publisher>Dalesman</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>224</id>
+		<title>Stowaway to Mars</title>
+		<author>John Wyndham</author>
+		<publisher>Coronet</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>224</id>
+		<title>The Day of the Triffids</title>
+		<author>John Wyndham</author>
+		<publisher>Penguin</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>224</id>
+		<title>The Crysalids</title>
+		<author>John Wyndham</author>
+		<publisher>Penguin</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>224</id>
+		<title>The Midwich Cookoos</title>
+		<author>John Wyndham</author>
+		<publisher>Penguin</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>224</id>
+		<title>The Outward Urge</title>
+		<author>John Wyndham</author>
+		<publisher>Penguin</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>224</id>
+		<title>Trouble with Lichen</title>
+		<author>John Wyndham</author>
+		<publisher>Penguin</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>249</id>
+		<title>Showstopper!</title>
+		<author>G. Pascal Zachary</author>
+		<publisher>Warner</publisher>
+		<notes>Story of NT</notes>
+	</book>
+	<book>
+		<id>225</id>
+		<title>Macro Life</title>
+		<author>George Zebrowski</author>
+		<publisher>Orbit</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>226</id>
+		<title>The World that Never Was</title>
+		<author>Karl Zeigfreid</author>
+		<publisher>Badger</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>227</id>
+		<title>Four for Tomorrow</title>
+		<author>Roger Zelazny</author>
+		<publisher>Ace</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>227</id>
+		<title>Isle of the Dead</title>
+		<author>Roger Zelazny</author>
+		<publisher>Ace</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>227</id>
+		<title>Damnation Alley</title>
+		<author>Roger Zelazny</author>
+		<publisher>Sphere</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>227</id>
+		<title>The Doors of his Face, The lamps of his Mouth</title>
+		<author>Roger Zelazny</author>
+		<publisher>Methuen</publisher>
+		<notes></notes>
+	</book>
+	<book>
+		<id>227</id>
+		<title>Nine Princes in Amber</title>
+		<author>Roger Zelazny</author>
+		<publisher>Sphere</publisher>
+		<notes>Amber 1</notes>
+	</book>
+	<book>
+		<id>227</id>
+		<title>The Guns of Avalon</title>
+		<author>Roger Zelazny</author>
+		<publisher>Sphere</publisher>
+		<notes>Amber 2</notes>
+	</book>
+</index>
