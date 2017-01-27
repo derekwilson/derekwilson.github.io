@@ -63,7 +63,7 @@ function expandAll()
 {
 	var i=0;
 	for(i=0;i<AllGroups.length;i++)
-		document.all(AllGroups[i]).style.display='inline';
+		document.all(AllGroups[i]).style.display='table-row';
 }
 
 // *********************************************************

@@ -8,9 +8,9 @@ function findFrame(name)
 	var i;
 
 	if (parent!=null)
-		for (framecount=0; framecount<parent.document.frames.length; framecount++)
-			if (parent.document.frames(framecount).name==name)
-				return parent.document.frames(framecount);
+		for (framecount=0; framecount<parent.frames.length; framecount++)
+			if (parent.frames[framecount].name==name)
+				return parent.frames[framecount];
 }
 
 // *********************************************************
