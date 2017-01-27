@@ -2,18 +2,16 @@
 <!--
 .author
 {
-	font-size : x-small;
+	font-size : normal;
 	color : black;
-	font-family : Arial;
 	font-weight : normal;
 	text-decoration : none;
 }
  
 A:hover
 {
-	font-size : x-small;
+	font-size : normal;
 	color : #000084;
-	font-family : Arial;
 	font-weight : bold;
 	text-decoration : none;
 }
