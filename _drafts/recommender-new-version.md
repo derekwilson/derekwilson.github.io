@@ -7,7 +7,7 @@ tags: ["Android", "Recommender", "Development", "Mobile"]
 categories: ["Android", "Recommender", "Development", "Mobile"]
 ---
 
-I’ve released a small update to Recommender this month. The app is working quite well in its small user base, the change enables you to add a nickname to the app and then when you share a recommendation the recipient will always know where the recommendation came from.
+I’ve [released][recommender-play] a small update to Recommender this month. The app is working quite well in its small user base, the change enables you to add a nickname to the app and then when you share a recommendation the recipient will always know where the recommendation came from.
 
 You can also edit any recommendation to identify where it came from in the same way as giving a recommendation a category.
 
@@ -20,3 +20,5 @@ Also this version has been enabled to allow the data local to the phone to be ba
 img
 
 However, on some devices Recommender never appears in the list, let me know if you have any ideas about how to get Google Drive to back the data up.
+
+[recommender-play]: https://play.google.com/store/apps/details?id=net.derekwilson.recommender
