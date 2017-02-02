@@ -1,0 +1,8 @@
+myApp.processQuestionsResult('\
+[\
+{"QuestionId":1,"Title":"Question 1","Body":"How tall are you?"},\
+{"QuestionId":2,"Title":"Question 2","Body":"What is your weight?"},\
+{"QuestionId":3,"Title":"Question 3","Body":"Are you left handed?"},\
+{"QuestionId":4,"Title":"Question 4","Body":"Are you vegitarian?"}\
+]\
+');

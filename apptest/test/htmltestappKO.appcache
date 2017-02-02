@@ -1,0 +1,21 @@
+CACHE MANIFEST
+      
+# rev 23
+
+CACHE:
+styles/normalize/normalize.min.css
+styles/main.css
+scripts/jquery-1.8.1.min.js
+scripts/modernizr-2.5.3.js
+scripts/knockout-2.1.0.debug.js
+appKO/htmltestapp.js
+appKO/quizViewModel.js
+appKO/appdata-json.txt
+appKO/questions-json.txt
+
+FALLBACK:
+/ offline.html
+
+NETWORK:
+*
+

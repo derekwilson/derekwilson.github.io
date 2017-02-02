@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html manifest="htmltestappko.appcache">
+<head>
+    <meta charset="utf-8" />
+    <title>HTML Test Home Page - Knockout version</title>
+    <link rel="stylesheet" href="styles/normalize/normalize.min.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <script src="scripts/jquery-1.8.1.min.js" type="text/javascript"></script>
+    <script src="scripts/modernizr-2.5.3.js" type="text/javascript"></script>
+    <script src="scripts/knockout-2.1.0.debug.js" type="text/javascript"></script>
+</head>
+<body>
+
+        <div class="header-container">
+            <header class="wrapper clearfix">
+                <h1 class="title">Test App - Knockout version</h1>
+                <nav>
+                    <ul>
+                        <li><a id="makeRequest" href="#">Make Request</a></li>
+                        <li><a id="prevQuestion" href="#" data-bind="click: previousQuestion">Previous Question</a></li>
+                        <li><a id="nextQuestion" href="#" data-bind="click: nextQuestion">Next Question</a></li>
+                    </ul>
+                </nav>
+            </header>
+        </div>
+
+        <div class="main-container">
+            <div class="main wrapper clearfix">
+
+                <article>
+                    <header>
+                        <h1>Example Questions</h1>
+                        <p>Navigate through the questions</p>
+                    </header>
+                    <section data-bind="with: currentQuestion">
+                        <h2 id="question_title" data-bind="text: Title"></h2>
+                        <p id="question_body" data-bind="text: Body"></p>
+                    </section>
+                </article>
+
+            <aside>
+                <h3>Questions</h3>
+                <p id="question_aside" data-bind="text: questionAside"></p>
+            </aside>
+
+                <article id="inputSection">
+                    <section id="outputSection">
+                    </section>
+                </article>
+
+            </div> <!-- #main -->
+        </div> <!-- #main-container -->
+
+        <div class="footer-container">
+            <footer class="wrapper">
+                <h3>v<span data-bind="text: codeVersion"></span></h3>
+            </footer>
+        </div>
+
+<script src="appKO/htmltestapp.js" type="text/javascript"></script>
+<script src="appKO/quizViewModel.js" type="text/javascript"></script>
+
+</body>
+</html>

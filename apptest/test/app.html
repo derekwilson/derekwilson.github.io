@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html manifest="htmltestapp.appcache">
+<head>
+    <meta charset="utf-8" />
+    <title>HTML Test Home Page</title>
+    <link rel="stylesheet" href="styles/normalize/normalize.min.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <script src="scripts/jquery-1.8.1.min.js" type="text/javascript"></script>
+    <script src="scripts/jquery.mobile-1.2.0.min.js" type="text/javascript"></script>
+    <script src="scripts/modernizr-2.5.3.js" type="text/javascript"></script>
+</head>
+<body>
+
+        <div class="header-container">
+            <header class="wrapper clearfix">
+                <h1 class="title">Test App</h1>
+                <nav>
+                    <ul>
+                        <li><a id="makeRequest" href="#">Make Request</a></li>
+                        <li><a id="prevQuestion" href="#">Previous Question</a></li>
+                        <li><a id="nextQuestion" href="#">Next Question</a></li>
+                    </ul>
+                </nav>
+            </header>
+        </div>
+
+        <div class="main-container">
+            <div class="main wrapper clearfix">
+
+                <article>
+                    <header>
+                        <h1>Example Questions</h1>
+                        <p>Navigate through the questions</p>
+                    </header>
+                    <section>
+                        <h2 id="question_title"></h2>
+                        <p id="question_body"></p>
+                    </section>
+                </article>
+
+            <aside>
+                <h3>Questions</h3>
+                <p id="localdata_aside"></p>
+                <p id="question_aside">Loading...</p>
+            </aside>
+
+                <article>
+                    <textarea id="clip">this is example text for the clipboard</textarea>
+                </article>
+
+                <article id="inputSection">
+                    <section class="submission">
+                        <label for="userName">Name</label>
+                        <input type="text" id="userName" />
+                    </section>
+                    <section>
+                        <button id="saveName" type="button">Set Name</button>
+                    </section>
+                    <section id="outputSection">
+                    </section>
+                </article>
+
+            </div> <!-- #main -->
+        </div> <!-- #main-container -->
+
+        <div class="footer-container">
+            <footer class="wrapper">
+                <h3 id="footer"></h3>
+            </footer>
+        </div>
+
+<script src="app/htmltestapp.js" type="text/javascript"></script>
+<script src="app/questions.js" type="text/javascript"></script>
+</body>
+</html>

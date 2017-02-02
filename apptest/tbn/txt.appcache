@@ -1,0 +1,45 @@
+CACHE MANIFEST
+      
+# rev 342
+
+CACHE:
+styles/normalize/normalize.min.css
+styles/jquerymobile/jquery.mobile-1.2.0.css
+styles/jquerymobile/jquery.mobile.theme-1.2.0.css
+styles/jquerymobile/images/ajax-loader.gif
+styles/jquerymobile/images/icons-18-white.png
+styles/jquerymobile/images/icons-18-black.png
+styles/jquerymobile/images/icons-36-white.png
+styles/jquerymobile/images/icons-36-black.png
+scripts/jquery-1.8.1.min.js
+scripts/jquery.mobile-1.2.0.min.js
+scripts/modernizr-2.5.3.js
+scripts/knockout-2.1.0.debug.js
+scripts/moment.min.js
+viewmodel/bindingHelpers.js
+viewmodel/environment.js
+viewmodel/jsonDataSource.js
+viewmodel/textFileIO.js
+viewmodel/arrayStorageContainer.js
+viewmodel/snippet.js
+viewmodel/selectedSnippetStorage.js
+viewmodel/userTokenStorage.js
+viewmodel/messageTokenProcessor.js
+viewmodel/messageViewModel.js
+viewmodel/snippetsViewModel.js
+viewmodel/tokensViewModel.js
+viewmodel/helpViewModel.js
+data/snippets-json.txt
+data/catagory-json.txt
+help.html
+index.html
+message.html
+tokens.html
+
+FALLBACK:
+/ offline.html
+
+NETWORK:
+*
+
+
