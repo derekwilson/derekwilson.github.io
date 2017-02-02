@@ -1,6 +1,6 @@
 CACHE MANIFEST
       
-# rev 342
+# rev 348
 
 CACHE:
 styles/normalize/normalize.min.css
@@ -30,7 +30,7 @@ viewmodel/snippetsViewModel.js
 viewmodel/tokensViewModel.js
 viewmodel/helpViewModel.js
 data/snippets-json.txt
-data/catagory-json.txt
+data/category-json.txt
 help.html
 index.html
 message.html

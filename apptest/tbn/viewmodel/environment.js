@@ -19,7 +19,7 @@ function Environment() {
     }
 
     self.appVersion = ko.computed(function() {
-        return '341' + (self.isPhoneGap() ? '(p)' : '(b)');
+        return '352' + (self.isPhoneGap() ? '(p)' : '(b)');
     }, this);
 }   
 

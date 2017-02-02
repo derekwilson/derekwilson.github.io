@@ -8,15 +8,15 @@ function SnippetsViewModel() {
     // this needs to be observable or the status bar will not update
     self.dataLoaded = ko.observable(false);
 
-    self.catagoryDataSource = new JsonDataSource('data/catagory-json.txt');
+    self.categoryDataSource = new JsonDataSource('data/category-json.txt');
     self.snippetDataSource = new JsonDataSource('data/snippets-json.txt');
-    self.catagoryFile = null;
+    self.categoryFile = null;
     self.snippetsFile = null;
     self.failedLocalStorage = false;
 
     self.selectedSnippets = new SelectedSnippetStorage();
 
-    self.catagories = ko.observableArray();
+    self.categories = ko.observableArray();
 
     self.selectedSnippet = ko.observable(new SelectedSnippet('not set'));
     self.selectedSnippetText = ko.computed(function() {
@@ -31,27 +31,27 @@ function SnippetsViewModel() {
         }
 
         var snippetCount = 0;
-        for (var catagoryIndex = 0; catagoryIndex < self.catagories().length; catagoryIndex++) {
-            snippetCount = snippetCount + self.catagories()[catagoryIndex].snippets().length;
+        for (var categoryIndex = 0; categoryIndex < self.categories().length; categoryIndex++) {
+            snippetCount = snippetCount + self.categories()[categoryIndex].snippets().length;
         }
-        return self.catagories().length + " catagories " + snippetCount + " snippets loaded";
+        return self.categories().length + " categories " + snippetCount + " snippets";
     }, this);
 
-    self.loadCatagories = function (catagories, fromCache, reloadFromServer) {
-        if (catagories == null) {
+    self.loadCategories = function (categories, fromCache, reloadFromServer) {
+        if (categories == null) {
             if (self.failedLocalStorage) {
                 return 0;
             }
             if (self.environment.shouldUsePhoneGap()) {
                 // we failed to load from local storage - get from our own assets
-                console.log('loadCatagories failed reverting to builtin assets');
+                console.log('loadCategories failed reverting to builtin assets');
                 self.failedLocalStorage = true;
-                self.catagoryDataSource.getData(false, self.loadCatagories);
+                self.categoryDataSource.getData(false, self.loadCategories);
             }
         }
 
-        for (var i = 0; i < catagories.length; i++) {
-            self.catagories.push(new Catagory(catagories[i].CatagoryId,catagories[i].Display));
+        for (var i = 0; i < categories.length; i++) {
+            self.categories.push(new Category(categories[i].CategoryId,categories[i].Display));
         }
         if (!self.failedLocalStorage && self.environment.isPhoneGap()) {
             self.snippetsFile.readJSON(self.loadSnippets);
@@ -71,17 +71,17 @@ function SnippetsViewModel() {
                 // we failed to load from local storage - get from our own assets
                 console.log('loadSnippets failed reverting to builtin assets');
                 self.failedLocalStorage = true;
-                self.catagoryDataSource.getData(false, self.loadCatagories);
+                self.categoryDataSource.getData(false, self.loadCategories);
             }
         }
 
 
         var lodadedCount = 0;
         for (var i = 0; i < snippets.length; i++) {
-            var snippet = new Snippet(snippets[i].CatagoryId,snippets[i].Display);
-            for (var catagoryIndex = 0; catagoryIndex < self.catagories().length; catagoryIndex++) {
-                if (self.catagories()[catagoryIndex].id == snippet.catagoryId) {
-                    self.catagories()[catagoryIndex].snippets.push(snippet);
+            var snippet = new Snippet(snippets[i].CategoryId,snippets[i].Display);
+            for (var categoryIndex = 0; categoryIndex < self.categories().length; categoryIndex++) {
+                if (self.categories()[categoryIndex].id == snippet.categoryId) {
+                    self.categories()[categoryIndex].snippets.push(snippet);
                     lodadedCount = lodadedCount + 1;
                 }
             }
@@ -93,13 +93,13 @@ function SnippetsViewModel() {
 
     self.snippetsUpdated = function () {
         // need to refresh the UI after the data has been bound
-        var list = $('.catagorylist');
+        var list = $('.categorylist');
         self.refreshListview(list)
 
         // for some reason text binding to the bubble counter does not work
-        var catagoryBubbles = $('.catagorybubble');
-        catagoryBubbles.each(function (index) {
-            var snippetCount = self.catagories()[index].numberOfSnippets();
+        var categoryBubbles = $('.categorybubble');
+        categoryBubbles.each(function (index) {
+            var snippetCount = self.categories()[index].numberOfSnippets();
             $(this).text(snippetCount);
         })
     };
@@ -130,9 +130,13 @@ function SnippetsViewModel() {
     self.onDeviceReady = function () {
         // Now safe to use the PhoneGap API
         console.log("Device Ready...");
-        self.catagoryFile = new TextFileIO("tbn","catagory.txt");
+        self.categoryFile = new TextFileIO("tbn","category.txt");
         self.snippetsFile = new TextFileIO("tbn","snippets.txt");
-        self.catagoryFile.readJSON(self.loadCatagories);
+        self.categoryFile.readJSON(self.loadCategories);
+    };
+
+    self.exitApp = function () {
+        navigator.app.exitApp();
     };
 
     // code
@@ -140,7 +144,7 @@ function SnippetsViewModel() {
         // need to do this here as we do not store the snippets in persistant storage
         // only do it on the page init as the page show event fires when backing out of the list view
         if (!self.environment.isPhoneGap()) {
-            self.catagoryDataSource.getData(false, self.loadCatagories);
+            self.categoryDataSource.getData(false, self.loadCategories);
         }
     });
 

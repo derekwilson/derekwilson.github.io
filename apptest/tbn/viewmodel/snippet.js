@@ -1,4 +1,4 @@
-function Catagory(id, display) {
+function Category(id, display) {
     var self = this;
     self.id = id;
     self.display = ko.observable(display);
@@ -9,9 +9,9 @@ function Catagory(id, display) {
     }, this);
 }
 
-function Snippet(catagoryId, display) {
+function Snippet(categoryId, display) {
     var self = this;
-    self.catagoryId = catagoryId;
+    self.categoryId = categoryId;
     self.display = ko.observable(display);
 }
 

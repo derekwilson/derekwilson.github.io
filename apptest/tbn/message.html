@@ -2,7 +2,7 @@
 <html manifest="txt.appcache">
 	<head>
 		<title>TextByNumbers</title>
-		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 		<meta name="viewport" content="width=device-width, initial-scale=1"> 
 	    <link rel="stylesheet" href="styles/normalize/normalize.min.css">
 	    <link rel="stylesheet" href="styles/jquerymobile/jquery.mobile-1.2.0.css" />  
@@ -84,7 +84,9 @@
 	<!-- /ko -->
  </div>
  <div data-role="footer" data-theme="b">
-  <h4>v<span data-bind="text: codeVersion"></span>, <span data-bind="text: selectionStatus"></span></h4>
+  <h4 style="text-align: left">v<span data-bind="text: codeVersion"></span>, <span data-bind="text: selectionStatus"></span>
+  	  <a href="#" data-bind="click: $root.exitApp" class="ui-btn-right" data-role="button" data-icon="star">Exit</a>
+  </h4>
  </div>
 </div>
 

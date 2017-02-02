@@ -15,7 +15,7 @@ function TokensViewModel() {
         var selectionLength = self.tokenStorage.store.persistentArray().length;
 
         if (selectionLength < 1) {
-            return "there are no tokens defined";
+            return "no tokens defined";
         }
 
         return selectionLength + " tokens";
@@ -74,7 +74,7 @@ function TokensViewModel() {
     self.updateTokensFromAllSnippets = function (snippets, fromCache, reloadFromServer) {
         var allSnippets = ko.observableArray();     // wonder if there is a way to make this not observable
         for (var i = 0; i < snippets.length; i++) {
-            var snippet = new Snippet(snippets[i].CatagoryId,snippets[i].Display);
+            var snippet = new Snippet(snippets[i].CategoryId,snippets[i].Display);
             allSnippets.push(snippet);
         };
         self.addFromArray(allSnippets);
@@ -94,4 +94,8 @@ function TokensViewModel() {
         }
     };
 
+    self.exitApp = function () {
+        self.saveAll();
+        navigator.app.exitApp();
+    };
 }

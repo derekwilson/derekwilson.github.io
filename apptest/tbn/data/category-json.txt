@@ -1,0 +1,5 @@
+[
+{"CategoryId":1,"Display":"Example Snippets"},
+{"CategoryId":2,"Display":"Phone App Setup"},
+{"CategoryId":3,"Display":"Web Site Setup"}
+]

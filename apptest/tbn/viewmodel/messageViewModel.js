@@ -29,10 +29,10 @@ function MessageViewModel() {
         var selectionLength = self.selectedSnippets.store.persistentArray().length;
 
         if (selectionLength < 1) {
-            return "nothing has been selected";
+            return "nothing selected";
         }
 
-        return selectionLength + " snippets selected";
+        return selectionLength + " snippets";
     }, this);
 
     self.selectedSnippetsUpdated = function() {
@@ -60,6 +60,10 @@ function MessageViewModel() {
         //alert('move: ' + selectedSnippet.display());
         self.selectedSnippets.store.moveDown(selectedSnippet);
         self.selectedSnippetsUpdated();
+    };
+
+    self.exitApp = function () {
+        navigator.app.exitApp();
     };
 
     // code
