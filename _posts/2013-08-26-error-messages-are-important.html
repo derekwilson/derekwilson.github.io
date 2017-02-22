@@ -3,8 +3,8 @@ layout: post
 title: "Error messages are important"
 date: 2013-08-26 01:28:00
 published: true
-tags: ["Code Review", "Development"]
-categories: ["Code Review", "Development"]
+tags: ["Code Review", "Development", ".Net"]
+categories: ["Code Review", "Development", ".Net"]
 alias: ["/derekblog/post/2013/08/26/Error-messages-are-important.aspx", "/derekblog/post/2013/08/26/error-messages-are-important.aspx"]
 ---
 <p>I’ve been doing some maintenance work on some old code. And I think that most of my effort has gone into making the error messages better. If a piece if software is successful then it means its going to be used in a live environment. It also means its going to break at some point and at that point its going to be a lot easier for everyone if the error message it produces makes sense.</p>  <p>For example just the other day I came across this piece of code that loads a piece of XML</p>  <pre>new XDocument(xml).Validate(_schema, (sender, e) =&gt; {

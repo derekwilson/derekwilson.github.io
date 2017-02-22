@@ -3,8 +3,8 @@ layout: post
 title: "Message logging in WCF clients"
 date: 2014-12-10 01:54:00
 published: true
-tags: ["Web", "Development"]
-categories: ["Web", "Development"]
+tags: ["Web", "Development", ".Net"]
+categories: ["Web", "Development", ".Net"]
 alias: ["/derekblog/post/2014/12/10/Message-logging-in-WCF-clients.aspx", "/derekblog/post/2014/12/10/message-logging-in-wcf-clients.aspx"]
 ---
 <p>Having migrated a service client from <a href="http://www.microsoft.com/en-us/download/details.aspx?id=14089">WSE</a> to WCF one of the things I noticed is that <a href="http://msdn.microsoft.com/en-us/library/ms730064(v=vs.110).aspx">WCF client message logging</a> is certainly very comprehensive but it can be extremely verbose and difficult to just look at the wire packets.</p>  <p>It turns out that WCF client channels can be easily configured to use an existing logging framework. To attach a custom logger we can configure it into the client by adding a behaviourConfiguration into the client endpoint.</p>  <pre>&lt;system.serviceModel&gt;
