@@ -54,19 +54,19 @@ SQLite [cannot run in medium trust](https://forums.iis.net/t/1161500.aspx?Medium
 
 I managed to hang on to NHibernate, just. Dynamic proxies are not possible in Medium Trust but I could have [pre-generated](http://www.nhforge.org/wikis/howtonh/pre-generate-lazy-loading-proxies.aspx) them, but in the end just used some that [someone else had generated](http://iamdotnetcrazy.blogspot.co.nz/2010/09/how-to-get-fluent-nhibernate-nhibernate.html).
 
-While I was about it I moved to MVC which enabled me to layer the code better and provide a proper set of models and a repository pattern.
+While I was about it I moved to MVC which enabled me to [layer](https://en.wikipedia.org/wiki/Abstraction_layer) the code better and provide a proper set of models and a [repository pattern](https://martinfowler.com/eaaCatalog/repository.html).
 
 ## Full circle
 
-And then after moving to a dynamic pattern a decade ago, I decided tp move my blog to GitHub Pages where it is generated from markdown into static HTML, much like my original books catalogue.
+And then after moving to a dynamically generated site a decade ago, I decided tp move my blog to GitHub Pages where it is generated from markdown into static HTML, much like my original books catalogue.
 
-Obviously I cannot host the MVC catalogue in Github Pages so I needed a new home. I decided to move it to Azure.
+Obviously I cannot host the MVC books catalogue in Github Pages so I needed a new home. I decided to move it to Azure and linking to it from my blog.
 
 I had disliked moving to SQLServer CE and only did it because I was forced. So the first thing was to migrate back to SQLite, this was pretty easy, I still had the old schema and the SQLCE40 Toolbox could generate Insert statement text files.
 
 Ditto with NHibernate, I had adopted is as an experiment and it was fine at what it did, and in a large line of business app I am sure it would be great, in my catalogue it was overkill. I had used and liked the simplicity and speed of Dapper so moved over to it.
 
-Also and as an experiment I though I would upgrade to the latest MVC. This meant that I was so close to move off .NET (and Windows) to .NETCore I decided to go the final step. 
+Also and as an experiment I though I would upgrade to the latest MVC. This meant that I was so close to move off .NET (and Windows) to .NETCore that I decided to go the final step. 
 
 So now I have a lightweight site that can be hosted in Azure (or probably any other provider), using Windows or Linux, in fact I am playing around with the idea of putting it on a Raspberry Pi running Ubuntu.
 
@@ -74,14 +74,17 @@ The client side has remained the same so its a clunky 10 year old collection of 
 
 ## What have I learnt
 
-### Database and ORM
+### Database and ORM - patterns and interfaces
 
 One of the perceived advantages of an ORM is that it can enable an app to swap database providers. In this instance I was swapping both ORM and database. My experience was that the ORM does isolate the app from the database and as a consequence swapping is possible. In fact this is what I did in 2012 when I went to SQLServer CE. 
 
 Swapping both wasn't that much harder. In this instance having a repository pattern and programming against an interface was a lifesaver. The controller and view model logic were unaffected by the changes in the data access layer.
 
-### View render engine
+### View render engine - simple views
 
 Web Forms are not available in .NETCore so I had to use Razor. Having very simple views that had no logic but were just containers for HTML was great, it meant that migrating was a simple search and replace for syntax changes.
 
- 
+### Layers are good
+
+I know this is very basic but keeping code isolated in layers has helped my replace modules as I go. For example I have been able to work on the backed database and data access layers without disturbing the front end. Of course this does mean that the front end is looking a bit shabby and in need of some love but when I have some time I can get to it in isolation. 
+
