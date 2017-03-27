@@ -77,6 +77,15 @@ blockquote
  margin-bottom: 10px;
 }
 
+.message
+{
+    background-color: #FFEE99;
+    border: 2px solid #AAAAAA;
+    margin-top: 6em;
+    margin-bottom: 6em;
+    padding: 5px;
+}
+
 /* end - extra for static pages */
 
 
