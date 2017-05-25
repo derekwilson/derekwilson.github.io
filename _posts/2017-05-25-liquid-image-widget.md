@@ -7,7 +7,7 @@ tags: ["Development", "General", "Web"]
 categories: ["Development", "General", "Web"]
 ---
 
-This year I [migrated][migrate-play-url] my blog to [Github Pages][github-pages-url]. I am super impressed by the move hosting on github is incredibly fast.
+This year I [migrated][migrate-post-url] my blog to [Github Pages][github-pages-url]. I am super impressed by the move hosting on github is incredibly fast.
 
 There are a few things that I took for granted in my old work flow. One was the way that if I inserted an image into a post then Windows Live Writer would insert a small thumbnail and link to the full image. I didnt realist how useful this was until I wrote one of my [first posts][example-post-url].
 
