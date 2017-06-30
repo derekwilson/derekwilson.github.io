@@ -2,6 +2,7 @@
 layout: post
 title:  "Navigation widgets for liquid"
 date:   2017-06-28 20:38:47 +1300
+published: true
 tags: ["Development", "General", "Web"]
 categories: ["Development", "General", "Web"]
 ---
