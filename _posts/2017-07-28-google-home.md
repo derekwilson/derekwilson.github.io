@@ -11,9 +11,9 @@ I have another new gadget - [Google Home][ghome-url]. Speakers you talk to are a
 
 ## First Impressions
 
-Well there is a lot of hype. The voice recognition is good, over 90% accuracy. Its just that the devices its competeing with, light switches egg timers, volume controls are all running at 100% accuracy. Even having to repeat yourself a bit is irritating. In general you can do everything Home can do faster and with more precision with your phone. 
+Well there is a lot of hype. The voice recognition is good, over 90% accuracy. Its just that the devices its competing with, light switches egg timers, volume controls are all running at 100% accuracy. Even having to repeat yourself a bit is irritating. In general you can do everything Home can do faster and with more precision with your phone. 
 
-That said there are a few use cases when Home is useful. Setting a timer from the kitchen when your hands are full; turning the heater on when you dont have your phone; checking some random fact while watching TV. They are limted and the Home is not that cheap. 
+That said there are a few use cases when Home is useful. Setting a timer from the kitchen when your hands are full; turning the heater on when you don't have your phone; checking some random fact while watching TV. They are limited and the Home is not that cheap. 
 
 For me the thing that tips the balance in its favour is using [Home in conjunction with a Chromecast Audio][multicast-url] to get multiroom playback - sort of [Sonos][sonos-url] on the cheap. 
 
