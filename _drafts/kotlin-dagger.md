@@ -1,3 +1,14 @@
+### kotlin plugin
+
+Your version of Kotlin runtime in 'kotlin-stdlib-1.1.3-2' library is 1.1.3-2, while plugin version is 1.1.4-release-Studio2.3-3.
+Runtime library should be updated to avoid compatibility problems.
+Update Runtime Ignore
+
+	ext.kotlin_version = '1.1.3-2'
+
+	ext.kotlin_version = '1.1.4'
+
+
 ### kapt errors are a mess
 
 ```
