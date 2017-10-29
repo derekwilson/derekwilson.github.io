@@ -43,3 +43,66 @@ e: java.lang.IllegalStateException: failed to analyze: org.jetbrains.kotlin.kapt
         at org.jetbrains.kotlin.cli.jvm.K2JVMCompiler.doExecute(K2JVMCompiler.kt:55)
         at org.jetbrains.kotlin.cli.common.CLICompiler.exec(CLICompiler.java:182)
         at org.jetbrains.kotlin.daemon.CompileServiceImpl.execCompiler(CompileServiceImpl.kt:397)
+
+
+### AS3
+
+Error:Execution failed for task ':app:transformResourcesWithMergeJavaResForDebug'.
+More than one file was found with OS independent path 'META-INF/app_debug.kotlin_module'
+
+
+10:24	Outdated Kotlin Runtime
+			Your version of Kotlin runtime in 'org.jetbrains.kotlin:kotlin-stdlib:1.1.4@jar' library is 1.1.4, while plugin version is 1.1.51-release-Studio3.0-1.
+			Runtime library should be updated to avoid compatibility problems.
+			Update Runtime Ignore
+
+reload cache didnt work
+
+	// dagger
+	kapt 'com.google.dagger:dagger-compiler:2.11'
+	kapt 'com.google.dagger:dagger-android-processor:2.11'
+	compile 'com.google.dagger:dagger:2.11'
+	compile 'com.google.dagger:dagger-android-support:2.11'
+
+->
+
+	compile 'com.google.dagger:dagger:2.11'
+	annotationProcessor 'com.google.dagger:dagger-compiler:2.11'
+	compile 'com.google.dagger:dagger-android:2.11'
+	compile 'com.google.dagger:dagger-android-support:2.11'
+	annotationProcessor 'com.google.dagger:dagger-android-processor:2.11'
+
+
+
+android {
+	compileSdkVersion 25
+	buildToolsVersion '26.0.2'
+	defaultConfig {
+		applicationId "com.andrewandderek.mapspoc"
+		minSdkVersion 14
+		targetSdkVersion 25
+		versionCode 1
+		versionName "1.0"
+		testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+		multiDexEnabled true
+	}
+	buildTypes {
+		release {
+			minifyEnabled false
+			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+		}
+	}
+
+	//Although Gradle will compile any Kotlin files it finds in src/main/java, it’s good practice to store your Kotlin files in a dedicated Kotlin directory. Here, you can see that the Kotlin plugin has added a src/main/kotlin declaration to build.gradle, but note that it hasn’t actually created this directory, so we’ll create it ourselves later in this article//
+	sourceSets {
+		main.java.srcDirs += 'src/main/kotlin'
+		release.java.srcDirs += 'src/release/kotlin'
+		debug.java.srcDirs += 'src/debug/kotlin'
+	}
+
+	packagingOptions {
+		exclude 'META-INF/app_debug.kotlin_module'
+	}
+}
+
+
