@@ -1,31 +1,50 @@
+## Kotlin, Dagger2 and Butterknife
+
+I have started a new app. I know I have written about setting up an app to use Dagger2 in the past but this time I am using Dagger2 and Butterknife with Android Studio 3 and Kotlin. Dagger2 and Butterknife are not new and are well documented but using them in a Kotlin app was less well documented as I setup this app.
+
+There are some things that I needed to get used to before I could make any real progress.
+
 ### kotlin plugin
 
+As Android Studio adopts Kotlin as an officially supported language for Android development the plugin and the runtime appear to be release more often at the moment. As a consequence you will see this kind of error message.
+
+```
 Your version of Kotlin runtime in 'kotlin-stdlib-1.1.3-2' library is 1.1.3-2, while plugin version is 1.1.4-release-Studio2.3-3.
 Runtime library should be updated to avoid compatibility problems.
 Update Runtime Ignore
+```
 
-	ext.kotlin_version = '1.1.3-2'
+Android Studio can and will update the plugin automatically, or allow you to do it at the click of a toast popup however the runtime is up to you to sort out.
 
+It wasne completely obvious but the numbers need to match up to the suffix staring with `-release-Studio`. You need to change the line in your gradle file, which by default is at the top of the top level `build.gradle` file. In this instance I change the file to look like this.
+
+```
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
 	ext.kotlin_version = '1.1.4'
+	repositories {
+```
+
+As of version 1.1.50 the format has changed to eliminate any hyphens so no more 1.1.x-y instead it will be 1.1.xy, which is a bit clearer given that the plugin suffix can contain hyphens.
 
 
 ### kapt errors are a mess
+
+The annotations processor for Kotlin (KAPT) does not integrate well into Android Studio in the sense that the error messages are easily missed.
+
+Usually this is not a problem but Dagger2 relies heavily on KAPT and all too often will generate an error. In that instance all you will see is
 
 ```
 Error:Execution failed for task ':app:kaptDebugKotlin'. > Internal compiler error. See log for more details
 ```
 
-File -> Settings -> Compiler
+You may see more information by going to File -> Settings -> Compiler and adding `--stacktrace --debug` to the command line options
 
-```
---stacktrace --debug
-```
-
-Command line
+Also you can build from the command line, or examine the gradle console window in Android Studio, with will yeild more information, some of it should help, for example
 
 ```
 gradlew build --stacktrace
-```
 
 :app:kaptDebugKotlin
 e: ...\di\scopes\MainActivityModule.java:15: error: @Provides methods cannot be abstract
@@ -43,66 +62,143 @@ e: java.lang.IllegalStateException: failed to analyze: org.jetbrains.kotlin.kapt
         at org.jetbrains.kotlin.cli.jvm.K2JVMCompiler.doExecute(K2JVMCompiler.kt:55)
         at org.jetbrains.kotlin.cli.common.CLICompiler.exec(CLICompiler.java:182)
         at org.jetbrains.kotlin.daemon.CompileServiceImpl.execCompiler(CompileServiceImpl.kt:397)
+```
 
+### Package error after updating to Android Studio 3
 
-### AS3
+I also found this error
 
+```
 Error:Execution failed for task ':app:transformResourcesWithMergeJavaResForDebug'.
 More than one file was found with OS independent path 'META-INF/app_debug.kotlin_module'
+```
 
+There were suggestions that I could reload the cache, however that didnt help in this instance. In the end I excluded the file in the package options like this
 
-10:24	Outdated Kotlin Runtime
-			Your version of Kotlin runtime in 'org.jetbrains.kotlin:kotlin-stdlib:1.1.4@jar' library is 1.1.4, while plugin version is 1.1.51-release-Studio3.0-1.
-			Runtime library should be updated to avoid compatibility problems.
-			Update Runtime Ignore
-
-reload cache didnt work
-
-	// dagger
-	kapt 'com.google.dagger:dagger-compiler:2.11'
-	kapt 'com.google.dagger:dagger-android-processor:2.11'
-	compile 'com.google.dagger:dagger:2.11'
-	compile 'com.google.dagger:dagger-android-support:2.11'
-
-->
-
-	compile 'com.google.dagger:dagger:2.11'
-	annotationProcessor 'com.google.dagger:dagger-compiler:2.11'
-	compile 'com.google.dagger:dagger-android:2.11'
-	compile 'com.google.dagger:dagger-android-support:2.11'
-	annotationProcessor 'com.google.dagger:dagger-android-processor:2.11'
-
-
-
+```
 android {
 	compileSdkVersion 25
 	buildToolsVersion '26.0.2'
-	defaultConfig {
-		applicationId "com.andrewandderek.mapspoc"
-		minSdkVersion 14
-		targetSdkVersion 25
-		versionCode 1
-		versionName "1.0"
-		testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-		multiDexEnabled true
-	}
-	buildTypes {
-		release {
-			minifyEnabled false
-			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-		}
-	}
 
-	//Although Gradle will compile any Kotlin files it finds in src/main/java, it’s good practice to store your Kotlin files in a dedicated Kotlin directory. Here, you can see that the Kotlin plugin has added a src/main/kotlin declaration to build.gradle, but note that it hasn’t actually created this directory, so we’ll create it ourselves later in this article//
-	sourceSets {
-		main.java.srcDirs += 'src/main/kotlin'
-		release.java.srcDirs += 'src/release/kotlin'
-		debug.java.srcDirs += 'src/debug/kotlin'
-	}
-
+	....
+	
 	packagingOptions {
 		exclude 'META-INF/app_debug.kotlin_module'
 	}
 }
+```
+
+### Using Dagger.Android
+
+As I was building a new app I wanted to use the latest offering from Dagger2 and there now is the new `Dagger.Android` package wich should make injecting Android objects, such as Activity, Service, Fragment etc. easier with less boilerplate code in the app.
+
+There are a number of small pieces that I ended up doing to get it to work, this is the code from my first cur proof of concept, I was just trying to get everything working, there are parts that needed tweaking as I produced a more polished version.
+
+#### In the application
+
+The root setup of the IoC container happens int eh application. 
+
+```
+class AndroidApplication : Application(), HasActivityInjector
+{
+    // Deliberately not using IoC for this - as we want to log setting up IoC
+    private val logger = LoggerFactory.getLogger(AndroidApplication::class.java)
+
+    @Inject lateinit var injectedLogger: IApplicationLoggerFactory
+    @Inject lateinit var activityInjector: DispatchingAndroidInjector<Activity>
+
+    override fun activityInjector(): AndroidInjector<Activity> {
+        return activityInjector
+    }
+
+	// this is the root IoC container
+    val component: IApplicationComponent by lazy {
+        DaggerIApplicationComponent
+                .builder()
+                .applicationModule(ApplicationModule(this))
+                .build()
+    }
+
+    override fun onCreate() {
+        logger.debug("POC: Application started - shared")
+        component.inject(this)
+        injectedLogger.applicationLogger.debug("POC: IoC container build complete")
+
+        super.onCreate()
+
+        ButterKnife.setDebug(BuildConfig.DEBUG)
+    }
+}
+```
+
+We emit one log entry directly and then after injection as happened we emit one line using the injected logger.
+
+We are well used to seeing `component.inject(this)` boiler plate code in Activities from using Dagger2 in Java. However when we use `Dagger.Android` this is the only class that we explicitly create a component and inject, Dagger will handle a lot of the legwork in the Activity classes.
+
+#### In the Activity
+
+The activity class is much simpler than using old style Dagger2
+
+```
+class MainActivity :
+        AppCompatActivity(),
+        IMainActivityView
+{
+    @Inject lateinit var presenter: IMainActivityPresenter
+    @Inject lateinit var logger: IApplicationLoggerFactory
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
+        logger.applicationLogger.debug("Main activity started")
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+		....
+    }
+```
+
+We still call inject by calling `AndroidInjection.inject(this)` but that is the only line required to get injection to work.
+
+#### The Component and Module
+
+To get this to happen I setup the component and module, that we created in the Application slightly differently than I was used to in old style Dagger.
+
+```
+@Singleton
+@Component(modules = arrayOf(
+        AndroidSupportInjectionModule::class,
+        SubcomponentBuilderModule::class,       // the activity (view) subcomponent injectors, binding is automatic
+        ApplicationModule::class))              // global singleton objects
+interface IApplicationComponent {
+    fun inject(app: AndroidApplication)
+}
+
+/**
+ * This module contains all the binding to the sub component builders in the app
+ */
+@Module
+abstract class SubcomponentBuilderModule {
+    @Binds
+    @IntoMap
+    @ActivityKey(MainActivity::class)
+    abstract fun bindMainActivityInjectorFactory(builder: IMainActivitySubComponent.Builder): AndroidInjector.Factory<out Activity>
+}
+
+// do not forget to add any additional subcomponents here
+@Module(subcomponents = arrayOf(IMainActivitySubComponent::class)
+class ApplicationModule(val application: AndroidApplication) {
+    @Provides
+    @Singleton
+    fun provideApplicationContext() : Context = application.applicationContext
+
+    @Provides
+    @Singleton
+    fun provideLogger(loggerFactory: SlfLoggerFactory): IApplicationLoggerFactory {
+        return loggerFactory
+    }
+}
+```
+
+
+
 
 
