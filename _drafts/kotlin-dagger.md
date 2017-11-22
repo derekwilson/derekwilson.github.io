@@ -160,7 +160,11 @@ We still call inject by calling `AndroidInjection.inject(this)` but that is the 
 
 #### The Component and Module
 
-To get this to happen I setup the component and module, that we created in the Application slightly differently than I was used to in old style Dagger.
+To get this to happen I had to setup the component and module slightly differently than I had done for previous projects.
+
+##### Global scoped singletons
+
+The global module looks like this
 
 ```
 @Singleton
@@ -198,7 +202,44 @@ class ApplicationModule(val application: AndroidApplication) {
 }
 ```
 
+##### Activity scoped objects
 
+Then the activity has a module that looks like this.
 
+```
+@ActivityScope
+@Subcomponent(modules = arrayOf(MainActivityViewModule::class))
+interface IMainActivitySubComponent : AndroidInjector<MainActivity> {
+    @Subcomponent.Builder
+    abstract class Builder : AndroidInjector.Builder<MainActivity>()
+}
 
+@Module(includes = arrayOf(MainActivityModule::class))
+abstract class MainActivityViewModule {
+    @Binds
+    internal abstract fun provideMainActivityView(activity: MainActivity): IMainActivityView
+}
 
+// we cannot mix provide and bind methods in one module
+@Module
+class MainActivityModule {
+    @Provides
+    @ActivityScope
+    fun provideMainActivityPresenter(presenter: MainActivityPresenter): IMainActivityPresenter {
+        return presenter
+    }
+}
+
+```
+
+The IMainActivitySubComponent satisfies the promise we made in SubcomponentBuilderModule if we do not provide a `AndroidInjector.Builder<MainActivity>` then we will get a compilation error. 
+
+Usually we only have one `@Module` however in kotlin you cannot mix `@Binds` and `@Provides` in the same class as `@Binds` requires the class to be abstract. In Java we can get around this by using `static` but here in kotlin we needed to have a `@Module` made up from two classes.
+
+### Butterknife
+
+There only extra pieve I needed to get Butterknife to work was to make sure I used 
+
+### The future
+
+Like I said this was a first proof of concept and it does need some tidying up. I have read that putting all the builder in on subcomponent like I have done in `SubcomponentBuilderModule` isnt great as it imposes the same scope on them all. Also I should prefer `@Bind` over `@Provide` as in most cases I dont need `@Provide`. I will revisit this.
