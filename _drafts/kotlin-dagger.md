@@ -1,12 +1,12 @@
 ## Kotlin, Dagger2 and Butterknife
 
-I have started a new app. I know I have written about setting up an app to use Dagger2 in the past but this time I am using Dagger2 and Butterknife with Android Studio 3 and Kotlin. Dagger2 and Butterknife are not new and are well documented but using them in a Kotlin app was less well documented as I setup this app.
+I have started a new app. I know I have [written about setting up an app to use Dagger2][previous-post-url] in the past but this time I am using [Dagger2][dagger-url] and [Butterknife][butterknife-url] with [Android Studio 3][as3-url] and [Kotlin][]kotlin-url. Dagger2 and Butterknife are not new and are well documented but using them in a Kotlin app was less well documented as I setup this app.
 
 There are some things that I needed to get used to before I could make any real progress.
 
 ### kotlin plugin
 
-As Android Studio adopts Kotlin as an officially supported language for Android development the plugin and the runtime appear to be release more often at the moment. As a consequence you will see this kind of error message.
+As [Android Studio adopts Kotlin][kotlin-android-url] as an officially supported language for Android development the plugin and the runtime appear to be release more often at the moment. As a consequence you will see this kind of error message.
 
 ```
 Your version of Kotlin runtime in 'kotlin-stdlib-1.1.3-2' library is 1.1.3-2, while plugin version is 1.1.4-release-Studio2.3-3.
@@ -16,7 +16,7 @@ Update Runtime Ignore
 
 Android Studio can and will update the plugin automatically, or allow you to do it at the click of a toast popup however the runtime is up to you to sort out.
 
-It wasne completely obvious but the numbers need to match up to the suffix staring with `-release-Studio`. You need to change the line in your gradle file, which by default is at the top of the top level `build.gradle` file. In this instance I change the file to look like this.
+It wasn't completely obvious but the numbers need to match up to the suffix staring with `-release-Studio`. You need to change the line in your gradle file, which by default is at the top of the top level `build.gradle` file. In this instance I change the file to look like this.
 
 ```
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
@@ -90,7 +90,7 @@ android {
 
 ### Using Dagger.Android
 
-As I was building a new app I wanted to use the latest offering from Dagger2 and there now is the new `Dagger.Android` package wich should make injecting Android objects, such as Activity, Service, Fragment etc. easier with less boilerplate code in the app.
+As I was building a new app I wanted to use the latest offering from Dagger2 and there now is the new `Dagger.Android` package which should make injecting Android objects, such as Activity, Service, Fragment etc. easier with less boilerplate code in the app.
 
 There are a number of small pieces that I ended up doing to get it to work, this is the code from my first cur proof of concept, I was just trying to get everything working, there are parts that needed tweaking as I produced a more polished version.
 
@@ -238,8 +238,30 @@ Usually we only have one `@Module` however in kotlin you cannot mix `@Binds` and
 
 ### Butterknife
 
-There only extra pieve I needed to get Butterknife to work was to make sure I used 
+There only extra piece I needed to get Butterknife to work was to make sure I used `@JvmField` like this. I decided that I would use the mature Butterknife rather than [Kotterknife][kotterknife-url].
+
+```
+@JvmField @BindView(R.id.txt_status)
+protected var status: TextView? = null
+
+override fun onCreate(savedInstanceState: Bundle?) {
+    AndroidInjection.inject(this)
+    super.onCreate(savedInstanceState)
+    setContentView(R.layout.activity_diagnostics)
+    ButterKnife.bind(this)
+    presenter.setupScreen()
+}
+```
 
 ### The future
 
 Like I said this was a first proof of concept and it does need some tidying up. I have read that putting all the builder in on subcomponent like I have done in `SubcomponentBuilderModule` isnt great as it imposes the same scope on them all. Also I should prefer `@Bind` over `@Provide` as in most cases I dont need `@Provide`. I will revisit this.
+
+[previous-post-url]:	/blog/2015/11/12/an-mvp-pattern-using-scoped-dagger2-ioc-containers
+[dagger-url]:			https://google.github.io/dagger/
+[butterknife-url]:		http://jakewharton.github.io/butterknife/
+[kotterknife-url]:		https://github.com/JakeWharton/kotterknife
+[as3-url]:				https://android-developers.googleblog.com/2017/10/android-studio-30.html
+[kotlin-url]:			https://kotlinlang.org/
+[kotlin-android-url]:	https://developer.android.com/kotlin/index.html
+
