@@ -1,10 +1,17 @@
-## Kotlin, Dagger2 and Butterknife
+---
+layout: post
+title:  "Kotlin, Dagger2 and Butterknife"
+date:   2017-11-27 12:00:00
+published: true
+tags: ["Android", "Development"]
+categories: ["Android", "Development"]
+---
 
-I have started a new app. I know I have [written about setting up an app to use Dagger2][previous-post-url] in the past but this time I am using [Dagger2][dagger-url] and [Butterknife][butterknife-url] with [Android Studio 3][as3-url] and [Kotlin][]kotlin-url. Dagger2 and Butterknife are not new and are well documented but using them in a Kotlin app was less well documented as I setup this app.
+I have started a new app. I know I have [written about setting up an app to use Dagger2][previous-post-url] in the past but this time I am using [Dagger2][dagger-url] and [Butterknife][butterknife-url] with [Android Studio 3][as3-url] and [Kotlin][kotlin-url]. Dagger2 and Butterknife are not new and are well documented but using them in a Kotlin app was less well documented as I setup this app.
 
 There are some things that I needed to get used to before I could make any real progress.
 
-### kotlin plugin
+### Kotlin plugin
 
 As [Android Studio adopts Kotlin][kotlin-android-url] as an officially supported language for Android development the plugin and the runtime appear to be release more often at the moment. As a consequence you will see this kind of error message.
 
@@ -29,7 +36,7 @@ buildscript {
 As of version 1.1.50 the format has changed to eliminate any hyphens so no more 1.1.x-y instead it will be 1.1.xy, which is a bit clearer given that the plugin suffix can contain hyphens.
 
 
-### kapt errors are a mess
+### Kapt errors are a mess
 
 The annotations processor for Kotlin (KAPT) does not integrate well into Android Studio in the sense that the error messages are easily missed.
 
