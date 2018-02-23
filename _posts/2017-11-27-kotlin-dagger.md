@@ -3,8 +3,8 @@ layout: post
 title:  "Kotlin, Dagger2 and Butterknife"
 date:   2017-11-27 12:00:00
 published: true
-tags: ["Android", "Development"]
-categories: ["Android", "Development"]
+tags: ["Android", "Development", "Kotlin"]
+categories: ["Android", "Development", "Kotlin"]
 ---
 
 I have started a new app. I know I have [written about setting up an app to use Dagger2][previous-post-url] in the past but this time I am using [Dagger2][dagger-url] and [Butterknife][butterknife-url] with [Android Studio 3][as3-url] and [Kotlin][kotlin-url]. Dagger2 and Butterknife are not new and are well documented but using them in a Kotlin app was less well documented as I setup this app.
