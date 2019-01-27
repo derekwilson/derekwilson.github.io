@@ -11,7 +11,7 @@ I am staring to get to grips with [Kotlin][kotlin-url] and I have writted about 
 
 In Java classes are only sealed if you use the keyword `final`. By contrast in Kotlin classes are sealed by default and can only be inherited or overridden if we use the keyword `open`.
 
-That we perfectly fine while I was writing the code I produced classes like this
+That was perfectly fine while I was writing the code I produced classes like this
 
 {% highlight Kotlin linenos %}
 class LocalBinder : Binder() {
