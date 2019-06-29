@@ -9,7 +9,10 @@ categories: ["Android", "Development", "Kotlin"]
 
 I was using two different computers with my new [Trailblazer][trailblazer-source] project and I noticed something odd, one unit test failed on one of the computers and they all passed on the other. I check that everything was up to date on both and that the Git hash we were building from was the same.
 
-I was weird but consistent I kept seeing this error
+I was weird but consistent I kept seeing a `Stub!` error
+
+This is a generic error that seems to get thrown by [Mockito][mockito-url] for any number of reasons - [this question for example][example-stackoverflow].
+
 
 ```
 java.lang.RuntimeException: Stub!
@@ -50,8 +53,6 @@ java.lang.RuntimeException: Stub!
 
 org.mockito.exceptions.misusing.UnfinishedStubbingException: 
 ```
-
-This is a generic error that seems to get thrown by [Mockito][mockito-url] for any number of reasons - [this question for example][example-stackoverflow].
 
 After much experimentation I did discover one difference on the Project Structure dialog
 
