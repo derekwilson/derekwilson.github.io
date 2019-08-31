@@ -62,6 +62,8 @@ There were any number of concerns about buying a Versa and now I have had one fo
 
 I have ported wrist-spin and it is working very well and looks great.
 
+{% include widgets/image.html src='/images/jekyll/2019-08-01/fitbit.png' width='900' height='150' title='SimpleSolution' %}
+
 Good Bits
 1. Screen is excellent, even in bright sunlight
 1. I could port wrist-spin and it works as well on the Fitbit as it did on the Pebble
