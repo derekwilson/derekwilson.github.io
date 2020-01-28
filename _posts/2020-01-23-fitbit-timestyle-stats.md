@@ -7,7 +7,7 @@ tags: ["Gadgets", "General", "JavaScript", "Pebble", "Fitbit"]
 categories: ["Gadgets", "General", "JavaScript", "Pebble", "Fitbit"]
 ---
 
-Whenever I start a project I like to have an idea about what success looks like, one of my private projects is not exception. In the past I had some [modest success targets][previous-post-url] for my pebble app wrist-spin. I decided that at least 10 hearts and 100 downloads would be a success and by the time that Pebble was shut down I had more than three times that.
+Whenever I start a project I like to have an idea about what success looks like, and my private projects are no exception. In the past I had some [modest success targets][previous-post-url] for my pebble app: wrist-spin. I decided that at least 10 hearts and 100 downloads would be a success and by the time that Pebble was shut down I had more than three times that target.
 
 For my current project, [Timestyle for Fitbit][timestyle-fitbit-url] I decided that I should be able to match the mark that wrist-spin eventually got to, 30 hearts and 300 downloads.
 
