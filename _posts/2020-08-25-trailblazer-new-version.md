@@ -13,7 +13,7 @@ Trailblazer is a simple, quick and easy to use track recorder, for hiking, runni
 
 This release has been updated for Android 10 and enables sharing the statistics for the track
 
-{% include widgets/image.html src='/images/jekyll/2020-08-01/screen1.png' width='150' height='500' title='Screen' %}
+{% include widgets/image.html src='/images/jekyll/2020-08-01/screen1.PNG' width='150' height='500' title='Screen' %}
 
 also now multiple selection is supported
 
