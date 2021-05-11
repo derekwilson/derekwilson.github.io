@@ -7,7 +7,7 @@ tags: ["Android", "Development"]
 categories: ["Android", "Development"]
 ---
 
-Recently I can across an odd problem with [AndroidX navigation][androidx-navigation-url] and [Proguard][proguard-url]. It was odd because the code worked fine in a debug build but the release variant crashed. There is very little difference between the debug and release variants, as you would expect, the min one is proguard. I am not a big fan of proguard, for this exact reason, however it was a requirement of the client.
+Recently I can across an odd problem with [AndroidX navigation][androidx-navigation-url] and [Proguard][proguard-url]. It was odd because the code worked fine in a debug build but the release variant crashed. There is very little difference between the debug and release variants, as you would expect, the main one is proguard. I am not a big fan of proguard, for this exact reason, however it was a requirement from the client.
 
 
  with the following error
