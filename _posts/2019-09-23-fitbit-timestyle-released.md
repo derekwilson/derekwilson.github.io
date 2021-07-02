@@ -22,7 +22,7 @@ In addition to having a large clear time display I wanted
 
 {% include widgets/image.html src='/images/jekyll/2019-09-01/listing.png' width='300' height='200' title='SimpleSolution' %}
 
-Now that it is released and in the app store I am pretty pleased with the result, I use it every day and I am already getting feature requests.
+Now that it is [released and in the app store][timestyle-fitbit-url] I am pretty pleased with the result, I use it every day and I am already getting feature requests.
 
 {% include widgets/image.html src='/images/jekyll/2019-09-01/rescent.png' width='500' height='400' title='SimpleSolution' %}
 
