@@ -234,7 +234,7 @@ Upgrading to JDK 11 is pretty straightforward. There are [Microsoft builds of Op
 
 There were still a couple of problems, setting the JDK in `Tools->Options->Xamarin->Android Settings->Java Development Kit Location` works but the setting seems to revert when exiting and restarting VS. This is a [common problem][vs-jdk-bug-url] and there may be a fix in later versions of VS2019.
 
-Also the Xamarin Android designer in VS2019 does not work with JDK 11, again there may be a fix for later versions, or I may explore updating to VS2022 in a later step.
+Also the Xamarin Android designer in VS2019 does not work with JDK 11, again there may be a fix for later versions although I would suggest if you want to target Android 12 you should use VS2022 as the SDK selection and designer both work.
 
 {% include widgets/image.html src='/images/jekyll/2022-02-01/jdkerror.png' width='600' height='250' title='VS Designer error' %}
 
