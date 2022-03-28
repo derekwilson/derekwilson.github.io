@@ -3,8 +3,8 @@ layout: post
 title:  "Xamarin Android Part 1"
 date:   2021-12-28 12:00:00
 published: true
-tags: ["Xamarin", "Development", "Android", ".net", "Podcastutilities", "Mobile"]
-categories: ["Xamarin", "Development", "Android", ".net", "Podcastutilities", "Mobile"]
+tags: ["Xamarin", "Development", "Android", ".Net", "Podcastutilities", "Mobile"]
+categories: ["Xamarin", "Development", "Android", ".Net", "Podcastutilities", "Mobile"]
 ---
 
 # Xamarin Android for Android Developers
