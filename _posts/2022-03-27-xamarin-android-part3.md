@@ -483,7 +483,7 @@ public class ViewModelFactory : Java.Lang.Object, ViewModelProvider.IFactory
 
 Android will call `Create` and will pass in the `Java` class it want to be created. Internally in the `ViewModelFactory` we have a map of java classes to .NET classes so we can get the IocContainer to create the .NET type (we need to do this via reflection as we dont know the type at compile time) and then we just cast it back to being a Java object and hand it back.
 
-As we are using the IocContainer to resolve the type any dependencies or lifestyle restrictions will be satisfied by the IocContainer.
+As we are using the IocContainer to resolve the type any dependencies or lifestyle restrictions will be satisfied by the IocContainer. As the IocContainer is an injected dependency of the factory we place the container in the container in the `AndroidApplication`.
 
 #### The Application
 
@@ -528,6 +528,26 @@ private IIocContainer AddExtrasToIocContainer(IIocContainer container)
   return container;
 }
 {% endhighlight %}
+
+If you forget to add the viewmodel to the factory then you will get an error like this
+
+```
+The given key 'crc644c7cb612129105ac.PurgeViewModel' was not present in the dictionary.	
+Collections.Generic.KeyNotFoundException: The given key 'crc644c7cb612129105ac.PurgeViewModel' was not present in the dictionary.
+  at System.Collections.Generic.Dictionary`2[TKey,TValue].get_Item (TKey key) [0x0001e] in <a8b4702b60024176b74a9d7a0c8fe330>:0 
+  at PodcastUtilities.AndroidLogic.ViewModel.ViewModelFactory.Create (Java.Lang.Class classType) [0x00055] in <9aa43d2f76e444f8a2df9c9e1a95a089>:0 
+  at AndroidX.Lifecycle.ViewModelProvider+IFactoryInvoker.n_Create_Ljava_lang_Class_ (System.IntPtr jnienv, System.IntPtr native__this, System.IntPtr native_modelClass) [0x0000f] in <3bc29452d8cf4fe3980f8edceb3ad872>:0 
+  at (wrapper dynamic-method) Android.Runtime.DynamicMethodNameCounter.4(intptr,intptr,intptr)
+--- End of stack trace from previous location where exception was thrown ---
+
+  at Java.Interop.JniEnvironment+InstanceMethods.CallObjectMethod (Java.Interop.JniObjectReference instance, Java.Interop.JniMethodInfo method, Java.Interop.JniArgumentValue* args) [0x0006e] in <2e109281f9514c53b44688fd4549adb2>:0 
+  at Java.Interop.JniPeerMembers+JniInstanceMethods.InvokeVirtualObjectMethod (System.String encodedMember, Java.Interop.IJavaPeerable self, Java.Interop.JniArgumentValue* parameters) [0x0002a] in <2e109281f9514c53b44688fd4549adb2>:0 
+  at AndroidX.Lifecycle.ViewModelProvider.Get (Java.Lang.Class modelClass) [0x00031] in <3bc29452d8cf4fe3980f8edceb3ad872>:0 
+  at PodcastUtilities.UI.Purge.PurgeActivity.OnCreate (Android.OS.Bundle savedInstanceState) [0x00101] in <ad7fdac40ea443a59474142a1a615fe1>:0 
+  at Android.App.Activity.n_OnCreate_Landroid_os_Bundle_ (System.IntPtr jnienv, System.IntPtr native__this, System.IntPtr native_savedInstanceState) [0x0000f] in <96214b62e5264246be943a5d64d16954>:0 
+  at (wrapper dynamic-method) Android.Runtime.DynamicMethodNameCounter.5(intptr,intptr,intptr)
+```
+
 
 #### Lifecycle
 
