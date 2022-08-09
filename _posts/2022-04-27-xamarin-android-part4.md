@@ -3,8 +3,8 @@ layout: post
 title:  "Xamarin Android Part 4"
 date:   2022-04-27 12:00:00
 published: true
-tags: ["Xamarin", "Development", "Android", ".Net", "Podcastutilities", "Mobile"]
-categories: ["Xamarin", "Development", "Android", ".Net", "Podcastutilities", "Mobile"]
+tags: ["Xamarin", "Development", "Android", ".Net", "PodcastUtilities", "Mobile"]
+categories: ["Xamarin", "Development", "Android", ".Net", "PodcastUtilities", "Mobile"]
 ---
 
 # Xamarin Android for Android Developers
