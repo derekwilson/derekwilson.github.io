@@ -19,7 +19,7 @@ The architecture we are trying to create looks like this
 
 In the previous posts we created the `PodcastUtilities` application and `PodcastUtilities.AndroidLogic` class library next we need to create `PodcastUtilities.AndroidTests`
 
-#### Running Unit Tests
+### Running Unit Tests
 
 The typical advice for testing android applications is to [split your tests into groups][unit-test1-url] where some run on the device and some are [local tests][unit-test2-url] that run on your development machine rather than an android device.
 

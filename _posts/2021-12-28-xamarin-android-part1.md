@@ -11,6 +11,53 @@ categories: ["Xamarin", "Development", "Android", ".Net", "PodcastUtilities", "M
 
 I've been aware of [Xamarin][xamarin-url] for quite a while, but given that I write my Android apps in AndroidStudio and Kotlin I've always ignored it. I think I always though of Xamarin as being another attempt at a cross platform UI, I have played around with these on and off over the last 30 years going all the way back to [Zinc][zinc-url], and I've never found any of them to be great experiences. It turns out there are two flavours of Xamarin for Android developers [Xamarin Forms][xamarin-forms-url] (soon to be called MAUI) is a cross platform UI, [Xamarin Android][xamarin-android-url] is a framework than enables running .NET code using [Mono][mono-url] on Android phones by providing wrappers and bridges to calling the OS and allows the regular XML layout files and assets to be used.
 
+There is a lot of ground to cover so I've broken this up into a number of posts
+
+* [Part 1][part-1-url]
+  * [The Software](/blog/2021/12/28/xamarin-android-part1#the-software)
+  * [The Developer](/blog/2021/12/28/xamarin-android-part1#the-developer)
+  * [The Project](/blog/2021/12/28/xamarin-android-part1#the-project)
+  * [Current Structure](/blog/2021/12/28/xamarin-android-part1#current-structure)
+  * [The Target](/blog/2021/12/28/xamarin-android-part1#the-target)
+* [Part 2][part-2-url]
+  * [Create Application Project](/blog/2022/02/24/xamarin-android-part2#create-application-project)
+  * [App icon and colour scheme](/blog/2022/02/24/xamarin-android-part2#app-icon-and-colour-scheme)
+  * [App name and package name](/blog/2022/02/24/xamarin-android-part2#app-name-and-package-name)
+  * [Update package references](/blog/2022/02/24/xamarin-android-part2#update-package-references)
+  * [Putting it all together](/blog/2022/02/24/xamarin-android-part2#putting-it-all-together)
+* [Part 3][part-3-url]
+  * [Create AndroidLogic class library](/blog/2022/03/27/xamarin-android-part3#create-androidlogic-class-library)
+  * [Adding development essentials](/blog/2022/03/27/xamarin-android-part3#adding-development-essentials)
+  * [Creating a custom application](/blog/2022/03/27/xamarin-android-part3#creating-a-custom-application)
+  * [Adding NLog](/blog/2022/03/27/xamarin-android-part3#adding-nlog)
+  * [Adding dependency injection](/blog/2022/03/27/xamarin-android-part3#adding-dependency-injection)
+  * [ViewModels](/blog/2022/03/27/xamarin-android-part3#viewmodels)
+     * [The ViewModel](/blog/2022/03/27/xamarin-android-part3#the-viewmodel)
+     * [The Activity](/blog/2022/03/27/xamarin-android-part3#the-activity)
+     * [The ViewModelFactory](/blog/2022/03/27/xamarin-android-part3#the-viewmodelfactory)
+     * [The Application](/blog/2022/03/27/xamarin-android-part3#the-application)
+     * [Lifecycle](/blog/2022/03/27/xamarin-android-part3#lifecycle)
+  * [Observable data](/blog/2022/03/27/xamarin-android-part3#observable-data)
+    * [LiveData](/blog/2022/03/27/xamarin-android-part3#livedata)
+    * [C# EventHandlers](/blog/2022/03/27/xamarin-android-part3#c-eventhandlers)
+* [Part 4][part-4-url]
+  * [Create the AndroidTest application](/blog/2022/04/27/xamarin-android-part4#create-the-androidtest-application)
+  * [Running Unit Tests](/blog/2022/04/27/xamarin-android-part4#running-unit-tests)
+    * [xUnit](/blog/2022/04/27/xamarin-android-part4#xunit)
+    * [nUnit](/blog/2022/04/27/xamarin-android-part4#nunit)
+  * [Mocking using FakeItEasy](/blog/2022/04/27/xamarin-android-part4#mocking-using-fakeiteasy)
+  * [Viewmodel tests using LiveData](/blog/2022/04/27/xamarin-android-part4#viewmodel-tests-using-livedata)
+  * [Viewmodel tests using C# EventHandlers](/blog/2022/04/27/xamarin-android-part4#viewmodel-tests-using-c-eventhandlers)
+  * [Putting it all together](/blog/2022/04/27/xamarin-android-part4#putting-it-all-together)
+* [Part 5][part-5-url]
+  * [Odds and Ends](/blog/2022/06/30/xamarin-android-part5#odds-and-ends)
+    * [Signing](/blog/2022/06/30/xamarin-android-part5#signing)
+    * [Package names](/blog/2022/06/30/xamarin-android-part5#package-names)
+    * [Logging](/blog/2022/06/30/xamarin-android-part5#logging)
+  * [Publishing](/blog/2022/06/30/xamarin-android-part5#publishing)
+    * [Publishing an AAB](/blog/2022/06/30/xamarin-android-part5#publishing-an-aab)
+    * [Publishing an APK](/blog/2022/06/30/xamarin-android-part5#publishing-an-apk)
+
 ## The Software
 
 [PodcastUtilities][podcastutilities-url] is a .NET Framework podcast cache manager. It is designed to have a minimal UI or be used as a headless API. It is old code, most of it was written over 10 years ago, the only significant development done recently has been [make the main projects multi-platform][podcastutilities-cross-url] so that they target .NET Framework and .NET Core/.NET Standard. Using .NET Core enabled Podcast Utilities to be run on Mac, Windows and Linux. It was fun to see it running on a Raspberry PI 1 using Mono but that was where it was left except for minor maintenance releases to code with TLS changes. 
@@ -201,3 +248,9 @@ Next time I'll start to dig into the steps I took and traps I fell into.
 [linfu-url]:                https://github.com/philiplaureano/LinFu
 [msextensions-url]:         https://docs.microsoft.com/en-us/dotnet/core/extensions/dependency-injection-usage
 
+
+[part-1-url]:               /blog/2021/12/28/xamarin-android-part1
+[part-2-url]:               /blog/2022/02/24/xamarin-android-part2
+[part-3-url]:               /blog/2022/03/27/xamarin-android-part3
+[part-4-url]:				/blog/2022/04/27/xamarin-android-part4
+[part-5-url]:				/blog/2022/06/30/xamarin-android-part5
