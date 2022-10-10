@@ -11,7 +11,7 @@ categories: ["Xamarin", "Development", "Android", ".Net", "PodcastUtilities", "M
 
 In the [previous post][part-5-url] we completed all the basic tasks building and publishing an app for Android using [Xamarin Android][xamarin-android-url]. There are some other techniques that android developers tend to use that are slightly different when using C#
 
-### Click Handers in Recyclerviews
+### Click Handlers in Recyclerviews
 
 In kotlin you will often see click handlers attached to `RecyclerView` items by using `setOnClickListener` like this
 

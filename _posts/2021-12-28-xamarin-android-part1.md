@@ -58,7 +58,7 @@ There is a lot of ground to cover so I've broken this up into a number of posts
     * [Publishing an AAB](/blog/2022/06/30/xamarin-android-part5#publishing-an-aab)
     * [Publishing an APK](/blog/2022/06/30/xamarin-android-part5#publishing-an-apk)
 * [Part 6][part-6-url]
-  * [Click Handers in Recyclerviews](/blog/2022/08/30/xamarin-android-part6#click-handers-in-recyclerviews)
+  * [Click Handlers in Recyclerviews](/blog/2022/08/30/xamarin-android-part6#click-handlers-in-recyclerviews)
 
 ## The Software
 
