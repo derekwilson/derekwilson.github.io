@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Xamarin Android Part 7"
-date:   2022-11-28 12:00:00
+date:   2022-11-27 12:00:00
 published: true
 tags: ["Xamarin", "Development", "Android", ".Net", "PodcastUtilities", "Mobile"]
 categories: ["Xamarin", "Development", "Android", ".Net", "PodcastUtilities", "Mobile"]
