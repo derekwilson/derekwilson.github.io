@@ -59,6 +59,9 @@ There is a lot of ground to cover so I've broken this up into a number of posts
     * [Publishing an APK](/blog/2022/06/30/xamarin-android-part5#publishing-an-apk)
 * [Part 6][part-6-url]
   * [Click Handlers in Recyclerviews](/blog/2022/08/30/xamarin-android-part6#click-handlers-in-recyclerviews)
+* [Part 7][part-7-url]
+  * [Google Analytics and Firebase Crashlytics](/blog/2022/11/28/xamarin-android-part7#google-analytics-and-firebase-crashlytics)
+  * [AppCenter Crashes and Analytics](/blog/2022/11/28/xamarin-android-part7#appcenter-crashes-and-analytics)
 
 ## The Software
 
@@ -254,6 +257,7 @@ Next time I'll start to dig into the steps I took and traps I fell into.
 [part-1-url]:               /blog/2021/12/28/xamarin-android-part1
 [part-2-url]:               /blog/2022/02/24/xamarin-android-part2
 [part-3-url]:               /blog/2022/03/27/xamarin-android-part3
-[part-4-url]:				/blog/2022/04/27/xamarin-android-part4
-[part-5-url]:				/blog/2022/06/30/xamarin-android-part5
-[part-6-url]:				/blog/2022/08/30/xamarin-android-part6
+[part-4-url]:			        	/blog/2022/04/27/xamarin-android-part4
+[part-5-url]:			          /blog/2022/06/30/xamarin-android-part5
+[part-6-url]:			        	/blog/2022/08/30/xamarin-android-part6
+[part-7-url]:			        	/blog/2022/11/28/xamarin-android-part7
