@@ -9,7 +9,7 @@ categories: ["Android", "Development", "PassTheParcel", "Kotlin"]
 
 This month I have released [PassTheParcel][ptp-source]. PassTheParcel is a simple, quick and easy to use app to play music for "Pass The Parcel" or "Musical Chair" type games.
 
-{% include widgets/image.html src='/images/jekyll/2022-12-01/screen1.PNG' width='150' height='300' title='Screen' %}
+{% include widgets/image.html src='/images/jekyll/2022-12-01/screen1.png' width='150' height='300' title='Screen' %}
 
 Its designed to do a simple task
 
