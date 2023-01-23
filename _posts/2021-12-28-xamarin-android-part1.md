@@ -62,6 +62,10 @@ There is a lot of ground to cover so I've broken this up into a number of posts
 * [Part 7][part-7-url]
   * [Google Analytics and Firebase Crashlytics](/blog/2022/11/27/xamarin-android-part7#google-analytics-and-firebase-crashlytics)
   * [AppCenter Crashes and Analytics](/blog/2022/11/27/xamarin-android-part7#appcenter-crashes-and-analytics)
+* [Part 8][part-8-url]
+  * [A progress custom view in Kotlin](/blog/2023/01/22/xamarin-android-part8#a-progress-custom-view-in-kotlin)
+  * [A progress custom view in C#](/blog/2023/01/22/xamarin-android-part8#a-progress-custom-view-in-c)
+  * [Using the custom view](/blog/2023/01/22/xamarin-android-part8#using-the-custom-view)
 
 ## The Software
 
@@ -261,3 +265,4 @@ Next time I'll start to dig into the steps I took and traps I fell into.
 [part-5-url]:			          /blog/2022/06/30/xamarin-android-part5
 [part-6-url]:			        	/blog/2022/08/30/xamarin-android-part6
 [part-7-url]:			        	/blog/2022/11/27/xamarin-android-part7
+[part-8-url]:			        	/blog/2023/01/22/xamarin-android-part8
