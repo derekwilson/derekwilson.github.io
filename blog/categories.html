@@ -5,7 +5,7 @@ title: Categories
 <section id="archive">
         <h3>All posts by category</h3>
         <ul class="tag-box inline">
-            {% assign tags_list = site.categories | sort {|left, right| left[0] <=> right[0]} %}
+            {% assign tags_list = site.categories | sort %}
             {% if tags_list.first[0] == null %}
                 {% for tag in tags_list %} 
                 <li><a href="#{{ tag }}"><strong>{{ tag | capitalize }}</strong></a> <span>({{ site.tags[tag].size }})</span></li>
