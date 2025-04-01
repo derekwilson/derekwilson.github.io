@@ -478,7 +478,7 @@ p#rss
     list-style-type: none;
     margin: 0 0 20px 0;
     padding: 0;
-    height: 1%;
+    height: auto;
 }
 #menu .widget h4
 {
