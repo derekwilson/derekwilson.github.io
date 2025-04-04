@@ -51,7 +51,7 @@ I have ported wrist-spin my cricket score tracker to Pebble, Fitbit and [Android
 [previous-post-2-url]:  /blog/2024/06/01/what-has-been-happening
 
 [pebble-url]:           https://en.wikipedia.org/wiki/Pebble_Time
-[bip-5-url]:            https://www.amazfit.com/products/amazfit-bip-5
+[bip-5-url]:            https://www.amazfit.com/pages/amazfit-bip-5-unity
 
 [wrist-spin-url]:       https://bitbucket.org/derekwilson/wrist-spin
 
