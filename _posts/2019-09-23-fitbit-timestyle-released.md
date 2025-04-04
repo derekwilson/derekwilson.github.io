@@ -3,8 +3,8 @@ layout: post
 title:  "Timestyle Fitbit released"
 date:   2019-09-23 12:00:00
 published: true
-tags: ["Gadgets", "General", "JavaScript", "Pebble", "Fitbit"]
-categories: ["Gadgets", "General", "JavaScript", "Pebble", "Fitbit"]
+tags: ["Gadgets", "General", "JavaScript", "Pebble", "Fitbit", "Timestyle"]
+categories: ["Gadgets", "General", "JavaScript", "Pebble", "Fitbit", "Timestyle"]
 ---
 
 [Last month I wrote][previous-post-url] about my decision to buy a [Fitbit Versa][versa-url]. As I noted in the conclusion I thought I might end up writing some of the apps that I wanted. It turned out that the first thing I wanted was a watch face like my beloved [TimeStyle on the pebble][timestyle-pebble-url].

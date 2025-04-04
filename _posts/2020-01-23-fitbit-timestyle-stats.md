@@ -3,8 +3,8 @@ layout: post
 title:  "Timestyle for Fitbit success criteria"
 date:   2020-01-23 12:00:00
 published: true
-tags: ["Gadgets", "General", "JavaScript", "Pebble", "Fitbit"]
-categories: ["Gadgets", "General", "JavaScript", "Pebble", "Fitbit"]
+tags: ["Gadgets", "General", "JavaScript", "Fitbit", "Timestyle"]
+categories: ["Gadgets", "General", "JavaScript", "Fitbit", "Timestyle"]
 ---
 
 Whenever I start a project I like to have an idea about what success looks like, and my private projects are no exception. In the past I had some [modest success targets][previous-post-url] for my pebble app: wrist-spin. I decided that at least 10 hearts and 100 downloads would be a success and by the time that Pebble was shut down I had more than three times that target.

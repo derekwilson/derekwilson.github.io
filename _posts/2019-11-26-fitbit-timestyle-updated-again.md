@@ -3,8 +3,8 @@ layout: post
 title:  "Timestyle for Fitbit updated again"
 date:   2019-11-26 12:00:00
 published: true
-tags: ["Gadgets", "General", "JavaScript", "Pebble", "Fitbit"]
-categories: ["Gadgets", "General", "JavaScript", "Pebble", "Fitbit"]
+tags: ["Gadgets", "General", "JavaScript", "Fitbit", "Timestyle"]
+categories: ["Gadgets", "General", "JavaScript", "Fitbit", "Timestyle"]
 ---
 
 [Last month I released an updated Timstyle for Fitbit][previous-post-url], It seemed to go quite well and as I added analytics I can get a feel for how users use the app. I even got some more feature requests from users.

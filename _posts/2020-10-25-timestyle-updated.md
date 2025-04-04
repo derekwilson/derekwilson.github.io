@@ -3,8 +3,8 @@ layout: post
 title:  "Timestyle updated"
 date:   2020-10-25 12:00:00
 published: true
-tags: ["Gadgets", "General", "JavaScript", "Fitbit"]
-categories: ["Gadgets", "General", "JavaScript", "Fitbit"]
+tags: ["Gadgets", "General", "JavaScript", "Fitbit", "Timestyle"]
+categories: ["Gadgets", "General", "JavaScript", "Fitbit", "Timestyle"]
 ---
 
 The last update to my [Timestyle for Fitbit][timestyle-fitbit-url] watchface was six months ago in it I addressed [memory issues][previous-post-url] when launching the watchface

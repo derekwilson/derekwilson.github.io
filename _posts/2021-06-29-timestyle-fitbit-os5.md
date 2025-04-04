@@ -3,8 +3,8 @@ layout: post
 title:  "Timestyle for Fitbit OS5 released"
 date:   2021-06-29 12:00:00
 published: true
-tags: ["Gadgets", "General", "JavaScript", "Fitbit"]
-categories: ["Gadgets", "General", "JavaScript", "Fitbit"]
+tags: ["Gadgets", "General", "JavaScript", "Fitbit", "Timestyle"]
+categories: ["Gadgets", "General", "JavaScript", "Fitbit", "Timestyle"]
 ---
 
 ## Timstyle for Fitbit OS5
