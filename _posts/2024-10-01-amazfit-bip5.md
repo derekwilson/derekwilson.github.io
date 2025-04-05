@@ -3,8 +3,8 @@ layout: post
 title: "Another Gadget: Amazfit Bip5"
 date: 2024-10-01 12:00:00
 published: true
-tags: ["Gadgets", "General", "JavaScript", "ZeppOS"]
-categories: ["Gadgets", "General", "JavaScript", "ZeppOS"]
+tags: ["Gadgets", "General", "JavaScript", "ZeppOS", "Wrist-spin"]
+categories: ["Gadgets", "General", "JavaScript", "ZeppOS", "Wrist-spin"]
 ---
 
 Almost exactly 5 years after I bought my previous everyday wearable [a Fitbit Vera][previous-post-1-url] I decided to buy a new one.

@@ -3,8 +3,8 @@ layout: post
 title: "What has been happening?"
 date: 2024-06-01 12:00:00
 published: true
-tags: ["Xamarin", "Development", "Android", ".Net", "PodcastUtilities", "RamEater", "Trailblazer", "wrist-spin", "Mobile"]
-categories: ["Xamarin", "Development", "Android", ".Net", "PodcastUtilities", "RamEater", "Trailblazer", "wrist-spin", "Mobile"]
+tags: ["Xamarin", "Development", "Android", ".Net", "PodcastUtilities", "RamEater", "Trailblazer", "Wrist-spin", "Mobile"]
+categories: ["Xamarin", "Development", "Android", ".Net", "PodcastUtilities", "RamEater", "Trailblazer", "Wrist-spin", "Mobile"]
 ---
 
 [I retired][previous-post-1-url] just over a year ago. I did say I would not be posting as often and it turns out I was right. I have still been doing some work on my projects so I though I would post a quick status update

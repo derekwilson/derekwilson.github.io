@@ -3,8 +3,8 @@ layout: post
 title:  "Another Gadget: Fitbit Versa"
 date:   2019-08-27 12:00:00
 published: true
-tags: ["Gadgets", "General", "JavaScript", "Pebble", "Fitbit"]
-categories: ["Gadgets", "General", "JavaScript", "Pebble", "Fitbit"]
+tags: ["Gadgets", "General", "JavaScript", "Pebble", "Fitbit", "Wrist-spin"]
+categories: ["Gadgets", "General", "JavaScript", "Pebble", "Fitbit", "Wrist-spin"]
 ---
 
 I have another new gadget - [Fitbit Versa][versa-url]. I have owned and [developed apps][pebble-posts-url] on a number of Pebbles and I was very disappointed when [Pebble stopped trading][pebble-bought-url]. I really enjoyed using my Pebble watches, and I guess to a certain extent was resentful of Fitbit, however I have to say that Fitbit have [tried to be fair][end-pebble-url] to us Pebble users. As my Pebbles have started to show signs of wear and tear, and Fitbit launched the Versa so I decided to have a look.
