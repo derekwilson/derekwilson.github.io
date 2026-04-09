@@ -3,15 +3,15 @@ layout: post
 title:  "wrist-list released"
 date:   2020-05-25 12:00:00
 published: true
-tags: ["General", "JavaScript", "Fitbit"]
-categories: ["General", "JavaScript", "Fitbit"]
+tags: ["General", "JavaScript", "Fitbit", "Wrist-list"]
+categories: ["General", "JavaScript", "Fitbit", "Wrist-list"]
 ---
 
 ## wrist-list
 
 I have release a new app this month. Its called [wrist-list][wrist-list-url] and its a todo list for [Fitbit OS devices][fitbit-smartwatches-url].
 
-The primary use case for the app is to be able to check off shopping items as you go around the supermarket without having to keep on getting your phone out. Hopefully it can also be used for may other todo list use cases.
+The primary use case for the app is to be able to check off shopping items as you go around the supermarket without having to keep on getting your phone out. Hopefully it can also be used for many other todo list use cases.
 
 wrist-list is not designed to edit and maintain lists, rather it will display lists from you chosen mobile todo list app conveniently on your wrist. 
 

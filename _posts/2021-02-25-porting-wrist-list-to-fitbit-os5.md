@@ -3,8 +3,8 @@ layout: post
 title:  "Porting wrist-list to Fitbit OS5"
 date:   2021-02-25 12:00:00
 published: true
-tags: ["Gadgets", "General", "JavaScript", "Fitbit"]
-categories: ["Gadgets", "General", "JavaScript", "Fitbit"]
+tags: ["Gadgets", "General", "JavaScript", "Fitbit", "Wrist-list"]
+categories: ["Gadgets", "General", "JavaScript", "Fitbit", "Wrist-list"]
 ---
 
 ## wrist-list

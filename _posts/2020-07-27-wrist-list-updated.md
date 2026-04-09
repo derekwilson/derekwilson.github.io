@@ -3,8 +3,8 @@ layout: post
 title:  "wrist-list updated"
 date:   2020-07-27 12:00:00
 published: true
-tags: ["General", "JavaScript", "Fitbit"]
-categories: ["General", "JavaScript", "Fitbit"]
+tags: ["General", "JavaScript", "Fitbit", "Wrist-list"]
+categories: ["General", "JavaScript", "Fitbit", "Wrist-list"]
 ---
 
 ## wrist-list
