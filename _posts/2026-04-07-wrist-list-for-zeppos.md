@@ -26,9 +26,12 @@ The todo list is controlled from the settings page of the wrist-list app within 
 1. Then select More in the Device App Settings panel
 1. Then select wrist-list
 
+{% include widgets/image.html src='/images/jekyll/2026-04-01/1.png' width='300' height='600' title='Settings' %}
+{% include widgets/image.html src='/images/jekyll/2026-04-01/2.png' width='300' height='600' title='Settings' %}
+
 You should see a page like this
 
-{% include widgets/image.html src='/images/jekyll/2026-04-01/1.png' width='300' height='600' title='Settings' %}
+{% include widgets/image.html src='/images/jekyll/2026-04-01/3.png' width='300' height='600' title='Settings' %}
 
 The main items on this page are
 
@@ -95,6 +98,44 @@ This will remove all items from the current list. When you import items they are
 ### The todo list
 
 This is the current list of items. Items can be deleted from wrist-list however it will not delete the items from the source app. This list is kept in sync with the one on your watch, it also shows the number of items and the number checked. 
+
+## Import list format
+
+wrist-list imports text from the clipboard and then breaks the text up into multiple items and puts them into the list. The format that wrist-list expects on the clipboard depends on separator selected on the settings page.
+
+As long as the clipboard contains plain text with the correct separators then it can be imported into wrist-list. In these examples the text is shown with each item on a new line, this is just for clarity, the line breaks are not essential, it would work if the text was just on one line.
+
+The item itself cannot contain a separator character
+
+### Google Keep
+
+The expected format is
+
+```
+[ ] bread 
+[x] cheese 
+[ ] milk
+```
+
+### CSV
+
+The expected format is
+
+```
+bread, 
+milk; 
+cheese,
+```
+
+### Markdown
+
+The expected format is
+
+```
+- milk
++ cheese
+- bread
+```
 
 ## Installing wrist-list
 
